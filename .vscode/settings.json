@@ -1,0 +1,11 @@
+{
+  "simpleBrowser.defaultUrl": "http://localhost/projet%20web/public/index.php/entry",
+  "multiCommand.commands": [
+    {
+      "command": "multiCommand.web4stage.openPreview",
+      "sequence": [
+        "simpleBrowser.show"
+      ]
+    }
+  ]
+}

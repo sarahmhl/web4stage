@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web4Stage - Espace étudiant</title>
+    <meta
+      name="description"
+      content="Tableau de bord étudiant Web4Stage : wish-list, candidatures envoyées et suivi de ta recherche de stage."
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="brand">
+          <div class="brand-badge">
+            <span>W4</span>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Web4Stage</span>
+            <span class="brand-subtitle">Stages &amp; candidatures</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Navigation principale">
+          <a href="index.html" class="nav-link">Accueil</a>
+          <a href="offres.html" class="nav-link">Offres de stage</a>
+          <a href="dashboard-etudiant.html" class="nav-link nav-link--active">Espace étudiant</a>
+          <a href="login.html" class="nav-link">Connexion</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a href="login.html" class="btn btn-outline">Changer de rôle</a>
+          <a href="index.html" class="btn btn-primary">Déconnexion</a>
+          <button class="burger" aria-label="Ouvrir le menu mobile">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+      <div class="nav-mobile" aria-label="Navigation mobile">
+        <a href="index.html" class="nav-link">Accueil</a>
+        <a href="offres.html" class="nav-link">Offres de stage</a>
+        <a href="dashboard-etudiant.html" class="nav-link nav-link--active">Espace étudiant</a>
+        <a href="login.html" class="nav-link">Connexion</a>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <header class="dashboard-header">
+        <div class="dashboard-title-block">
+          <h1 class="dashboard-title">Bienvenue, Amina ✨</h1>
+          <p class="dashboard-subtitle">
+            On suit ensemble ta recherche de stage : tes offres en favoris, tes candidatures et
+            ton avancement.
+          </p>
+        </div>
+        <span class="pill-role">Rôle : Étudiante</span>
+      </header>
+
+      <section class="dashboard-grid" aria-label="Résumé de ton activité">
+        <article class="dash-card" aria-label="Résumé de la recherche">
+          <header class="dash-card-header">
+            <span class="dash-card-title">Vue d’ensemble</span>
+            <span class="pill-small">Objectif : 1 stage trouvé</span>
+          </header>
+          <ul class="list-compact">
+            <li>
+              <span>Offres en wish-list</span>
+              <strong>7</strong>
+            </li>
+            <li>
+              <span>Candidatures envoyées</span>
+              <strong>4</strong>
+            </li>
+            <li>
+              <span>Entretiens prévus</span>
+              <strong>1</strong>
+            </li>
+          </ul>
+        </article>
+
+        <article class="dash-card" aria-label="Avancement de ta recherche">
+          <header class="dash-card-header">
+            <span class="dash-card-title">Avancement de ta recherche</span>
+            <span class="pill-small">Conseil : vise 8–10 candidatures</span>
+          </header>
+          <div class="hero-progress">
+            <div class="hero-progress-bar">
+              <div class="hero-progress-fill" style="width: 50%"></div>
+            </div>
+            <span class="hero-progress-label">Tu as déjà envoyé 4 candidatures sur 8</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" aria-labelledby="section-wishlist">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title" id="section-wishlist">Ma wish-list girly</h2>
+            <p class="section-subtitle">
+              Les offres que tu as repérées et que tu ne veux surtout pas oublier.
+            </p>
+          </div>
+          <div class="section-actions">
+            <a href="offres.html" class="link-soft">Ajouter des offres →</a>
+          </div>
+        </div>
+
+        <div class="offers-grid" aria-label="Offres de ta wish-list">
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">PT</div>
+              <div>
+                <h3 class="offer-title">Stage Développeuse Web Fullstack</h3>
+                <p class="offer-company">PinkTech Studio · Paris</p>
+              </div>
+            </header>
+            <div class="offer-meta">
+              <span>6 mois</span>
+              <span>1 000 €/mois</span>
+              <span>Début : Avril</span>
+            </div>
+            <div class="offer-skills">
+              <span class="tag">PHP / MVC</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">UI girly</span>
+            </div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">Ajoutée il y a 3 jours · idéal pour ton projet.</div>
+              <div class="offer-actions">
+                <button
+                  type="button"
+                  class="btn-icon btn-icon--wish active"
+                  aria-label="Retirer de ma wish-list"
+                >
+                  ♥
+                </button>
+                <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">
+                  Détails
+                </a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">GM</div>
+              <div>
+                <h3 class="offer-title">Assistante Marketing &amp; Social Media</h3>
+                <p class="offer-company">GlowMedia Agency · Lyon</p>
+              </div>
+            </header>
+            <div class="offer-meta">
+              <span>4 mois</span>
+              <span>Non rémunéré</span>
+              <span>Début : Mars</span>
+            </div>
+            <div class="offer-skills">
+              <span class="tag">Instagram / TikTok</span>
+              <span class="tag">Créa visuelle</span>
+            </div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">
+                Top des offres en wish-list pour ta promo cette semaine.
+              </div>
+              <div class="offer-actions">
+                <button
+                  type="button"
+                  class="btn-icon btn-icon--wish active"
+                  aria-label="Retirer de ma wish-list"
+                >
+                  ♥
+                </button>
+                <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">
+                  Détails
+                </a>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="section-candidatures">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title" id="section-candidatures">Mes candidatures</h2>
+            <p class="section-subtitle">
+              Garde un œil sur tous les stages pour lesquels tu as envoyé ton CV et ta lettre de
+              motivation.
+            </p>
+          </div>
+        </div>
+
+        <section class="page-layout" aria-label="Candidatures et détails">
+          <aside class="side-card">
+            <h3 class="side-card-title">Résumé rapide</h3>
+            <p class="side-card-text">
+              Dès que tu postules à une offre, elle apparaît ici avec son statut pour que tu
+              saches où tu en es.
+            </p>
+            <div class="stat-row">
+              <div class="stat-pill">
+                <span>Candidatures en attente</span>
+                <strong>3</strong>
+              </div>
+              <div class="stat-pill">
+                <span>Candidatures acceptées</span>
+                <strong>1</strong>
+              </div>
+              <div class="stat-pill">
+                <span>Candidatures refusées</span>
+                <strong>0</strong>
+              </div>
+            </div>
+          </aside>
+
+          <article class="dash-card" aria-label="Liste détaillée de tes candidatures">
+            <header class="dash-card-header">
+              <span class="dash-card-title">Détail des candidatures</span>
+              <span class="pill-small">LM &amp; CV associés</span>
+            </header>
+            <ul class="list-compact">
+              <li>
+                <span>Stage Dev Web PHP / JS · BubbleTech</span>
+                <span class="badge-status badge-status--pending">En attente</span>
+              </li>
+              <li>
+                <span>Stage UX / UI Designer junior · LovelyScreens</span>
+                <span class="badge-status badge-status--accepted">Entretien prévu</span>
+              </li>
+              <li>
+                <span>Stage Data &amp; BI · CandyStats</span>
+                <span class="badge-status badge-status--pending">En cours d’étude</span>
+              </li>
+            </ul>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>© 2026 · Web4Stage · Projet pédagogique CESI</span>
+        <div class="footer-links">
+          <a href="mentions-legales.html">Mentions légales</a>
+          <a href="#">Politique de confidentialité</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
+

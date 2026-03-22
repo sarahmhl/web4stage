@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web4Stage - Trouve ton stage de reve</title>
+    <meta http-equiv="refresh" content="0; url=public/index.php/entry" />
+    <script>
+      (function () {
+        if (window.location.protocol === "file:") {
+          var path = window.location.pathname.replace(/\\/g, "/");
+          var parts = path.split("/").filter(Boolean);
+          var folder = parts.length >= 2 ? decodeURIComponent(parts[parts.length - 2]) : "projet%20web";
+          var target = "http://localhost/" + encodeURIComponent(folder) + "/public/index.php/entry";
+          window.location.replace(target);
+          return;
+        }
+
+        window.location.replace("public/index.php/entry");
+      })();
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=public/index.php/entry" />
+    </noscript>
+    <meta
+      name="description"
+      content="Plateforme girly et moderne pour trouver un stage en entreprise, gerer tes candidatures et ta wish-list."
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body class="home-page">
+    <header class="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="brand">
+          <div class="brand-badge"><span>W4</span></div>
+          <div class="brand-text">
+            <span class="brand-title">Web4Stage</span>
+            <span class="brand-subtitle">Stages &amp; candidatures</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Navigation principale">
+          <a href="index.html" class="nav-link nav-link--active">Accueil</a>
+          <a href="offres.html" class="nav-link">Offres de stage</a>
+          <a href="dashboard-etudiant.html" class="nav-link">Espace etudiant</a>
+          <a href="login.html" class="nav-link">Connexion</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a href="login.html" class="btn btn-outline">Se connecter</a>
+          <a href="offres.html" class="btn btn-primary">Voir les offres</a>
+          <button class="burger" aria-label="Ouvrir le menu mobile">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+      <div class="nav-mobile" aria-label="Navigation mobile">
+        <a href="index.html" class="nav-link nav-link--active">Accueil</a>
+        <a href="offres.html" class="nav-link">Offres de stage</a>
+        <a href="dashboard-etudiant.html" class="nav-link">Espace etudiant</a>
+        <a href="login.html" class="nav-link">Connexion</a>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="titre-hero">
+        <div>
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span>Special etudiants en recherche de stage</span>
+          </div>
+          <h1 class="hero-title" id="titre-hero">
+            Votre recherche de stage,
+            <span>au meme endroit</span>.
+          </h1>
+          <p class="hero-subtitle">
+            Retrouvez les offres, les candidatures et votre suivi dans une interface plus simple et plus claire.
+          </p>
+          <div class="hero-actions">
+            <a href="offres.html" class="btn btn-primary">Decouvrir les offres</a>
+            <a href="login.html" class="btn btn-outline">Me connecter a mon espace</a>
+          </div>
+          <div class="hero-notes">
+            <div class="hero-kpi">
+              <strong>150+ offres</strong>
+              <span>Filtrees par competences et par ville</span>
+            </div>
+            <div class="hero-kpi">
+              <strong>Suivi centralise</strong>
+              <span>Offres, candidatures et tableaux de bord</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Exemple d'offre mise en avant">
+          <div class="hero-card-inner">
+            <div class="hero-card-title">
+              <span class="pill">Coup de coeur de la semaine</span>
+              <div class="hero-card-logo">*</div>
+            </div>
+            <div>
+              <p class="hero-offer-title">Stage Developpeuse Web Fullstack</p>
+              <p class="hero-offer-company">PinkTech Studio · Paris</p>
+            </div>
+            <div class="hero-tags">
+              <span class="tag">PHP &amp; MVC</span>
+              <span class="tag">HTML / CSS / JS</span>
+              <span class="tag">UI girly</span>
+            </div>
+            <div class="hero-stats">
+              <div class="hero-avatar-row">
+                <div class="avatar-stack">
+                  <div class="avatar-circle">AM</div>
+                  <div class="avatar-circle">LN</div>
+                  <div class="avatar-circle">CL</div>
+                </div>
+                <span class="avatar-more">+ 6 etudiantes ont deja postule</span>
+              </div>
+              <div class="hero-progress">
+                <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
+                <span class="hero-progress-label">Places encore dispo · 30 % restantes</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="search-section" aria-label="Recherche rapide">
+        <form class="search-grid">
+          <div>
+            <label class="field-label" for="mot-cle">Mot-cle</label>
+            <input type="text" id="mot-cle" class="field-input" placeholder="Ex : developpeuse front, marketing..." />
+          </div>
+          <div>
+            <label class="field-label" for="ville">Ville</label>
+            <input type="text" id="ville" class="field-input" placeholder="Ex : Paris, Lyon..." />
+          </div>
+          <div>
+            <label class="field-label" for="competence">Competence principale</label>
+            <select id="competence" class="field-select">
+              <option value="">Toutes les competences</option>
+              <option value="dev-web">Developpement Web</option>
+              <option value="data">Data / BI</option>
+              <option value="marketing">Marketing digital</option>
+              <option value="reseau">Systemes &amp; Reseaux</option>
+            </select>
+          </div>
+          <div class="search-actions">
+            <button type="submit" class="btn btn-primary btn-full">Lancer la recherche</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="section" aria-labelledby="section-offres-populaires">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title" id="section-offres-populaires">Offres populaires</h2>
+            <p class="section-subtitle">Les stages les plus apprecies en ce moment.</p>
+          </div>
+          <div class="section-actions">
+            <a href="offres.html" class="link-soft">Voir toutes les offres -></a>
+          </div>
+        </div>
+
+        <div class="chip-filter-row" aria-label="Filtres rapides">
+          <button type="button" class="chip-filter chip-filter--active">Toutes</button>
+          <button type="button" class="chip-filter">Developpement web</button>
+          <button type="button" class="chip-filter">UX / UI design</button>
+          <button type="button" class="chip-filter">Marketing</button>
+          <button type="button" class="chip-filter">Autres domaines</button>
+        </div>
+
+        <div class="offers-grid" aria-label="Liste d'offres populaires">
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">PT</div>
+              <div>
+                <h3 class="offer-title">Stage Front-end React-like (sans framework)</h3>
+                <p class="offer-company">PinkTech Studio · Paris (hybride)</p>
+              </div>
+            </header>
+            <div class="offer-meta"><span>6 mois</span><span>850 EUR/mois</span><span>Debut : Avril</span></div>
+            <div class="offer-skills"><span class="tag">HTML5 / CSS3</span><span class="tag">JS Vanilla</span><span class="tag">Design system</span></div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">12 etudiantes ont deja ajoute cette offre en favori.</div>
+              <div class="offer-actions">
+                <button type="button" class="btn-icon btn-icon--wish" aria-label="Ajouter a ma wish-list">♥</button>
+                <a href="offres.html" class="btn btn-outline" style="padding-inline: 0.9rem">Voir</a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">GM</div>
+              <div>
+                <h3 class="offer-title">Assistante Marketing &amp; Social Media</h3>
+                <p class="offer-company">GlowMedia Agency · Lyon</p>
+              </div>
+            </header>
+            <div class="offer-meta"><span>4-6 mois</span><span>750 EUR/mois</span><span>Debut : Mai</span></div>
+            <div class="offer-skills"><span class="tag">Social Ads</span><span class="tag">Canva</span><span class="tag">Community management</span></div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">8 etudiantes suivent deja cette offre.</div>
+              <div class="offer-actions">
+                <button type="button" class="btn-icon btn-icon--wish" aria-label="Ajouter a ma wish-list">♥</button>
+                <a href="offres.html" class="btn btn-outline" style="padding-inline: 0.9rem">Voir</a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">DS</div>
+              <div>
+                <h3 class="offer-title">Stage Data Analyst Junior</h3>
+                <p class="offer-company">DataSpark · Nantes</p>
+              </div>
+            </header>
+            <div class="offer-meta"><span>6 mois</span><span>900 EUR/mois</span><span>Debut : Juin</span></div>
+            <div class="offer-skills"><span class="tag">SQL</span><span class="tag">Power BI</span><span class="tag">Python</span></div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">5 etudiantes ont postule cette semaine.</div>
+              <div class="offer-actions">
+                <button type="button" class="btn-icon btn-icon--wish" aria-label="Ajouter a ma wish-list">♥</button>
+                <a href="offres.html" class="btn btn-outline" style="padding-inline: 0.9rem">Voir</a>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>© 2026 · Web4Stage · Projet pedagogique CESI</span>
+        <div class="footer-links">
+          <a href="mentions-legales.html">Mentions legales</a>
+          <a href="#">Politique de confidentialite</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

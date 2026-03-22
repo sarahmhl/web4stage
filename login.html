@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web4Stage - Connexion</title>
+    <meta
+      name="description"
+      content="Connecte-toi à ton espace Web4Stage pour gérer tes candidatures, ta wish-list et suivre les offres de stage."
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="brand">
+          <div class="brand-badge">
+            <span>W4</span>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Web4Stage</span>
+            <span class="brand-subtitle">Stages &amp; candidatures</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Navigation principale">
+          <a href="index.html" class="nav-link">Accueil</a>
+          <a href="offres.html" class="nav-link">Offres de stage</a>
+          <a href="dashboard-etudiant.html" class="nav-link">Espace étudiant</a>
+          <a href="login.html" class="nav-link nav-link--active">Connexion</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a href="login.html" class="btn btn-outline">Se connecter</a>
+          <a href="offres.html" class="btn btn-primary">Voir les offres</a>
+          <button class="burger" aria-label="Ouvrir le menu mobile">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+      <div class="nav-mobile" aria-label="Navigation mobile">
+        <a href="index.html" class="nav-link">Accueil</a>
+        <a href="offres.html" class="nav-link">Offres de stage</a>
+        <a href="dashboard-etudiant.html" class="nav-link">Espace étudiant</a>
+        <a href="login.html" class="nav-link nav-link--active">Connexion</a>
+      </div>
+    </header>
+
+    <main class="auth-wrapper">
+      <section class="auth-card" aria-labelledby="titre-login">
+        <h1 class="auth-title" id="titre-login">Connexion à ton espace</h1>
+        <p class="auth-subtitle">
+          Connecte-toi avec ton adresse e-mail CESI pour accéder à tes offres, ta wish-list et
+          tes candidatures.
+        </p>
+
+        <form method="post" action="public/index.php/login">
+          <input type="hidden" name="return_to" value="login" />
+
+          <div class="form-group">
+            <label for="email">Adresse e-mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="prenom.nom@cesi.fr"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Ton mot de passe"
+              required
+            />
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+            <a href="#" class="link-soft">Mot de passe oublié ?</a>
+          </div>
+
+          <p class="auth-hint">
+            Les comptes sont gérés par les administrateurs et pilotes de promotion.
+          </p>
+          <p class="auth-hint">
+            Si tu n'as pas encore d'accès, contacte ton pilote ou un administrateur.
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>© 2026 · Web4Stage · Projet pédagogique CESI</span>
+        <div class="footer-links">
+          <a href="mentions-legales.html">Mentions légales</a>
+          <a href="#">Politique de confidentialité</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

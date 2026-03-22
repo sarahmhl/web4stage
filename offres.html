@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web4Stage - Offres de stage</title>
+    <meta
+      name="description"
+      content="Parcours toutes les offres de stage disponibles, filtre par compétence, durée, ville et ajoute tes coups de cœur à ta wish-list girly."
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="navbar-inner">
+        <a href="index.html" class="brand">
+          <div class="brand-badge">
+            <span>W4</span>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Web4Stage</span>
+            <span class="brand-subtitle">Stages &amp; candidatures</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Navigation principale">
+          <a href="index.html" class="nav-link">Accueil</a>
+          <a href="offres.html" class="nav-link nav-link--active">Offres de stage</a>
+          <a href="dashboard-etudiant.html" class="nav-link">Espace étudiant</a>
+          <a href="login.html" class="nav-link">Connexion</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a href="login.html" class="btn btn-outline">Se connecter</a>
+          <a href="offres.html" class="btn btn-primary">Voir les offres</a>
+          <button class="burger" aria-label="Ouvrir le menu mobile">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+      <div class="nav-mobile" aria-label="Navigation mobile">
+        <a href="index.html" class="nav-link">Accueil</a>
+        <a href="offres.html" class="nav-link nav-link--active">Offres de stage</a>
+        <a href="dashboard-etudiant.html" class="nav-link">Espace étudiant</a>
+        <a href="login.html" class="nav-link">Connexion</a>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <header class="section-header">
+        <div>
+          <h1 class="section-title">Toutes les offres de stage</h1>
+          <p class="section-subtitle">
+            Filtre les offres par compétence, ville, durée et ajoute celles qui te plaisent à ta
+            wish-list.
+          </p>
+        </div>
+      </header>
+
+      <section class="search-section" aria-label="Filtres d'offres">
+        <form class="search-grid">
+          <div>
+            <label class="field-label" for="mot-cle-liste">Mot-clé</label>
+            <input
+              type="text"
+              id="mot-cle-liste"
+              class="field-input"
+              placeholder="Ex : développeuse, UX, marketing..."
+            />
+          </div>
+          <div>
+            <label class="field-label" for="ville-liste">Ville</label>
+            <input
+              type="text"
+              id="ville-liste"
+              class="field-input"
+              placeholder="Ex : Bordeaux, Toulouse..."
+            />
+          </div>
+          <div>
+            <label class="field-label" for="competence-liste">Compétence</label>
+            <select id="competence-liste" class="field-select">
+              <option value="">Toutes</option>
+              <option value="dev">Développement</option>
+              <option value="design">UX / UI</option>
+              <option value="marketing">Marketing</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="duree">Durée</label>
+            <select id="duree" class="field-select">
+              <option value="">Toutes durées</option>
+              <option value="2-3">2-3 mois</option>
+              <option value="4-6">4-6 mois</option>
+              <option value="6-plus">6 mois et +</option>
+            </select>
+          </div>
+        </form>
+      </section>
+
+      <section class="section" aria-label="Liste d'offres">
+        <div class="offers-grid">
+          <!-- Cartes d'offres fictives pour le front -->
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">BT</div>
+              <div>
+                <h2 class="offer-title">Stage Développeuse Web PHP / JS</h2>
+                <p class="offer-company">BubbleTech · Bordeaux</p>
+              </div>
+            </header>
+            <div class="offer-meta">
+              <span>6 mois</span>
+              <span>900 €/mois</span>
+              <span>Publié le 02/02/2026</span>
+            </div>
+            <div class="offer-skills">
+              <span class="tag">PHP POO</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">MySQL</span>
+            </div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">8 étudiantes ont déjà postulé à cette offre.</div>
+              <div class="offer-actions">
+                <button
+                  type="button"
+                  class="btn-icon btn-icon--wish"
+                  aria-label="Ajouter à ma wish-list"
+                >
+                  ♥
+                </button>
+                <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">
+                  Détails
+                </a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">LS</div>
+              <div>
+                <h2 class="offer-title">Stage UX / UI Designer junior</h2>
+                <p class="offer-company">LovelyScreens · Lille</p>
+              </div>
+            </header>
+            <div class="offer-meta">
+              <span>4 mois</span>
+              <span>Gratification selon profil</span>
+              <span>Publié le 28/01/2026</span>
+            </div>
+            <div class="offer-skills">
+              <span class="tag">Wireframes</span>
+              <span class="tag">Figma</span>
+              <span class="tag">Design system</span>
+            </div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">Top des offres en wish-list cette semaine.</div>
+              <div class="offer-actions">
+                <button
+                  type="button"
+                  class="btn-icon btn-icon--wish"
+                  aria-label="Ajouter à ma wish-list"
+                >
+                  ♥
+                </button>
+                <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">
+                  Détails
+                </a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">CS</div>
+              <div>
+                <h2 class="offer-title">Stage Data &amp; BI</h2>
+                <p class="offer-company">CandyStats · Toulouse</p>
+              </div>
+            </header>
+            <div class="offer-meta">
+              <span>6 mois</span>
+              <span>1 000 €/mois</span>
+              <span>Publié le 20/01/2026</span>
+            </div>
+            <div class="offer-skills">
+              <span class="tag">SQL</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Reporting</span>
+            </div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">
+                4 étudiantes de ta promo ont déjà candidaté à ce stage.
+              </div>
+              <div class="offer-actions">
+                <button
+                  type="button"
+                  class="btn-icon btn-icon--wish"
+                  aria-label="Ajouter à ma wish-list"
+                >
+                  ♥
+                </button>
+                <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">
+                  Détails
+                </a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">HC</div>
+              <div>
+                <h2 class="offer-title">Stage Communication &amp; Events</h2>
+                <p class="offer-company">HappyCampus · Paris</p>
+              </div>
+            </header>
+            <div class="offer-meta">
+              <span>3 mois</span>
+              <span>600 €/mois</span>
+              <span>Publié le 15/01/2026</span>
+            </div>
+            <div class="offer-skills">
+              <span class="tag">Organisation d'événements</span>
+              <span class="tag">Communication</span>
+            </div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">Idéal pour un premier stage polyvalent.</div>
+              <div class="offer-actions">
+                <button
+                  type="button"
+                  class="btn-icon btn-icon--wish"
+                  aria-label="Ajouter à ma wish-list"
+                >
+                  ♥
+                </button>
+                <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">
+                  Détails
+                </a>
+              </div>
+            </footer>
+          </article>
+
+          <article class="offer-card">
+            <header class="offer-card-header">
+              <div class="offer-badge">SR</div>
+              <div>
+                <h2 class="offer-title">Stage Admin Systèmes &amp; Réseaux</h2>
+                <p class="offer-company">SecureRose · Nantes</p>
+              </div>
+            </header>
+            <div class="offer-meta">
+              <span>6 mois</span>
+              <span>900 €/mois</span>
+              <span>Publié le 10/01/2026</span>
+            </div>
+            <div class="offer-skills">
+              <span class="tag">Linux</span>
+              <span class="tag">Sécurité</span>
+              <span class="tag">Scripts</span>
+            </div>
+            <footer class="offer-footer">
+              <div class="offer-tagline">Suivi dédié par un pilote de promo.</div>
+              <div class="offer-actions">
+                <button
+                  type="button"
+                  class="btn-icon btn-icon--wish"
+                  aria-label="Ajouter à ma wish-list"
+                >
+                  ♥
+                </button>
+                <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">
+                  Détails
+                </a>
+              </div>
+            </footer>
+          </article>
+        </div>
+
+        <nav class="pagination" aria-label="Pagination des offres">
+          <button class="page-btn" type="button">«</button>
+          <button class="page-btn page-btn--active" type="button">1</button>
+          <button class="page-btn" type="button">2</button>
+          <button class="page-btn" type="button">3</button>
+          <button class="page-btn" type="button">»</button>
+        </nav>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>© 2026 · Web4Stage · Projet pédagogique CESI</span>
+        <div class="footer-links">
+          <a href="mentions-legales.html">Mentions légales</a>
+          <a href="#">Politique de confidentialité</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
+
