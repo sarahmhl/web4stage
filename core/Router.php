@@ -32,7 +32,9 @@ class Router
 
         if ($action === null) {
             http_response_code(404);
-            echo '<h1>Page non trouvée</h1>';
+            View::render('errors/404', [
+                'title' => 'Web4Stage - Page introuvable',
+            ]);
             return;
         }
 
@@ -53,7 +55,6 @@ class Router
 
     private function getPath(): string
     {
-        // On privilégie PATH_INFO ou REQUEST_URI pour de jolis URLs
         $path = '/';
         if (!empty($_SERVER['PATH_INFO'])) {
             $path = $_SERVER['PATH_INFO'];
@@ -63,14 +64,12 @@ class Router
 
         $path = rawurldecode($path ?: '/');
 
-        // Retire automatiquement le dossier de base (ex: /projet web/public)
         $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
         $baseDir = str_replace('\\', '/', dirname($scriptName));
         if ($baseDir !== '' && $baseDir !== '/' && str_starts_with($path, $baseDir)) {
             $path = substr($path, strlen($baseDir));
         }
 
-        // Supporte les URLs de type /index.php/route quand le rewrite Apache n'est pas actif.
         if (str_starts_with($path, '/index.php')) {
             $path = substr($path, strlen('/index.php'));
         }
@@ -91,4 +90,3 @@ class Router
         return rtrim($path, '/') ?: '/';
     }
 }
-

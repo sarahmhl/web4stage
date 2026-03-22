@@ -1,28 +1,23 @@
 -- Web4Stage seed data
 SET NAMES utf8mb4;
 
-UPDATE entreprise SET nom = 'Tech Horizon' WHERE nom = 'Tech Studio';
-UPDATE entreprise SET nom = 'Nova Media' WHERE nom = 'Growth Media';
-UPDATE entreprise SET nom = 'Cesi Digital' WHERE nom = 'Cesi Solutions';
-UPDATE entreprise SET nom = 'Altis Web' WHERE nom = 'BubbleTech';
-UPDATE entreprise SET nom = 'Studio Interface' WHERE nom = 'LovelyScreens';
-UPDATE entreprise SET nom = 'Data Insight' WHERE nom = 'CandyStats';
-UPDATE entreprise SET nom = 'Campus Events' WHERE nom = 'HappyCampus';
-UPDATE entreprise SET nom = 'Infra Secure' WHERE nom = 'SecureRose';
-
-INSERT INTO entreprise (nom, ville, secteur, site_web)
+INSERT INTO entreprise (nom, description, ville, secteur, site_web, email_contact, telephone_contact)
 VALUES
-  ('Tech Horizon', 'Paris', 'Developpement Web', NULL),
-  ('Nova Media', 'Lyon', 'Marketing Digital', NULL),
-  ('Cesi Digital', 'Remote', 'Ingenierie logicielle', NULL),
-  ('Altis Web', 'Bordeaux', 'Developpement Web', NULL),
-  ('Studio Interface', 'Lille', 'UX / UI Design', NULL),
-  ('Data Insight', 'Toulouse', 'Data / BI', NULL),
-  ('Campus Events', 'Paris', 'Communication', NULL),
-  ('Infra Secure', 'Nantes', 'Systemes & Reseaux', NULL)
+  ('Tech Horizon', 'Agence web orientée produits digitaux, intégration front-end et interfaces modernes.', 'Paris', 'Developpement Web', 'https://techhorizon.example', 'contact@techhorizon.fr', '01 84 52 11 20'),
+  ('Nova Media', 'Agence spécialisée en acquisition digitale, contenus social media et campagnes multicanales.', 'Lyon', 'Marketing Digital', 'https://novamedia.example', 'recrutement@novamedia.fr', '04 72 11 45 60'),
+  ('Cesi Digital', 'Structure orientée projets web pédagogiques, maintenance d applications et bonnes pratiques MVC.', 'Remote', 'Ingenierie logicielle', 'https://cesidigital.example', 'stages@cesidigital.example', '02 31 00 80 20'),
+  ('Altis Web', 'Studio de développement web focalisé sur les outils métiers, la maintenance et l évolutivité.', 'Bordeaux', 'Developpement Web', 'https://altisweb.example', 'jobs@altisweb.example', '05 56 44 18 22'),
+  ('Studio Interface', 'Agence UX/UI centrée sur la conception d interfaces, wireframes et design systems.', 'Lille', 'UX / UI Design', 'https://studiointerface.example', 'contact@studiointerface.example', '03 20 90 14 30'),
+  ('Data Insight', 'Cabinet data orienté reporting, tableaux de bord et valorisation des données métiers.', 'Toulouse', 'Data / BI', 'https://datainsight.example', 'talents@datainsight.example', '05 61 44 23 10'),
+  ('Campus Events', 'Organisation d événements étudiants et accompagnement communication sur des opérations campus.', 'Paris', 'Communication', 'https://campusevents.example', 'stages@campusevents.example', '01 77 11 92 50'),
+  ('Infra Secure', 'Entreprise orientée administration systèmes, supervision réseau et sécurité des postes.', 'Nantes', 'Systemes & Reseaux', 'https://infrasecure.example', 'contact@infrasecure.example', '02 40 31 88 42')
 ON DUPLICATE KEY UPDATE
+  description = VALUES(description),
   ville = VALUES(ville),
-  secteur = VALUES(secteur);
+  secteur = VALUES(secteur),
+  site_web = VALUES(site_web),
+  email_contact = VALUES(email_contact),
+  telephone_contact = VALUES(telephone_contact);
 
 -- Optional seeded accounts (password = ChangeMe123!)
 INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role)
@@ -126,7 +121,6 @@ ON DUPLICATE KEY UPDATE
   image_path = VALUES(image_path),
   statut = VALUES(statut);
 
--- Competences (id lookup by title)
 INSERT IGNORE INTO offre_competence (id_offre, libelle_competence)
 SELECT o.id_offre, c.skill
 FROM offre o
@@ -155,3 +149,86 @@ JOIN (
   UNION ALL SELECT 'Stage Admin Systemes & Reseaux', 'Securite'
   UNION ALL SELECT 'Stage Admin Systemes & Reseaux', 'Scripts'
 ) c ON c.titre = o.titre;
+
+INSERT INTO document_etudiant (id_etudiant, cv_path, lettre_type)
+SELECT
+  u.id_utilisateur,
+  'cv/lea-martin-cv.pdf',
+  'Madame, Monsieur, je souhaite rejoindre une entreprise qui me permettra de développer mes compétences web tout en découvrant un environnement de stage concret.'
+FROM utilisateur u
+WHERE u.email = 'lea.martin@viacesi.fr'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM document_etudiant d
+    WHERE d.id_etudiant = u.id_utilisateur
+  );
+
+INSERT INTO wishlist_offre (id_etudiant, id_offre)
+SELECT u.id_utilisateur, o.id_offre
+FROM utilisateur u
+JOIN offre o ON o.titre IN (
+  'Stage Developpeur Front-end',
+  'Stage Developpeur Web PHP / JS',
+  'Stage Marketing digital'
+)
+WHERE u.email = 'lea.martin@viacesi.fr'
+ON DUPLICATE KEY UPDATE
+  created_at = created_at;
+
+INSERT INTO candidature (id_offre, id_etudiant, statut, commentaire, lettre_motivation, cv_path)
+SELECT
+  o.id_offre,
+  u.id_utilisateur,
+  c.statut,
+  c.commentaire,
+  c.lettre_motivation,
+  'cv/lea-martin-cv.pdf'
+FROM utilisateur u
+JOIN (
+  SELECT 'Stage Developpeur Front-end' AS titre, 'ENVOYEE' AS statut, 'Candidature envoyee cette semaine apres mise a jour du CV.' AS commentaire, 'Je souhaite contribuer a la mise en place de composants front-end modernes et continuer a progresser sur JavaScript.' AS lettre_motivation
+  UNION ALL
+  SELECT 'Stage Developpeur PHP / MVC', 'ENTRETIEN', 'Entretien prevu avec l equipe technique.', 'Votre offre PHP / MVC correspond a mon projet de stage et a mes competences en architecture web.'
+  UNION ALL
+  SELECT 'Stage Marketing digital', 'EN_REVIEW', 'Retour attendu sous quelques jours.', 'Je suis interessee par l aspect contenu digital et par le suivi des campagnes de communication.'
+) c
+JOIN offre o ON o.titre = c.titre
+WHERE u.email = 'lea.martin@viacesi.fr'
+ON DUPLICATE KEY UPDATE
+  statut = VALUES(statut),
+  commentaire = VALUES(commentaire),
+  lettre_motivation = VALUES(lettre_motivation),
+  cv_path = VALUES(cv_path);
+
+INSERT INTO avis_etudiant (id_etudiant, note, commentaire)
+SELECT u.id_utilisateur, seed.note, seed.commentaire
+FROM utilisateur u
+JOIN (
+  SELECT 5 AS note, 'La plateforme rend la recherche de stage beaucoup plus claire, surtout pour suivre les candidatures deja envoyees.' AS commentaire
+  UNION ALL
+  SELECT 4, 'Les fiches d offres sont faciles a lire et j aime pouvoir garder mes favoris au meme endroit.'
+  UNION ALL
+  SELECT 5, 'Le suivi avec le pilote et les informations entreprises aident vraiment a s organiser.'
+) seed
+WHERE u.email = 'lea.martin@viacesi.fr'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM avis_etudiant a
+    WHERE a.id_etudiant = u.id_utilisateur
+      AND a.commentaire = seed.commentaire
+  );
+
+INSERT INTO evaluation_entreprise (id_entreprise, id_etudiant, note, commentaire)
+SELECT e.id_entreprise, u.id_utilisateur, seed.note, seed.commentaire
+FROM utilisateur u
+JOIN (
+  SELECT 'Tech Horizon' AS entreprise, 5 AS note, 'Processus de candidature clair, retour rapide et mission bien expliquee.' AS commentaire
+  UNION ALL
+  SELECT 'Nova Media', 4, 'Bonne presentation de l offre et equipe disponible pendant les echanges.'
+  UNION ALL
+  SELECT 'Cesi Digital', 5, 'Entreprise adaptee pour un stage web avec un cadrage pedagogique rassurant.'
+) seed
+JOIN entreprise e ON e.nom = seed.entreprise
+WHERE u.email = 'lea.martin@viacesi.fr'
+ON DUPLICATE KEY UPDATE
+  note = VALUES(note),
+  commentaire = VALUES(commentaire);

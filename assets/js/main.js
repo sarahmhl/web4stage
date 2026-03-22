@@ -24,15 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Démo : gestion des coeurs de wish-list côté front uniquement
-  document.querySelectorAll(".btn-icon--wish").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      btn.classList.toggle("active");
-      const active = btn.classList.contains("active");
-      btn.setAttribute("aria-pressed", active ? "true" : "false");
-    });
-  });
-
   if (canUseTilt) {
     const tiltTargets = document.querySelectorAll(
       ".hero-card, .offer-card, .side-card, .dash-card, .entry-card, .entry-reboot-panel, .btn-primary"
@@ -61,6 +52,4 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-
 });
-

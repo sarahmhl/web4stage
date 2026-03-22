@@ -1,98 +1,62 @@
 <header class="dashboard-header">
   <div class="dashboard-title-block">
-    <span class="dashboard-kicker">Tableau de bord etudiant</span>
+    <span class="dashboard-kicker">Tableau de bord étudiant</span>
     <div class="dashboard-heading-row">
       <h1 class="dashboard-title">Bienvenue, <?= htmlspecialchars($studentName, ENT_QUOTES) ?></h1>
     </div>
-    <span class="pill-role pill-role--inline">Etudiant</span>
+    <span class="pill-role pill-role--inline">Étudiant</span>
     <p class="dashboard-subtitle">
       Suivez vos offres, vos candidatures, vos documents et vos retours directement depuis votre espace.
     </p>
   </div>
-  <span class="pill-role">Rôle : Étudiant</span>
 </header>
 
 <section class="dashboard-grid" aria-label="Résumé de votre activité">
-  <article class="dash-card" aria-label="Résumé de la recherche">
+  <article class="dash-card">
     <header class="dash-card-header">
-      <span class="dash-card-title">Vue d'ensemble</span>
-      <span class="pill-small">Objectif : 1 stage validé</span>
+      <span class="dash-card-title">Vue d ensemble</span>
+      <span class="pill-small">Recherche en cours</span>
     </header>
     <ul class="list-compact">
-      <li>
-        <span>Offres en favoris</span>
-        <strong><?= (int) $stats['wishlist'] ?></strong>
-      </li>
-      <li>
-        <span>Candidatures envoyées</span>
-        <strong><?= (int) $stats['applications'] ?></strong>
-      </li>
-      <li>
-        <span>Entretiens prévus</span>
-        <strong><?= (int) $stats['interviews'] ?></strong>
-      </li>
+      <li><span>Offres en favoris</span><strong><?= (int) $stats['wishlist'] ?></strong></li>
+      <li><span>Candidatures envoyées</span><strong><?= (int) $stats['applications'] ?></strong></li>
+      <li><span>Entretiens prévus</span><strong><?= (int) $stats['interviews'] ?></strong></li>
     </ul>
   </article>
 
-  <article class="dash-card" aria-label="Avancement de la recherche">
+  <article class="dash-card">
     <header class="dash-card-header">
-      <span class="dash-card-title">Avancement</span>
-      <span class="pill-small">Recommandé : 8 à 10 candidatures</span>
-    </header>
-    <div class="hero-progress">
-      <div class="hero-progress-bar">
-        <?php
-          $target = 8;
-          $current = (int) $stats['applications'];
-          $percent = max(0, min(100, (int) round($current / $target * 100)));
-        ?>
-        <div class="hero-progress-fill" style="width: <?= $percent ?>%"></div>
-      </div>
-      <span class="hero-progress-label">
-        <?= (int) $stats['applications'] ?> candidatures sur <?= $target ?>
-      </span>
-    </div>
-  </article>
-
-  <article class="dash-card" aria-label="Checklist du moment">
-    <header class="dash-card-header">
-      <span class="dash-card-title">Checklist du moment</span>
-      <span class="pill-small">À faire</span>
+      <span class="dash-card-title">Statuts</span>
+      <span class="pill-small">Suivi</span>
     </header>
     <ul class="list-compact">
-      <li>
-        <span>Mettre à jour le CV</span>
-        <span class="badge-status badge-status--accepted">Prêt</span>
-      </li>
-      <li>
-        <span>Finaliser la lettre de motivation</span>
-        <span class="badge-status badge-status--pending">À revoir</span>
-      </li>
-      <li>
-        <span>Compléter le profil étudiant</span>
-        <span class="badge-status">85%</span>
-      </li>
+      <li><span>En attente</span><strong><?= (int) $stats['pending'] ?></strong></li>
+      <li><span>Acceptées</span><strong><?= (int) $stats['accepted'] ?></strong></li>
+      <li><span>Refusées</span><strong><?= (int) $stats['rejected'] ?></strong></li>
     </ul>
   </article>
 
-  <article class="dash-card" aria-label="Mon dossier candidat">
+  <article class="dash-card">
     <header class="dash-card-header">
-      <span class="dash-card-title">Mon dossier candidat</span>
+      <span class="dash-card-title">Mon dossier</span>
       <span class="pill-small">Documents</span>
     </header>
     <ul class="list-compact">
-      <li>
-        <span>CV principal</span>
-        <strong>Version mars 2026</strong>
-      </li>
-      <li>
-        <span>Lettre type</span>
-        <strong>2 modèles</strong>
-      </li>
-      <li>
-        <span>Portfolio / GitHub</span>
-        <strong>Ajouté</strong>
-      </li>
+      <li><span>CV enregistré</span><strong><?= !empty($documents['cv_path']) ? 'Oui' : 'À ajouter' ?></strong></li>
+      <li><span>Lettre type</span><strong><?= !empty($documents['lettre_type']) ? 'Disponible' : 'À compléter' ?></strong></li>
+      <li><span>Accès rapide</span><strong><a href="<?= htmlspecialchars(\Core\Url::route('etudiant/documents'), ENT_QUOTES) ?>">Mettre à jour</a></strong></li>
+    </ul>
+  </article>
+
+  <article class="dash-card">
+    <header class="dash-card-header">
+      <span class="dash-card-title">Mon espace</span>
+      <span class="pill-small">Actions</span>
+    </header>
+    <ul class="list-compact">
+      <li><span>Voir la wish-list</span><strong><a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>">Ouvrir</a></strong></li>
+      <li><span>Voir mes candidatures</span><strong><a href="<?= htmlspecialchars(\Core\Url::route('candidatures'), ENT_QUOTES) ?>">Ouvrir</a></strong></li>
+      <li><span>Parcourir les offres</span><strong><a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>">Ouvrir</a></strong></li>
     </ul>
   </article>
 </section>
@@ -101,38 +65,30 @@
   <div class="section-header">
     <div>
       <h2 class="section-title" id="section-actions-etudiant">Actions rapides</h2>
-      <p class="section-subtitle">
-        Les raccourcis utiles pour continuer votre recherche sans perdre de temps.
-      </p>
+      <p class="section-subtitle">Les raccourcis utiles pour continuer votre recherche sans perdre de temps.</p>
     </div>
   </div>
 
-  <div class="action-grid" aria-label="Actions rapides étudiant">
+  <div class="action-grid">
     <article class="action-card">
       <span class="pill-small">Retour</span>
       <h3 class="action-card-title">Donner son avis sur la formation</h3>
-      <p class="action-card-text">
-        Partagez votre ressenti sur l'accompagnement, les ateliers et la préparation au stage.
-      </p>
-      <a href="#" class="btn btn-outline">Donner mon avis</a>
+      <p class="action-card-text">Ajoutez un avis sur l accompagnement et consultez les retours déjà publiés.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('etudiant/avis'), ENT_QUOTES) ?>" class="btn btn-outline">Donner mon avis</a>
     </article>
 
     <article class="action-card">
       <span class="pill-small">Évaluation</span>
       <h3 class="action-card-title">Évaluer une entreprise</h3>
-      <p class="action-card-text">
-        Laissez une appréciation après entretien ou après stage pour aider les autres étudiants.
-      </p>
-      <a href="#" class="btn btn-outline">Ajouter un avis</a>
+      <p class="action-card-text">Partagez votre ressenti après un échange ou une expérience de stage.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('etudiant/entreprises/evaluer'), ENT_QUOTES) ?>" class="btn btn-outline">Ajouter un avis</a>
     </article>
 
     <article class="action-card">
       <span class="pill-small">Documents</span>
-      <h3 class="action-card-title">Mettre à jour CV et LM</h3>
-      <p class="action-card-text">
-        Gardez un dossier propre et prêt à envoyer pour vos prochaines candidatures.
-      </p>
-      <a href="#" class="btn btn-outline">Mettre à jour</a>
+      <h3 class="action-card-title">Mettre à jour CV et lettre</h3>
+      <p class="action-card-text">Préparez vos prochains envois avec un dossier candidat toujours prêt.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('etudiant/documents'), ENT_QUOTES) ?>" class="btn btn-outline">Mettre à jour</a>
     </article>
   </div>
 </section>
@@ -141,178 +97,85 @@
   <div class="section-header">
     <div>
       <h2 class="section-title" id="section-wishlist">Offres en favoris</h2>
-      <p class="section-subtitle">
-        Offres enregistrées pour suivi et candidature.
-      </p>
+      <p class="section-subtitle">Offres enregistrées pour suivi et candidature.</p>
     </div>
     <div class="section-actions">
-      <a href="offres" class="link-soft">Ajouter des offres -></a>
+      <a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>" class="link-soft">Voir toute la wish-list -></a>
     </div>
   </div>
 
-  <div class="offers-grid" aria-label="Offres en favoris">
-    <article class="offer-card">
-      <header class="offer-card-header">
-        <div class="offer-badge">PT</div>
-        <div>
-          <h3 class="offer-title">Stage Développeur Web Fullstack</h3>
-          <p class="offer-company">Tech Studio · Paris</p>
-        </div>
-      </header>
-      <div class="offer-meta">
-        <span>6 mois</span>
-        <span>1 000 EUR/mois</span>
-        <span>Début : Avril</span>
-      </div>
-      <div class="offer-skills">
-        <span class="tag">PHP / MVC</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">Qualité logicielle</span>
-      </div>
-      <footer class="offer-footer">
-        <div class="offer-tagline">Ajoutée il y a 3 jours.</div>
-        <div class="offer-actions">
-          <button type="button" class="btn-icon btn-icon--wish active" aria-label="Retirer des favoris">♥</button>
-          <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">Détails</a>
-        </div>
-      </footer>
-    </article>
-
-    <article class="offer-card">
-      <header class="offer-card-header">
-        <div class="offer-badge">DW</div>
-        <div>
-          <h3 class="offer-title">Stage Data Analyst Junior</h3>
-          <p class="offer-company">DataWorks · Nantes</p>
-        </div>
-      </header>
-      <div class="offer-meta">
-        <span>5 mois</span>
-        <span>900 EUR/mois</span>
-        <span>Début : Mai</span>
-      </div>
-      <div class="offer-skills">
-        <span class="tag">SQL</span>
-        <span class="tag">Power BI</span>
-        <span class="tag">Analyse</span>
-      </div>
-      <footer class="offer-footer">
-        <div class="offer-tagline">Entreprise très consultée cette semaine.</div>
-        <div class="offer-actions">
-          <button type="button" class="btn-icon btn-icon--wish active" aria-label="Retirer des favoris">♥</button>
-          <a href="#" class="btn btn-outline" style="padding-inline: 0.9rem">Détails</a>
-        </div>
-      </footer>
-    </article>
-  </div>
+  <?php if (!empty($wishlistOffers)): ?>
+    <div class="offers-grid">
+      <?php foreach ($wishlistOffers as $offer): ?>
+        <article class="offer-card">
+          <header class="offer-card-header">
+            <div class="offer-badge"><?= htmlspecialchars((string) $offer['badge'], ENT_QUOTES) ?></div>
+            <div>
+              <h3 class="offer-title"><?= htmlspecialchars((string) $offer['title'], ENT_QUOTES) ?></h3>
+              <p class="offer-company"><?= htmlspecialchars((string) $offer['company'], ENT_QUOTES) ?></p>
+            </div>
+          </header>
+          <div class="offer-meta">
+            <span><?= htmlspecialchars((string) $offer['duration'], ENT_QUOTES) ?></span>
+            <span><?= htmlspecialchars((string) $offer['salary'], ENT_QUOTES) ?></span>
+          </div>
+          <div class="offer-skills">
+            <?php foreach (($offer['skills'] ?? []) as $skill): ?>
+              <span class="tag"><?= htmlspecialchars((string) $skill, ENT_QUOTES) ?></span>
+            <?php endforeach; ?>
+          </div>
+          <footer class="offer-footer">
+            <div class="offer-tagline"><?= htmlspecialchars((string) $offer['tagline'], ENT_QUOTES) ?></div>
+            <div class="offer-actions">
+              <form method="post" action="<?= htmlspecialchars(\Core\Url::route('wishlist/toggle'), ENT_QUOTES) ?>">
+                <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $csrfToken, ENT_QUOTES) ?>" />
+                <input type="hidden" name="offer_id" value="<?= (int) $offer['id'] ?>" />
+                <input type="hidden" name="redirect_to" value="dashboard-etudiant" />
+                <button type="submit" class="btn-icon btn-icon--wish active" aria-label="Retirer des favoris">♥</button>
+              </form>
+              <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $offer['id']), ENT_QUOTES) ?>" class="btn btn-outline">Détails</a>
+            </div>
+          </footer>
+        </article>
+      <?php endforeach; ?>
+    </div>
+  <?php else: ?>
+    <div class="dash-card">
+      <p class="action-card-text">Aucune offre n est encore enregistrée dans votre wish-list.</p>
+    </div>
+  <?php endif; ?>
 </section>
 
 <section class="section" aria-labelledby="section-candidatures">
   <div class="section-header">
     <div>
-      <h2 class="section-title" id="section-candidatures">Candidatures</h2>
-      <p class="section-subtitle">
-        Suivez l'état de vos candidatures et les prochaines actions.
-      </p>
+      <h2 class="section-title" id="section-candidatures">Candidatures récentes</h2>
+      <p class="section-subtitle">Suivez les dernières démarches envoyées depuis votre espace.</p>
+    </div>
+    <div class="section-actions">
+      <a href="<?= htmlspecialchars(\Core\Url::route('candidatures'), ENT_QUOTES) ?>" class="link-soft">Voir toutes les candidatures -></a>
     </div>
   </div>
 
-  <section class="page-layout" aria-label="Candidatures et détails">
-    <aside class="side-card">
-      <h3 class="side-card-title">Résumé rapide</h3>
-      <p class="side-card-text">
-        Chaque candidature apparaît ici avec son statut de traitement.
-      </p>
-      <div class="stat-row">
-        <div class="stat-pill">
-          <span>En attente</span>
-          <strong><?= (int) $stats['pending'] ?></strong>
-        </div>
-        <div class="stat-pill">
-          <span>Entretiens / validées</span>
-          <strong><?= (int) $stats['accepted'] ?></strong>
-        </div>
-        <div class="stat-pill">
-          <span>Refusées</span>
-          <strong><?= (int) $stats['rejected'] ?></strong>
-        </div>
-      </div>
-    </aside>
-
-    <article class="dash-card" aria-label="Liste détaillée des candidatures">
-      <header class="dash-card-header">
-        <span class="dash-card-title">Détail des candidatures</span>
-        <span class="pill-small">CV et LM associés</span>
-      </header>
-      <ul class="list-compact">
-        <li>
-          <span>Stage Dev Web PHP / JS · BubbleTech</span>
-          <span class="badge-status badge-status--pending">En attente</span>
-        </li>
-        <li>
-          <span>Stage UX / UI Designer · Studio Interfaces</span>
-          <span class="badge-status badge-status--accepted">Entretien prévu</span>
-        </li>
-        <li>
-          <span>Stage Data &amp; BI · DataWorks</span>
-          <span class="badge-status badge-status--pending">En cours d'étude</span>
-        </li>
-      </ul>
-    </article>
-  </section>
-</section>
-
-<section class="section" aria-labelledby="section-suivi-etudiant">
-  <div class="section-header">
-    <div>
-      <h2 class="section-title" id="section-suivi-etudiant">Suivi personnel</h2>
-      <p class="section-subtitle">
-        Les retours et éléments utiles pour rester organisé pendant la recherche.
-      </p>
+  <?php if (!empty($applications)): ?>
+    <div class="dashboard-grid">
+      <?php foreach ($applications as $application): ?>
+        <article class="dash-card">
+          <header class="dash-card-header">
+            <span class="dash-card-title"><?= htmlspecialchars((string) $application['titre'], ENT_QUOTES) ?></span>
+            <span class="pill-small"><?= htmlspecialchars((string) $application['statut'], ENT_QUOTES) ?></span>
+          </header>
+          <ul class="list-compact">
+            <li><span>Entreprise</span><strong><?= htmlspecialchars((string) $application['entreprise_nom'], ENT_QUOTES) ?></strong></li>
+            <li><span>CV</span><strong><?= htmlspecialchars((string) ($application['cv_path'] ?: 'Non renseigné'), ENT_QUOTES) ?></strong></li>
+          </ul>
+          <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $application['id_offre']), ENT_QUOTES) ?>" class="btn btn-outline">Voir l offre</a>
+        </article>
+      <?php endforeach; ?>
     </div>
-  </div>
-
-  <div class="dashboard-grid" aria-label="Suivi personnel étudiant">
-    <article class="dash-card">
-      <header class="dash-card-header">
-        <span class="dash-card-title">Avis et évaluations</span>
-        <span class="pill-small">À compléter</span>
-      </header>
-      <ul class="list-compact">
-        <li>
-          <span>Avis sur la formation</span>
-          <span class="badge-status badge-status--pending">À remplir</span>
-        </li>
-        <li>
-          <span>Évaluation entreprise après entretien</span>
-          <span class="badge-status">Disponible</span>
-        </li>
-        <li>
-          <span>Bilan de stage final</span>
-          <span class="badge-status badge-status--pending">Plus tard</span>
-        </li>
-      </ul>
-    </article>
-
-    <article class="dash-card">
-      <header class="dash-card-header">
-        <span class="dash-card-title">Agenda de la semaine</span>
-        <span class="pill-small">Planning</span>
-      </header>
-      <ul class="list-compact">
-        <li>
-          <span>Lundi · Relecture LM DataWorks</span>
-          <strong>18h00</strong>
-        </li>
-        <li>
-          <span>Mercredi · Point avec le pilote</span>
-          <strong>10h30</strong>
-        </li>
-        <li>
-          <span>Vendredi · Entretien Studio Interfaces</span>
-          <strong>14h00</strong>
-        </li>
-      </ul>
-    </article>
-  </div>
+  <?php else: ?>
+    <div class="dash-card">
+      <p class="action-card-text">Aucune candidature n a encore été envoyée.</p>
+    </div>
+  <?php endif; ?>
 </section>

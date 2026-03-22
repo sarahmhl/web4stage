@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Core;
 
 use App\Models\User;
+use Core\View;
 
 class Auth
 {
@@ -62,10 +63,18 @@ class Auth
 
     public static function requireRole(string $role): void
     {
-        if (!self::checkRole($role)) {
+        if (!self::check()) {
             $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
             http_response_code(302);
             header('Location: ' . rtrim($scriptName, '/') . '/login');
+            exit;
+        }
+
+        if (!self::checkRole($role)) {
+            http_response_code(403);
+            View::render('errors/403', [
+                'title' => 'Web4Stage - Accès refusé',
+            ]);
             exit;
         }
     }

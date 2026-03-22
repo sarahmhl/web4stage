@@ -4,28 +4,61 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Application;
+use App\Models\Company;
 use App\Models\Offer;
+use App\Models\StudentFeedback;
+use App\Models\User;
 use Core\Auth;
 use Core\Security;
 use Core\View;
 
-class PilotController
+class PilotController extends BaseController
 {
     public function dashboard(): void
     {
         Auth::requireRole(Auth::ROLE_PILOTE);
 
+        $students = [];
+        $applications = [];
+        $companies = [];
+        $feedbacks = [];
         $stats = [
-            'students' => 42,
-            'applications' => 58,
-            'interviews' => 11,
-            'companies' => 18,
+            'students' => 0,
+            'applications' => 0,
+            'interviews' => 0,
+            'companies' => 0,
+            'feedbacks' => 0,
         ];
+
+        try {
+            $students = Application::studentsToFollowUp();
+            $applications = Application::listForPilot();
+            $companies = Application::companiesToFollowUp();
+            $feedbacks = StudentFeedback::all();
+
+            $stats = [
+                'students' => count(User::all(Auth::ROLE_ETUDIANT)),
+                'applications' => count($applications),
+                'interviews' => count(array_filter(
+                    $applications,
+                    static fn (array $application): bool => (string) ($application['statut'] ?? '') === 'ENTRETIEN'
+                )),
+                'companies' => count(Company::allWithStats()),
+                'feedbacks' => count($feedbacks),
+            ];
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Certaines données pilote n ont pas pu être chargées.');
+        }
 
         View::render('pilot/dashboard', [
             'title' => 'Web4Stage - Espace pilote',
             'pilotName' => Auth::user()['prenom'] ?? 'Pilote',
             'stats' => $stats,
+            'recentApplications' => array_slice($applications, 0, 4),
+            'studentsToFollowUp' => array_slice($students, 0, 4),
+            'companiesToFollowUp' => array_slice($companies, 0, 4),
+            'latestFeedbacks' => array_slice($feedbacks, 0, 4),
         ]);
     }
 
@@ -33,10 +66,8 @@ class PilotController
     {
         Auth::requireRole(Auth::ROLE_PILOTE);
 
-        $flashError = $_SESSION['pilot_offer_error'] ?? null;
-        $flashSuccess = $_SESSION['pilot_offer_success'] ?? null;
         $oldInput = $_SESSION['pilot_offer_old'] ?? null;
-        unset($_SESSION['pilot_offer_error'], $_SESSION['pilot_offer_success'], $_SESSION['pilot_offer_old']);
+        unset($_SESSION['pilot_offer_old']);
 
         View::render('pilot/offers-create', [
             'title' => 'Web4Stage - Ajouter une offre',
@@ -44,8 +75,8 @@ class PilotController
             'companies' => Offer::companyOptions(),
             'imageOptions' => $this->imageOptions(),
             'csrfToken' => Security::generateCsrfToken(),
-            'error' => is_string($flashError) ? $flashError : null,
-            'success' => is_string($flashSuccess) ? $flashSuccess : null,
+            'error' => null,
+            'success' => null,
             'old' => is_array($oldInput) ? $oldInput : [],
         ]);
     }
@@ -55,7 +86,7 @@ class PilotController
         Auth::requireRole(Auth::ROLE_PILOTE);
 
         if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
-            $_SESSION['pilot_offer_error'] = 'Session invalide. Merci de reessayer.';
+            $this->flash('error', 'Session invalide. Merci de réessayer.');
             $this->redirect('/pilote/offres/ajouter');
         }
 
@@ -64,19 +95,73 @@ class PilotController
 
         $error = $this->validateOfferInput($data);
         if ($error !== null) {
-            $_SESSION['pilot_offer_error'] = $error;
+            $this->flash('error', $error);
             $this->redirect('/pilote/offres/ajouter');
         }
 
         try {
             Offer::create($data);
-            $_SESSION['pilot_offer_success'] = 'La nouvelle offre de stage a bien ete ajoutee.';
             unset($_SESSION['pilot_offer_old']);
+            $this->flash('success', 'L offre de stage a bien été ajoutée.');
         } catch (\Throwable $e) {
-            $_SESSION['pilot_offer_error'] = 'Impossible d enregistrer l offre pour le moment.';
+            $this->flash('error', 'Impossible d enregistrer l offre pour le moment.');
         }
 
         $this->redirect('/pilote/offres/ajouter');
+    }
+
+    public function reviews(): void
+    {
+        Auth::requireRole(Auth::ROLE_PILOTE);
+
+        $feedbacks = [];
+        try {
+            $feedbacks = StudentFeedback::all();
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de charger les avis étudiants.');
+        }
+
+        View::render('pilot/reviews', [
+            'title' => 'Web4Stage - Retours étudiants',
+            'feedbacks' => $feedbacks,
+        ]);
+    }
+
+    public function followUps(): void
+    {
+        Auth::requireRole(Auth::ROLE_PILOTE);
+
+        $students = [];
+        $applications = [];
+        try {
+            $students = Application::studentsToFollowUp();
+            $applications = Application::listForPilot();
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de charger le suivi des étudiants.');
+        }
+
+        View::render('pilot/follow-up', [
+            'title' => 'Web4Stage - Relances et suivi',
+            'students' => $students,
+            'applications' => $applications,
+        ]);
+    }
+
+    public function companies(): void
+    {
+        Auth::requireRole(Auth::ROLE_PILOTE);
+
+        $companies = [];
+        try {
+            $companies = Company::allWithStats();
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de charger les entreprises.');
+        }
+
+        View::render('pilot/companies', [
+            'title' => 'Web4Stage - Entreprises partenaires',
+            'companies' => $companies,
+        ]);
     }
 
     /**
@@ -106,7 +191,7 @@ class PilotController
     private function validateOfferInput(array $data): ?string
     {
         if ((int) $data['id_entreprise'] <= 0) {
-            return 'Merci de selectionner une entreprise.';
+            return 'Merci de sélectionner une entreprise.';
         }
 
         if ((string) $data['titre'] === '') {
@@ -122,11 +207,11 @@ class PilotController
         }
 
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $data['date_offre'])) {
-            return 'La date de publication doit etre au format AAAA-MM-JJ.';
+            return 'La date de publication doit être au format AAAA-MM-JJ.';
         }
 
         if ($data['duree_mois'] !== null && (int) $data['duree_mois'] <= 0) {
-            return 'La duree doit etre superieure a zero.';
+            return 'La durée doit être supérieure à zéro.';
         }
 
         return null;
@@ -138,26 +223,12 @@ class PilotController
     private function imageOptions(): array
     {
         return [
-            ['file' => 'devfontend.jpeg', 'label' => 'Developpement front-end'],
-            ['file' => 'devphp.jpeg', 'label' => 'Developpement PHP / back-end'],
-            ['file' => 'devweb.jpeg', 'label' => 'Developpement web general'],
+            ['file' => 'devfontend.jpeg', 'label' => 'Développement front-end'],
+            ['file' => 'devphp.jpeg', 'label' => 'Développement PHP / back-end'],
+            ['file' => 'devweb.jpeg', 'label' => 'Développement web général'],
             ['file' => 'design.jpg', 'label' => 'Design / UX / UI'],
             ['file' => 'Marketing.jpeg', 'label' => 'Marketing / communication'],
             ['file' => 'default.svg', 'label' => 'Illustration neutre'],
         ];
-    }
-
-    private function buildUrl(string $path): string
-    {
-        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
-        $cleanPath = '/' . ltrim($path, '/');
-
-        return str_replace(' ', '%20', rtrim($scriptName, '/') . $cleanPath);
-    }
-
-    private function redirect(string $path): void
-    {
-        header('Location: ' . $this->buildUrl($path));
-        exit;
     }
 }

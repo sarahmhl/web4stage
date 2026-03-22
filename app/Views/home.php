@@ -130,11 +130,11 @@
       Web4Stage rassemble les offres, les candidatures et le suivi dans une interface simple et plus claire.
     </p>
     <div class="hero-actions">
-      <a href="offres" class="btn btn-primary">
+      <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="btn btn-primary">
         Consulter les offres
       </a>
       <?php if (!$isLoggedIn): ?>
-        <a href="entry" class="btn btn-outline">
+        <a href="<?= htmlspecialchars(\Core\Url::route('entry'), ENT_QUOTES) ?>" class="btn btn-outline">
           Se connecter
         </a>
       <?php endif; ?>
@@ -163,17 +163,17 @@
       </p>
 
       <div class="home-summary-list">
-        <a href="offres" class="home-summary-item">
+        <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="home-summary-item">
           <strong>Parcourir les offres</strong>
           <span>Consulter rapidement les stages disponibles.</span>
         </a>
         <?php if (!$isLoggedIn): ?>
-          <a href="entry" class="home-summary-item">
+          <a href="<?= htmlspecialchars(\Core\Url::route('entry'), ENT_QUOTES) ?>" class="home-summary-item">
             <strong>Se connecter</strong>
             <span>Acceder directement a son espace personnel.</span>
           </a>
         <?php endif; ?>
-        <a href="mentions-legales" class="home-summary-item">
+        <a href="<?= htmlspecialchars(\Core\Url::route('mentions-legales'), ENT_QUOTES) ?>" class="home-summary-item">
           <strong>Infos du projet</strong>
           <span>Voir le cadre pedagogique et les mentions legales.</span>
         </a>
@@ -229,12 +229,13 @@
 <?php endif; ?>
 
 <section class="search-section search-section--compact" aria-label="Recherche rapide">
-  <form class="search-grid">
+  <form method="get" action="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="search-grid">
     <div>
       <label class="field-label" for="mot-cle">Mot-clé</label>
       <input
         type="text"
         id="mot-cle"
+        name="keyword"
         class="field-input"
         placeholder="Ex : développeur front, marketing..."
       />
@@ -244,13 +245,14 @@
       <input
         type="text"
         id="ville"
+        name="city"
         class="field-input"
         placeholder="Ex : Paris, Lyon..."
       />
     </div>
     <div>
       <label class="field-label" for="competence">Compétence principale</label>
-      <select id="competence" class="field-select">
+      <select id="competence" name="skill" class="field-select">
         <option value="">Toutes les compétences</option>
         <option value="dev-web">Développement Web</option>
         <option value="data">Data / BI</option>
@@ -273,7 +275,7 @@
       </p>
     </div>
     <div class="section-actions">
-      <a href="offres" class="link-soft">Voir toutes les offres -></a>
+      <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="link-soft">Voir toutes les offres -></a>
     </div>
   </div>
 
@@ -314,14 +316,7 @@
             <?= htmlspecialchars($offer['tagline'], ENT_QUOTES) ?>
           </div>
           <div class="offer-actions">
-            <button
-              type="button"
-              class="btn-icon btn-icon--wish"
-              aria-label="Ajouter aux favoris"
-            >
-              ♥
-            </button>
-            <a href="offres" class="btn btn-outline" style="padding-inline: 0.9rem">
+            <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) ($offer['id'] ?? 0)), ENT_QUOTES) ?>" class="btn btn-outline" style="padding-inline: 0.9rem">
               Voir
             </a>
           </div>

@@ -4,28 +4,58 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Company;
+use App\Models\CompanyReview;
 use App\Models\Offer;
+use App\Models\StudentFeedback;
+use App\Models\User;
 use Core\Auth;
 use Core\Security;
 use Core\View;
 
-class AdminController
+class AdminController extends BaseController
 {
     public function dashboard(): void
     {
         Auth::requireRole(Auth::ROLE_ADMIN);
 
+        $users = [];
+        $offers = [];
+        $companies = [];
+        $feedbacks = [];
+        $companyReviews = [];
         $stats = [
-            'users' => 126,
-            'offers' => 37,
-            'companies' => 24,
-            'pendingActions' => 5,
+            'users' => 0,
+            'offers' => 0,
+            'companies' => 0,
+            'pendingActions' => 0,
         ];
+
+        try {
+            $users = User::all();
+            $offers = Offer::allForManagement();
+            $companies = Company::allWithStats();
+            $feedbacks = StudentFeedback::all();
+            $companyReviews = CompanyReview::all();
+
+            $stats = [
+                'users' => count($users),
+                'offers' => count($offers),
+                'companies' => count($companies),
+                'pendingActions' => count($feedbacks) + count($companyReviews),
+            ];
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Certaines données d administration n ont pas pu être chargées.');
+        }
 
         View::render('admin/dashboard', [
             'title' => 'Web4Stage - Administration',
             'adminName' => Auth::user()['prenom'] ?? 'Administrateur',
             'stats' => $stats,
+            'users' => array_slice($users, 0, 5),
+            'offers' => array_slice($offers, 0, 5),
+            'feedbacks' => array_slice($feedbacks, 0, 4),
+            'companyReviews' => array_slice($companyReviews, 0, 4),
         ]);
     }
 
@@ -34,9 +64,9 @@ class AdminController
         Auth::requireRole(Auth::ROLE_ADMIN);
 
         $offers = Offer::allForManagement();
-        $selectedOfferId = max(1, (int) ($_GET['id'] ?? 0));
+        $selectedOfferId = max(0, (int) ($_GET['id'] ?? 0));
 
-        if ($selectedOfferId <= 0 && $offers !== []) {
+        if ($selectedOfferId === 0 && $offers !== []) {
             $selectedOfferId = (int) ($offers[0]['id_offre'] ?? 0);
         }
 
@@ -46,10 +76,8 @@ class AdminController
             $selectedOffer = $selectedOfferId > 0 ? Offer::findForEdit($selectedOfferId) : null;
         }
 
-        $flashError = $_SESSION['admin_offer_error'] ?? null;
-        $flashSuccess = $_SESSION['admin_offer_success'] ?? null;
         $oldInput = $_SESSION['admin_offer_old'] ?? null;
-        unset($_SESSION['admin_offer_error'], $_SESSION['admin_offer_success'], $_SESSION['admin_offer_old']);
+        unset($_SESSION['admin_offer_old']);
 
         if (is_array($oldInput) && (int) ($oldInput['id_offre'] ?? 0) === $selectedOfferId && $selectedOffer !== null) {
             $selectedOffer = array_merge($selectedOffer, $oldInput);
@@ -64,8 +92,8 @@ class AdminController
             'companies' => Offer::companyOptions(),
             'imageOptions' => $this->imageOptions(),
             'csrfToken' => Security::generateCsrfToken(),
-            'error' => is_string($flashError) ? $flashError : null,
-            'success' => is_string($flashSuccess) ? $flashSuccess : null,
+            'error' => null,
+            'success' => null,
         ]);
     }
 
@@ -75,12 +103,12 @@ class AdminController
 
         $offerId = (int) ($_POST['id_offre'] ?? 0);
         if ($offerId <= 0) {
-            $_SESSION['admin_offer_error'] = 'Offre introuvable.';
+            $this->flash('error', 'Offre introuvable.');
             $this->redirect('/admin/offres/modifier');
         }
 
         if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
-            $_SESSION['admin_offer_error'] = 'Session invalide. Merci de reessayer.';
+            $this->flash('error', 'Session invalide. Merci de réessayer.');
             $this->redirect('/admin/offres/modifier?id=' . $offerId);
         }
 
@@ -90,19 +118,76 @@ class AdminController
 
         $error = $this->validateOfferInput($data);
         if ($error !== null) {
-            $_SESSION['admin_offer_error'] = $error;
+            $this->flash('error', $error);
             $this->redirect('/admin/offres/modifier?id=' . $offerId);
         }
 
         try {
             Offer::update($offerId, $data);
-            $_SESSION['admin_offer_success'] = 'L offre a bien ete mise a jour.';
             unset($_SESSION['admin_offer_old']);
+            $this->flash('success', 'Les modifications de l offre ont bien été enregistrées.');
         } catch (\Throwable $e) {
-            $_SESSION['admin_offer_error'] = 'Impossible de modifier cette offre pour le moment.';
+            $this->flash('error', 'Impossible de modifier cette offre pour le moment.');
         }
 
         $this->redirect('/admin/offres/modifier?id=' . $offerId);
+    }
+
+    public function accounts(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        $users = [];
+        try {
+            $users = User::all();
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de charger la liste des comptes.');
+        }
+
+        View::render('admin/accounts', [
+            'title' => 'Web4Stage - Gestion des comptes',
+            'users' => $users,
+        ]);
+    }
+
+    public function moderation(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        $feedbacks = [];
+        $companyReviews = [];
+        try {
+            $feedbacks = StudentFeedback::all();
+            $companyReviews = CompanyReview::all();
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de charger les retours utilisateurs.');
+        }
+
+        View::render('admin/moderation', [
+            'title' => 'Web4Stage - Modération',
+            'feedbacks' => $feedbacks,
+            'companyReviews' => $companyReviews,
+        ]);
+    }
+
+    public function quality(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        $offers = [];
+        $companies = [];
+        try {
+            $offers = Offer::allForManagement();
+            $companies = Company::allWithStats();
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de charger les indicateurs de qualité.');
+        }
+
+        View::render('admin/quality', [
+            'title' => 'Web4Stage - Qualité globale',
+            'offers' => $offers,
+            'companies' => $companies,
+        ]);
     }
 
     /**
@@ -132,7 +217,7 @@ class AdminController
     private function validateOfferInput(array $data): ?string
     {
         if ((int) $data['id_entreprise'] <= 0) {
-            return 'Merci de selectionner une entreprise.';
+            return 'Merci de sélectionner une entreprise.';
         }
 
         if ((string) $data['titre'] === '') {
@@ -148,11 +233,11 @@ class AdminController
         }
 
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $data['date_offre'])) {
-            return 'La date de publication doit etre au format AAAA-MM-JJ.';
+            return 'La date de publication doit être au format AAAA-MM-JJ.';
         }
 
         if ($data['duree_mois'] !== null && (int) $data['duree_mois'] <= 0) {
-            return 'La duree doit etre superieure a zero.';
+            return 'La durée doit être supérieure à zéro.';
         }
 
         return null;
@@ -164,26 +249,12 @@ class AdminController
     private function imageOptions(): array
     {
         return [
-            ['file' => 'devfontend.jpeg', 'label' => 'Developpement front-end'],
-            ['file' => 'devphp.jpeg', 'label' => 'Developpement PHP / back-end'],
-            ['file' => 'devweb.jpeg', 'label' => 'Developpement web general'],
+            ['file' => 'devfontend.jpeg', 'label' => 'Développement front-end'],
+            ['file' => 'devphp.jpeg', 'label' => 'Développement PHP / back-end'],
+            ['file' => 'devweb.jpeg', 'label' => 'Développement web général'],
             ['file' => 'design.jpg', 'label' => 'Design / UX / UI'],
             ['file' => 'Marketing.jpeg', 'label' => 'Marketing / communication'],
             ['file' => 'default.svg', 'label' => 'Illustration neutre'],
         ];
-    }
-
-    private function buildUrl(string $path): string
-    {
-        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
-        $cleanPath = '/' . ltrim($path, '/');
-
-        return str_replace(' ', '%20', rtrim($scriptName, '/') . $cleanPath);
-    }
-
-    private function redirect(string $path): void
-    {
-        header('Location: ' . $this->buildUrl($path));
-        exit;
     }
 }

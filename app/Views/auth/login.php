@@ -17,7 +17,7 @@
       </p>
     <?php endif; ?>
 
-    <form method="post" action="login">
+    <form method="post" action="<?= htmlspecialchars(\Core\Url::route('login'), ENT_QUOTES) ?>">
       <div class="form-group">
         <label for="email">Adresse e-mail</label>
         <input

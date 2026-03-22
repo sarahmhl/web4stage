@@ -5,127 +5,111 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Offer;
+use App\Models\Wishlist;
+use Core\Auth;
+use Core\Security;
 use Core\View;
 
-class OfferController
+class OfferController extends BaseController
 {
     public function index(): void
     {
-        // Recuperation des offres depuis la base
-        try {
-            $offers = Offer::all();
-        } catch (\Throwable $e) {
-            // Fallback : donnees simulees si la base n'est pas disponible
-            $offers = [
-                [
-                    'badge' => 'TH',
-                    'title' => 'Stage Developpeur Front-end',
-                    'company' => 'Tech Horizon',
-                    'duration' => '6 mois',
-                    'salary' => '850 EUR/mois',
-                    'published' => '2026-03-19',
-                    'image' => 'devfontend.jpeg',
-                    'skills' => ['HTML5 / CSS3', 'JavaScript', 'Design system'],
-                    'tagline' => '12 candidatures enregistrees cette semaine.',
-                ],
-                [
-                    'badge' => 'NM',
-                    'title' => 'Stage Marketing digital',
-                    'company' => 'Nova Media',
-                    'duration' => '4 mois',
-                    'salary' => 'Selon profil',
-                    'published' => '2026-03-19',
-                    'image' => 'Marketing.jpeg',
-                    'skills' => ['Canva', 'Redaction', 'Reseaux sociaux'],
-                    'tagline' => 'Offre fortement consultee ce mois-ci.',
-                ],
-                [
-                    'badge' => 'CD',
-                    'title' => 'Stage Developpeur PHP / MVC',
-                    'company' => 'Cesi Digital',
-                    'duration' => '5 mois',
-                    'salary' => '900 EUR/mois',
-                    'published' => '2026-03-19',
-                    'image' => 'devphp.jpeg',
-                    'skills' => ['MVC', 'MySQL', 'PHP objet'],
-                    'tagline' => 'Mission adaptee aux projets web academiques.',
-                ],
-                [
-                    'badge' => 'AW',
-                    'title' => 'Stage Developpeur Web PHP / JS',
-                    'company' => 'Altis Web',
-                    'duration' => '6 mois',
-                    'salary' => '900 EUR/mois',
-                    'published' => '2026-02-02',
-                    'image' => 'devweb.jpeg',
-                    'skills' => ['PHP POO', 'JavaScript', 'MySQL'],
-                    'tagline' => '8 candidatures en cours de traitement.',
-                ],
-                [
-                    'badge' => 'SI',
-                    'title' => 'Stage UX / UI Designer junior',
-                    'company' => 'Studio Interface',
-                    'duration' => '4 mois',
-                    'salary' => 'Gratification selon profil',
-                    'published' => '2026-01-28',
-                    'image' => 'design.jpg',
-                    'skills' => ['Wireframes', 'Figma', 'Design system'],
-                    'tagline' => 'Top des offres en wish-list cette semaine.',
-                ],
-                [
-                    'badge' => 'DI',
-                    'title' => 'Stage Data & BI',
-                    'company' => 'Data Insight',
-                    'duration' => '6 mois',
-                    'salary' => '1 000 EUR/mois',
-                    'published' => '2026-01-20',
-                    'image' => 'devweb.jpeg',
-                    'skills' => ['SQL', 'Power BI', 'Reporting'],
-                    'tagline' => '4 etudiants de la promo ont deja candidate a ce stage.',
-                ],
-                [
-                    'badge' => 'CE',
-                    'title' => 'Stage Communication & Events',
-                    'company' => 'Campus Events',
-                    'duration' => '3 mois',
-                    'salary' => '600 EUR/mois',
-                    'published' => '2026-01-15',
-                    'image' => 'Marketing.jpeg',
-                    'skills' => ['Organisation evenements', 'Communication'],
-                    'tagline' => 'Ideal pour un premier stage polyvalent.',
-                ],
-                [
-                    'badge' => 'IS',
-                    'title' => 'Stage Admin Systemes & Reseaux',
-                    'company' => 'Infra Secure',
-                    'duration' => '6 mois',
-                    'salary' => '900 EUR/mois',
-                    'published' => '2026-01-10',
-                    'image' => 'devphp.jpeg',
-                    'skills' => ['Linux', 'Securite', 'Scripts'],
-                    'tagline' => 'Suivi dedie par un pilote de promo.',
-                ],
-            ];
-        }
+        $filters = [
+            'keyword' => trim((string) ($_GET['keyword'] ?? '')),
+            'city' => trim((string) ($_GET['city'] ?? '')),
+            'skill' => trim((string) ($_GET['skill'] ?? '')),
+            'duration' => trim((string) ($_GET['duration'] ?? '')),
+        ];
 
         $perPage = 3;
-        $totalOffers = count($offers);
-        $totalPages = max(1, (int) ceil($totalOffers / $perPage));
-        $requestedPage = filter_input(
-            INPUT_GET,
-            'page',
-            FILTER_VALIDATE_INT,
-            ['options' => ['default' => 1, 'min_range' => 1]]
-        );
-        $currentPage = is_int($requestedPage) ? min($requestedPage, $totalPages) : 1;
-        $offset = ($currentPage - 1) * $perPage;
-        $offers = array_slice($offers, $offset, $perPage);
+        $requestedPage = (int) ($_GET['page'] ?? 1);
+        $currentPage = max(1, $requestedPage);
+        $offset = max(0, ($currentPage - 1) * $perPage);
+
+        try {
+            $totalOffers = Offer::countMatching($filters);
+            $totalPages = max(1, (int) ceil($totalOffers / $perPage));
+            $currentPage = min($currentPage, $totalPages);
+            $offset = max(0, ($currentPage - 1) * $perPage);
+            $offers = Offer::search($filters, $perPage, $offset);
+            $skillOptions = Offer::allSkills();
+        } catch (\Throwable $e) {
+            $offers = [];
+            $skillOptions = [];
+            $totalOffers = 0;
+            $totalPages = 1;
+            $this->flash('error', 'Impossible de charger les offres pour le moment.');
+        }
+
+        $wishlistIds = [];
+        if (Auth::checkRole(Auth::ROLE_ETUDIANT)) {
+            try {
+                $wishlistIds = Wishlist::offerIdsForStudent((int) (Auth::user()['id'] ?? 0));
+            } catch (\Throwable $e) {
+                $wishlistIds = [];
+            }
+        }
 
         View::render('offers/index', [
             'title' => 'Web4Stage - Offres de stage',
             'offers' => $offers,
+            'filters' => $filters,
+            'skillOptions' => $skillOptions,
+            'wishlistIds' => $wishlistIds,
             'currentPage' => $currentPage,
             'totalPages' => $totalPages,
+            'totalOffers' => $totalOffers,
+            'csrfToken' => Security::generateCsrfToken(),
+        ]);
+    }
+
+    public function show(): void
+    {
+        $offerId = (int) ($_GET['id'] ?? 0);
+
+        if ($offerId <= 0) {
+            $this->renderNotFound();
+            return;
+        }
+
+        try {
+            $offer = Offer::findDetail($offerId);
+            if ($offer === null) {
+                $this->renderNotFound();
+                return;
+            }
+
+            $relatedOffers = Offer::findByCompany((int) $offer['company_id'], $offerId, 3);
+        } catch (\Throwable $e) {
+            $this->renderNotFound();
+            return;
+        }
+
+        $studentId = (int) (Auth::user()['id'] ?? 0);
+        $isWishlisted = false;
+        if (Auth::checkRole(Auth::ROLE_ETUDIANT) && $studentId > 0) {
+            try {
+                $isWishlisted = Wishlist::has($studentId, $offerId);
+            } catch (\Throwable $e) {
+                $isWishlisted = false;
+            }
+        }
+
+        View::render('offers/show', [
+            'title' => 'Web4Stage - ' . (string) $offer['title'],
+            'offer' => $offer,
+            'relatedOffers' => $relatedOffers,
+            'isWishlisted' => $isWishlisted,
+            'canApply' => Auth::checkRole(Auth::ROLE_ETUDIANT),
+            'csrfToken' => Security::generateCsrfToken(),
+        ]);
+    }
+
+    private function renderNotFound(): void
+    {
+        http_response_code(404);
+        View::render('errors/404', [
+            'title' => 'Web4Stage - Offre introuvable',
         ]);
     }
 }

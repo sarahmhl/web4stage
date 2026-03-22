@@ -6340,6 +6340,243 @@ body {
   }
 }
 
+.flash-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.flash {
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(233, 198, 216, 0.88);
+  background: rgba(255, 255, 255, 0.94);
+  color: #424b5d;
+  box-shadow: 0 12px 24px rgba(162, 112, 142, 0.08);
+}
+
+.flash--success {
+  border-color: rgba(133, 205, 160, 0.72);
+  background: rgba(245, 255, 248, 0.96);
+}
+
+.flash--error {
+  border-color: rgba(229, 154, 154, 0.72);
+  background: rgba(255, 246, 246, 0.97);
+}
+
+.flash--info {
+  border-color: rgba(163, 187, 229, 0.72);
+  background: rgba(246, 250, 255, 0.97);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 1.6rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(235, 203, 221, 0.88);
+  box-shadow: 0 18px 32px rgba(164, 102, 138, 0.1);
+}
+
+.empty-state-title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.empty-state-text {
+  margin: 0;
+  max-width: 38rem;
+  color: var(--color-text-soft);
+  line-height: 1.6;
+}
+
+.empty-state-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.detail-layout {
+  align-items: start;
+}
+
+.detail-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  gap: 1.2rem;
+  padding: 1.1rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(237, 202, 221, 0.88);
+  box-shadow: 0 16px 28px rgba(162, 104, 137, 0.12);
+}
+
+.detail-cover img {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+  border-radius: 22px;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-content--full {
+  grid-column: 1 / -1;
+}
+
+.detail-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.detail-company {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: var(--color-text-soft);
+}
+
+.detail-company a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.detail-actions form {
+  margin: 0;
+}
+
+.detail-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.detail-section--compact h2,
+.detail-section h2 {
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+.detail-section p {
+  margin: 0;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.detail-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.detail-label {
+  display: block;
+  margin-bottom: 0.28rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8b6d7f;
+}
+
+.detail-company-description {
+  margin-top: 0.2rem;
+}
+
+.side-card-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.offer-actions form {
+  margin: 0;
+}
+
+.table-shell {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.8rem 0.75rem;
+  border-bottom: 1px solid rgba(235, 208, 223, 0.75);
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.data-table th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8b6d7f;
+}
+
+@media (max-width: 900px) {
+  .detail-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .detail-stats,
+  .detail-meta-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .empty-state,
+  .detail-card {
+    border-radius: 22px;
+  }
+
+  .detail-stats,
+  .detail-meta-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .empty-state-actions,
+  .detail-actions {
+    width: 100%;
+  }
+
+  .empty-state-actions .btn,
+  .detail-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 640px) {
   .action-grid {
     grid-template-columns: minmax(0, 1fr);
