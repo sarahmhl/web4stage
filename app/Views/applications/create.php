@@ -8,7 +8,7 @@
   </div>
 </header>
 
-<section class="page-layout detail-layout">
+<section class="page-layout">
   <aside class="side-card">
     <h2 class="side-card-title">Rappel de l offre</h2>
     <ul class="list-compact">

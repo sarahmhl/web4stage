@@ -40,15 +40,32 @@
         <div class="detail-meta-grid">
           <div>
             <span class="detail-label">Email</span>
-            <strong><?= htmlspecialchars((string) ($company['email_contact'] ?: 'Non renseigné'), ENT_QUOTES) ?></strong>
+            <?php if (!empty($company['email_contact'])): ?>
+              <a class="detail-link" href="mailto:<?= htmlspecialchars((string) $company['email_contact'], ENT_QUOTES) ?>">
+                <strong class="detail-value"><?= htmlspecialchars((string) $company['email_contact'], ENT_QUOTES) ?></strong>
+              </a>
+            <?php else: ?>
+              <strong class="detail-value">Non renseigné</strong>
+            <?php endif; ?>
           </div>
           <div>
             <span class="detail-label">Téléphone</span>
-            <strong><?= htmlspecialchars((string) ($company['telephone_contact'] ?: 'Non renseigné'), ENT_QUOTES) ?></strong>
+            <strong class="detail-value"><?= htmlspecialchars((string) ($company['telephone_contact'] ?: 'Non renseigné'), ENT_QUOTES) ?></strong>
           </div>
           <div>
             <span class="detail-label">Site</span>
-            <strong><?= htmlspecialchars((string) ($company['site_web'] ?: 'Non renseigné'), ENT_QUOTES) ?></strong>
+            <?php if (!empty($company['site_web'])): ?>
+              <a
+                class="detail-link"
+                href="<?= htmlspecialchars((string) $company['site_web'], ENT_QUOTES) ?>"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <strong class="detail-value"><?= htmlspecialchars((string) $company['site_web'], ENT_QUOTES) ?></strong>
+              </a>
+            <?php else: ?>
+              <strong class="detail-value">Non renseigné</strong>
+            <?php endif; ?>
           </div>
         </div>
       </section>

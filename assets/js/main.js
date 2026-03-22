@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const canUseTilt =
     window.matchMedia("(hover: hover)").matches &&
     !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isFlatWorkspace = document.body.classList.contains("workspace-flat");
 
   const burger = document.querySelector(".burger");
   const navMobile = document.querySelector(".nav-mobile");
@@ -24,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (canUseTilt) {
-    const tiltTargets = document.querySelectorAll(
+  if (canUseTilt && !isFlatWorkspace) {
+    const tiltTargets = Array.from(document.querySelectorAll(
       ".hero-card, .offer-card, .side-card, .dash-card, .entry-card, .entry-reboot-panel, .btn-primary"
-    );
+    ));
 
     tiltTargets.forEach((el) => {
       el.classList.add("tilt-3d");

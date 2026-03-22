@@ -32,11 +32,33 @@
   }
 
   $bodyClasses = [];
+  $workspaceFlatPrefixes = [
+    '/dashboard-etudiant',
+    '/dashboard-pilote',
+    '/dashboard-admin',
+    '/etudiant',
+    '/pilote',
+    '/admin',
+    '/candidatures',
+    '/wishlist',
+  ];
+  $isWorkspaceFlat = false;
+
+  foreach ($workspaceFlatPrefixes as $prefix) {
+    if ($currentPath === $prefix || str_starts_with($currentPath, $prefix . '/')) {
+      $isWorkspaceFlat = true;
+      break;
+    }
+  }
+
   if ($isHome) {
     $bodyClasses[] = 'home-page';
   }
   if ($isEntryPage) {
     $bodyClasses[] = 'entry-page';
+  }
+  if ($isWorkspaceFlat) {
+    $bodyClasses[] = 'workspace-flat';
   }
 ?>
 <!DOCTYPE html>
