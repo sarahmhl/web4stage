@@ -1,3 +1,4 @@
+<?php // Vue etudiant pour enregistrer son CV et sa lettre de motivation type. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Documents</span>

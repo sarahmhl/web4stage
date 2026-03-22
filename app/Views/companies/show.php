@@ -1,3 +1,4 @@
+<?php // Vue detail d une entreprise avec coordonnees, avis et offres liees. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Fiche entreprise</span>

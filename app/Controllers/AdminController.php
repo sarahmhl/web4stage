@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce controleur gere les ecrans admin : dashboard, comptes, moderation, qualite et edition des offres.
+
 namespace App\Controllers;
 
 use App\Models\Company;

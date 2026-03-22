@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce modele gere les offres de stage : liste, filtres, detail, creation et modification.
+
 namespace App\Models;
 
 use Core\Database;

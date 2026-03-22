@@ -1,4 +1,5 @@
 <?php
+  // Layout principal partage par les pages internes : navigation, flash messages, contenu et footer.
   use Core\Flash;
   use Core\Url;
 

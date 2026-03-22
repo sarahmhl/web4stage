@@ -1,4 +1,5 @@
 <?php
+  // Vue d entree du site avec le premier contact visuel et l acces a la connexion.
   $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
   $routePrefix = rtrim($scriptName, '/');
   $routeUrl = static function (string $path) use ($routePrefix): string {

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce controleur gere le catalogue des offres, les filtres de recherche et la fiche detail d une offre.
+
 namespace App\Controllers;
 
 use App\Models\Offer;

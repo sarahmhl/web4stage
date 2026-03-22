@@ -1,3 +1,4 @@
+<?php // Vue du formulaire de candidature a une offre avec CV et lettre de motivation. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Postuler</span>

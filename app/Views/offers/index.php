@@ -1,4 +1,5 @@
 <?php
+  // Vue du catalogue des offres avec filtres, cartes d offres et pagination.
   $filters = is_array($filters ?? null) ? $filters : [];
   $wishlistIds = is_array($wishlistIds ?? null) ? $wishlistIds : [];
   $returnToValue = 'offres' . (!empty($_SERVER['QUERY_STRING']) ? '?' . (string) $_SERVER['QUERY_STRING'] : '');

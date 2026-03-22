@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Migration ponctuelle pour ajouter les tables et colonnes des nouvelles fonctionnalites du portail.
+
 require dirname(__DIR__) . '/core/Database.php';
 
 use Core\Database;

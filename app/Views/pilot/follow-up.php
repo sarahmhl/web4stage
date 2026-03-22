@@ -1,3 +1,4 @@
+<?php // Vue pilote pour repasser sur les etudiants et candidatures a relancer. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Relances</span>

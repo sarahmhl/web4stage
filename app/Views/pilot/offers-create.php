@@ -1,4 +1,5 @@
 <?php
+  // Vue pilote pour publier une nouvelle offre de stage.
   $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
   $routePrefix = rtrim($scriptName, '/');
   $routeUrl = static function (string $path) use ($routePrefix): string {

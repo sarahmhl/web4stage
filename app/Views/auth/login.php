@@ -1,3 +1,4 @@
+<?php // Vue du formulaire de connexion commun a tous les profils. ?>
 <section class="auth-wrapper">
   <section class="auth-card" aria-labelledby="titre-login">
     <h1 class="auth-title" id="titre-login">Connexion</h1>

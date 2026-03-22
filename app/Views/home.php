@@ -1,4 +1,5 @@
 ﻿<?php
+  // Vue de la page d accueil publique avec hero, offres mises en avant et avis etudiants.
   $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
   $baseDir = rtrim(str_replace('\\', '/', dirname($scriptName)), '/');
   $projectBase = $baseDir === '' ? '' : rtrim(str_replace('\\', '/', dirname($baseDir)), '/');

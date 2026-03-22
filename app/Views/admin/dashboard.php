@@ -1,3 +1,4 @@
+<?php // Vue du tableau de bord admin avec resume global, actions rapides et suivis. ?>
 <header class="dashboard-header">
   <div class="dashboard-title-block">
     <span class="dashboard-kicker">Tableau de bord administrateur</span>

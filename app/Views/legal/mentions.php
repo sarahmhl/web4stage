@@ -1,3 +1,4 @@
+<?php // Vue des mentions legales et des informations legales du projet. ?>
 <section class="section" aria-labelledby="titre-mentions">
   <div class="section-header">
     <div>

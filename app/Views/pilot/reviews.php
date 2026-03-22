@@ -1,3 +1,4 @@
+<?php // Vue pilote qui centralise les avis publies par les etudiants. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Retours étudiants</span>

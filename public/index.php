@@ -1,4 +1,5 @@
 <?php
+// Point d entree du site : bootstrap des dependances puis declaration de toutes les routes.
 // Front controller
 
 declare(strict_types=1);

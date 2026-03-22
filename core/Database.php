@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce service fournit la connexion PDO unique utilisee par tout le projet.
+
 namespace Core;
 
 use PDO;

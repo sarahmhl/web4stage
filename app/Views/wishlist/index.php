@@ -1,3 +1,4 @@
+<?php // Vue de la wish-list avec les offres favorites de l etudiant. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Wish-list</span>

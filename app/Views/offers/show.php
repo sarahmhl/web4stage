@@ -1,4 +1,5 @@
 <?php
+  // Vue detail d une offre avec actions rapides, entreprise associee et offres liees.
   $offerImage = \Core\Url::asset('assets/img/offers/' . ((string) ($offer['image'] ?? 'devweb.jpeg')));
   $defaultImage = \Core\Url::asset('assets/img/web4stage.png');
 ?>

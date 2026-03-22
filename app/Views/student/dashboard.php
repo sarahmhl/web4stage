@@ -1,3 +1,4 @@
+<?php // Vue du tableau de bord etudiant avec suivi perso, actions et candidatures. ?>
 <header class="dashboard-header">
   <div class="dashboard-title-block">
     <span class="dashboard-kicker">Tableau de bord étudiant</span>

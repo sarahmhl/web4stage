@@ -1,3 +1,4 @@
+<?php // Vue du tableau de bord pilote avec suivi promo, relances et entreprises. ?>
 <header class="dashboard-header">
   <div class="dashboard-title-block">
     <span class="dashboard-kicker">Tableau de bord pilote</span>

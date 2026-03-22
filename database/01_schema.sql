@@ -1,3 +1,4 @@
+-- Schema principal du projet : utilisateurs, entreprises, offres, candidatures et relations SQL.
 -- Web4Stage schema (MySQL 8+)
 -- Import this file in phpMyAdmin on database `web4stage`
 

@@ -1,3 +1,4 @@
+<?php // Ancienne variante de connexion par role, conservee comme template secondaire. ?>
 <section class="auth-wrapper">
   <section class="auth-card" aria-labelledby="titre-login-role">
     <a href="<?= htmlspecialchars($backUrl, ENT_QUOTES) ?>" class="link-soft">Retour au choix des profils</a>

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce controleur affiche les mentions legales et les informations obligatoires du site.
+
 namespace App\Controllers;
 
 use Core\View;

@@ -1,3 +1,4 @@
+<?php // Vue etudiant pour deposer un avis sur la formation et relire les retours publies. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Avis étudiants</span>

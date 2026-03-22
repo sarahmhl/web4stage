@@ -1,3 +1,4 @@
+<?php // Vue d inscription, garde ici surtout comme reliquat ou extension future. ?>
 <section class="auth-wrapper">
   <section class="auth-card" aria-labelledby="titre-register">
     <h1 class="auth-title" id="titre-register">Créer un compte étudiant</h1>

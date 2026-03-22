@@ -1,3 +1,4 @@
+<?php // Vue affichee quand un utilisateur tente d ouvrir une page sans autorisation. ?>
 <section class="empty-state">
   <span class="pill-small">Accès refusé</span>
   <h1 class="empty-state-title">Vous n avez pas les droits pour accéder à cette page</h1>

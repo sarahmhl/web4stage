@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce moteur de vue charge les templates et les injecte dans le layout principal.
+
 namespace Core;
 
 class View

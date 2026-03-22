@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce modele gere les utilisateurs : authentification, profils et listes admin/pilote.
+
 namespace App\Models;
 
 use Core\Database;

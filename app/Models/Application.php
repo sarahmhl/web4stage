@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce modele manipule les candidatures en base : creation, listes et donnees utiles aux vues.
+
 namespace App\Models;
 
 use Core\Database;

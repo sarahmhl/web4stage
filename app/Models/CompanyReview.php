@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce modele enregistre et relit les evaluations publiees sur les entreprises.
+
 namespace App\Models;
 
 use Core\Database;

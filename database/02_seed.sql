@@ -1,3 +1,4 @@
+-- Donnees de demonstration pour alimenter le site avec des comptes, entreprises et offres de test.
 -- Web4Stage seed data
 SET NAMES utf8mb4;
 

@@ -1,3 +1,4 @@
+<?php // Vue etudiant pour noter une entreprise puis relire les avis deja laisses. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Évaluation entreprise</span>

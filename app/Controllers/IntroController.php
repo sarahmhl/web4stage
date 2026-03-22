@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce controleur gere la page d entree du site avant d arriver sur l accueil ou la connexion.
+
 namespace App\Controllers;
 
 use Core\Auth;

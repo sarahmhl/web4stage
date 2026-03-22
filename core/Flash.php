@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce service gere les messages flash affiches apres une action reussie ou en erreur.
+
 namespace Core;
 
 class Flash

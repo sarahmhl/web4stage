@@ -1,4 +1,5 @@
 <?php
+  // Vue admin pour choisir une offre existante puis modifier son contenu.
   $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
   $routePrefix = rtrim($scriptName, '/');
   $routeUrl = static function (string $path) use ($routePrefix): string {

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce modele stocke les informations de CV et de lettre type de l etudiant.
+
 namespace App\Models;
 
 use Core\Database;

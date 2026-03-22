@@ -1,3 +1,4 @@
+<?php // Vue affichee quand aucune route ne correspond a l URL demandee. ?>
 <section class="empty-state">
   <span class="pill-small">Erreur 404</span>
   <h1 class="empty-state-title">La page demandée est introuvable</h1>

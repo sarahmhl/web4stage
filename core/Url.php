@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce helper construit les URLs de routes et d assets selon le chemin actuel du projet.
+
 namespace Core;
 
 class Url

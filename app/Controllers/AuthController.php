@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce controleur centralise la connexion, la deconnexion et la redirection selon le role de l utilisateur.
+
 namespace App\Controllers;
 
 use Core\Auth;

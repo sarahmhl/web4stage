@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce modele recupere les entreprises, leurs statistiques, leurs offres et leurs avis.
+
 namespace App\Models;
 
 use Core\Database;

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce service centralise la session utilisateur, les roles et les controles d acces.
+
 namespace Core;
 
 use App\Models\User;

@@ -1,3 +1,4 @@
+<?php // Vue admin de gestion des utilisateurs et de leurs roles. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Comptes</span>

@@ -1,3 +1,4 @@
+<?php // Vue de la liste des entreprises referencees avec resume et acces a leur fiche. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Entreprises</span>

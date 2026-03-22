@@ -1,3 +1,4 @@
+// Script principal du front : menu mobile et quelques effets d interaction sur les cartes.
 // Menu burger pour mobile
 document.addEventListener("DOMContentLoaded", () => {
   const canUseTilt =

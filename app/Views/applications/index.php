@@ -1,3 +1,4 @@
+<?php // Vue de la liste des candidatures deja envoyees par l etudiant connecte. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Candidatures</span>

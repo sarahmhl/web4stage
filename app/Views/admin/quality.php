@@ -1,3 +1,4 @@
+<?php // Vue admin des indicateurs de qualite et de quelques statistiques globales. ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Qualité</span>

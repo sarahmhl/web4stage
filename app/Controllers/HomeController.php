@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce controleur prepare les donnees de la page d accueil publique : offres mises en avant, avis et statistiques.
+
 namespace App\Controllers;
 
 use App\Models\Offer;

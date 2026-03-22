@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// Ce controleur affiche les entreprises referencees et le detail d une entreprise avec ses avis et ses offres.
+
 namespace App\Controllers;
 
 use App\Models\Company;
