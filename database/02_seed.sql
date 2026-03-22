@@ -174,7 +174,7 @@ JOIN offre o ON o.titre IN (
 )
 WHERE u.email = 'lea.martin@viacesi.fr'
 ON DUPLICATE KEY UPDATE
-  created_at = created_at;
+  created_at = wishlist_offre.created_at;
 
 INSERT INTO candidature (id_offre, id_etudiant, statut, commentaire, lettre_motivation, cv_path)
 SELECT
