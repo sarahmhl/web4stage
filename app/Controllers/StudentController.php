@@ -186,8 +186,19 @@ class StudentController extends BaseController
             $this->redirect('/etudiant/documents');
         }
 
-        $cvPath = trim((string) ($_POST['cv_path'] ?? ''));
+        $cvPath = trim((string) ($_POST['existing_cv_path'] ?? ''));
         $letterTemplate = trim((string) ($_POST['letter_template'] ?? ''));
+
+        try {
+            $uploadedCvPath = $this->storeUploadedFile('cv_file', 'uploads/cv', ['pdf', 'doc', 'docx']);
+            if ($uploadedCvPath !== null) {
+                $cvPath = $uploadedCvPath;
+            }
+        } catch (\Throwable $e) {
+            $this->flash('error', $e->getMessage());
+            $this->redirect('/etudiant/documents');
+        }
+
         if ($cvPath === '' && $letterTemplate === '') {
             $this->flash('error', 'Merci de renseigner au moins un CV ou une lettre type.');
             $this->redirect('/etudiant/documents');

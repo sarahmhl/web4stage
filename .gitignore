@@ -1,0 +1,10 @@
+.phpunit.cache/
+/vendor/
+/public/uploads/cv/*
+!/public/uploads/cv/.gitkeep
+/tests/.sessions/*
+!/tests/.sessions/.gitkeep
+
+.idea/
+.DS_Store
+Thumbs.db

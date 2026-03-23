@@ -1,4 +1,5 @@
 <?php // Vue du formulaire de candidature a une offre avec CV et lettre de motivation. ?>
+<?php $hasStoredCv = !empty($documents['cv_path']); ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Postuler</span>
@@ -38,22 +39,31 @@
       <span class="pill-small">CV + lettre</span>
     </header>
 
-    <form method="post" action="<?= htmlspecialchars(\Core\Url::route('candidatures'), ENT_QUOTES) ?>">
+    <form method="post" action="<?= htmlspecialchars(\Core\Url::route('candidatures'), ENT_QUOTES) ?>" enctype="multipart/form-data">
       <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $csrfToken, ENT_QUOTES) ?>" />
       <input type="hidden" name="offer_id" value="<?= (int) $offer['id'] ?>" />
+      <input type="hidden" name="existing_cv_path" value="<?= htmlspecialchars((string) ($documents['cv_path'] ?? ''), ENT_QUOTES) ?>" />
 
       <div class="offer-form-grid">
         <div class="form-group form-group--full">
-          <label for="cv_path">CV</label>
+          <label for="cv_file">CV</label>
+          <?php if ($hasStoredCv): ?>
+            <p class="auth-hint offer-form-hint">
+              CV enregistre :
+              <a href="<?= htmlspecialchars(\Core\Url::asset((string) $documents['cv_path']), ENT_QUOTES) ?>" target="_blank" rel="noreferrer">
+                <?= htmlspecialchars((string) basename((string) $documents['cv_path']), ENT_QUOTES) ?>
+              </a>
+            </p>
+          <?php endif; ?>
           <input
-            type="text"
-            id="cv_path"
-            name="cv_path"
+            type="file"
+            id="cv_file"
+            name="cv_file"
             class="form-control"
-            value="<?= htmlspecialchars((string) ($documents['cv_path'] ?? ''), ENT_QUOTES) ?>"
-            placeholder="Ex : cv/lea-martin-cv.pdf"
-            required
+            accept=".pdf,.doc,.docx"
+            <?= $hasStoredCv ? '' : 'required' ?>
           />
+          <p class="auth-hint offer-form-hint">Formats acceptes : PDF, DOC, DOCX. Taille maximale : 5 Mo.</p>
         </div>
 
         <div class="form-group form-group--full">

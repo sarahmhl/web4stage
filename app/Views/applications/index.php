@@ -4,7 +4,7 @@
     <span class="page-heading-kicker">Candidatures</span>
     <h1 class="page-heading-title">Mes candidatures</h1>
     <p class="page-heading-subtitle">
-      Suivez l état de vos envois, les CV utilisés et les lettres de motivation associées.
+      Suivez l etat de vos envois, les CV utilises et les lettres de motivation associees.
     </p>
   </div>
 </header>
@@ -24,17 +24,31 @@
           </li>
           <li>
             <span>CV</span>
-            <strong><?= htmlspecialchars((string) ($application['cv_path'] ?: 'Non renseigné'), ENT_QUOTES) ?></strong>
+            <strong>
+              <?php if (!empty($application['cv_path'])): ?>
+                <a href="<?= htmlspecialchars(\Core\Url::asset((string) $application['cv_path']), ENT_QUOTES) ?>" target="_blank" rel="noreferrer">
+                  Consulter le CV
+                </a>
+              <?php else: ?>
+                Non renseigne
+              <?php endif; ?>
+            </strong>
           </li>
           <li>
-            <span>Envoyée le</span>
+            <span>Envoyee le</span>
             <strong><?= htmlspecialchars(date('d/m/Y', strtotime((string) $application['created_at'])), ENT_QUOTES) ?></strong>
           </li>
         </ul>
         <section class="detail-section detail-section--compact">
           <h2>Lettre de motivation</h2>
-          <p><?= nl2br(htmlspecialchars((string) ($application['lettre_motivation'] ?: 'Aucune lettre enregistrée.'), ENT_QUOTES)) ?></p>
+          <p><?= nl2br(htmlspecialchars((string) ($application['lettre_motivation'] ?: 'Aucune lettre enregistree.'), ENT_QUOTES)) ?></p>
         </section>
+        <?php if (!empty($application['commentaire'])): ?>
+          <section class="detail-section detail-section--compact">
+            <h2>Commentaire</h2>
+            <p><?= nl2br(htmlspecialchars((string) $application['commentaire'], ENT_QUOTES)) ?></p>
+          </section>
+        <?php endif; ?>
         <div class="detail-actions">
           <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $application['id_offre']), ENT_QUOTES) ?>" class="btn btn-outline">Voir l offre</a>
           <a href="<?= htmlspecialchars(\Core\Url::route('entreprises/detail?id=' . (int) $application['id_entreprise']), ENT_QUOTES) ?>" class="btn btn-outline">Voir l entreprise</a>
@@ -45,8 +59,8 @@
 <?php else: ?>
   <section class="empty-state">
     <span class="pill-small">Aucune candidature</span>
-    <h1 class="empty-state-title">Vous n avez pas encore postulé</h1>
-    <p class="empty-state-text">Parcourez les offres puis candidatez directement depuis leur fiche détaillée.</p>
+    <h1 class="empty-state-title">Vous n avez pas encore postule</h1>
+    <p class="empty-state-text">Parcourez les offres puis candidatez directement depuis leur fiche detaillee.</p>
     <div class="empty-state-actions">
       <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="btn btn-primary">Voir les offres</a>
     </div>

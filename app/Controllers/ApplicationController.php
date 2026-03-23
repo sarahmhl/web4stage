@@ -73,9 +73,26 @@ class ApplicationController extends BaseController
         }
 
         $offerId = (int) ($_POST['offer_id'] ?? 0);
-        $cvPath = trim((string) ($_POST['cv_path'] ?? ''));
+        $cvPath = trim((string) ($_POST['existing_cv_path'] ?? ''));
         $letter = trim((string) ($_POST['lettre_motivation'] ?? ''));
         $comment = trim((string) ($_POST['commentaire'] ?? ''));
+
+        try {
+            $uploadedCvPath = $this->storeUploadedFile('cv_file', 'uploads/cv', ['pdf', 'doc', 'docx']);
+            if ($uploadedCvPath !== null) {
+                $cvPath = $uploadedCvPath;
+
+                $existingDocuments = StudentDocument::findByStudent((int) ($this->currentUser()['id'] ?? 0));
+                StudentDocument::save(
+                    (int) ($this->currentUser()['id'] ?? 0),
+                    (string) ($existingDocuments['lettre_type'] ?? ''),
+                    $cvPath
+                );
+            }
+        } catch (\Throwable $e) {
+            $this->flash('error', $e->getMessage());
+            $this->redirect('/candidatures/nouvelle?id=' . $offerId);
+        }
 
         if ($offerId <= 0 || $cvPath === '' || $letter === '') {
             $this->flash('error', 'Merci de fournir votre CV et une lettre de motivation.');

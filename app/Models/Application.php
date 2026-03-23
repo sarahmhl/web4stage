@@ -91,6 +91,8 @@ class Application
               c.statut,
               c.created_at,
               c.cv_path,
+              c.commentaire,
+              c.lettre_motivation,
               o.id_offre,
               o.titre,
               e.nom AS entreprise_nom,

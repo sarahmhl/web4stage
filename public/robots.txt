@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /projet%20web/public/uploads/
+
+Sitemap: http://localhost/projet%20web/public/sitemap.xml

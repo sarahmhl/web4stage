@@ -1,4 +1,5 @@
 <?php // Vue etudiant pour enregistrer son CV et sa lettre de motivation type. ?>
+<?php $hasStoredCv = !empty($documents['cv_path']); ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Documents</span>
@@ -16,19 +17,28 @@
       <span class="pill-small">CV + lettre type</span>
     </header>
 
-    <form method="post" action="<?= htmlspecialchars(\Core\Url::route('etudiant/documents'), ENT_QUOTES) ?>">
+    <form method="post" action="<?= htmlspecialchars(\Core\Url::route('etudiant/documents'), ENT_QUOTES) ?>" enctype="multipart/form-data">
       <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $csrfToken, ENT_QUOTES) ?>" />
+      <input type="hidden" name="existing_cv_path" value="<?= htmlspecialchars((string) ($documents['cv_path'] ?? ''), ENT_QUOTES) ?>" />
       <div class="offer-form-grid">
         <div class="form-group form-group--full">
-          <label for="cv_path">Chemin ou nom du CV</label>
+          <label for="cv_file">CV</label>
+          <?php if ($hasStoredCv): ?>
+            <p class="auth-hint offer-form-hint">
+              CV actuel :
+              <a href="<?= htmlspecialchars(\Core\Url::asset((string) $documents['cv_path']), ENT_QUOTES) ?>" target="_blank" rel="noreferrer">
+                <?= htmlspecialchars((string) basename((string) $documents['cv_path']), ENT_QUOTES) ?>
+              </a>
+            </p>
+          <?php endif; ?>
           <input
-            type="text"
-            id="cv_path"
-            name="cv_path"
+            type="file"
+            id="cv_file"
+            name="cv_file"
             class="form-control"
-            value="<?= htmlspecialchars((string) ($documents['cv_path'] ?? ''), ENT_QUOTES) ?>"
-            placeholder="Ex : cv/lea-martin-cv.pdf"
+            accept=".pdf,.doc,.docx"
           />
+          <p class="auth-hint offer-form-hint">Formats acceptes : PDF, DOC, DOCX. Taille maximale : 5 Mo.</p>
         </div>
         <div class="form-group form-group--full">
           <label for="letter_template">Lettre de motivation type</label>
