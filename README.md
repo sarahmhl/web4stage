@@ -1,81 +1,95 @@
 # Web4Stage
 
-## Presentation du projet
+## Project Overview
 
-Web4Stage est une application web realisee dans le cadre du projet web CESI.
-Le site a pour objectif de faciliter la recherche de stage des etudiants en regroupant des offres de stage, des informations sur les entreprises et un suivi des candidatures.
+Web4Stage is a web application developed as part of a CESI academic project.  
+Its main purpose is to facilitate internship searches for students by centralizing internship offers, company information, and application tracking.
 
-Ce projet repond au besoin suivant :
-- centraliser les offres de stage
-- enregistrer les entreprises ayant deja accueilli des stagiaires
-- aider les etudiants a mieux suivre leur recherche
-- proposer des interfaces adaptees selon le role de l'utilisateur
+This project addresses the following needs:
+- Centralizing internship offers in a single platform
+- Storing information about companies that have hosted interns
+- Helping students efficiently track their applications
+- Providing interfaces adapted to different user roles
 
-## But du projet
+---
 
-L'objectif principal est de proposer une plateforme simple et pratique qui permet :
-- a l'etudiant de rechercher des offres, suivre ses candidatures et gerer sa wish-list
-- au pilote de promotion de suivre les candidatures de ses etudiants et d'ajouter des offres
-- a l'administrateur de superviser la plateforme, les comptes et les offres
+## Project Objectives
 
-Le site doit aussi respecter plusieurs contraintes de l'enonce :
-- architecture MVC
-- responsive design
-- HTML, CSS, JavaScript, PHP et base SQL
-- authentification et gestion des roles
-- bonnes pratiques de securite
-- optimisation SEO de base
+The main objective is to provide a simple and practical platform that allows:
+- Students to search for internship offers, apply, track their applications, and manage a wishlist
+- Academic supervisors (pilots) to monitor student applications and publish internship offers
+- Administrators to manage the platform, user accounts, and internship offers
 
-## Enonce resume
+---
 
-Les etudiants effectuent souvent leurs recherches de stage en utilisant leurs reseaux personnels et professionnels, puis en postulant a des offres.
-Le projet consiste a creer un site web capable de regrouper ces offres et de stocker les donnees des entreprises qui recherchent des stagiaires ou qui en ont deja accueilli.
+## Project Requirements
 
-Le site doit permettre de :
-- rechercher et afficher des entreprises
-- creer, modifier et supprimer des entreprises
-- rechercher et afficher des offres de stage
-- creer, modifier et supprimer des offres
-- gerer les comptes pilotes et etudiants
-- permettre aux etudiants de postuler a une offre
-- suivre les candidatures
-- gerer une wish-list d'offres
-- afficher des statistiques et des informations utiles
+The application follows several technical and functional constraints:
+- MVC architecture
+- Responsive design
+- Technologies: HTML, CSS, JavaScript, PHP, MySQL
+- Authentication system with role management
+- Security best practices
+- Basic SEO optimization
 
-## Profils utilisateurs
+---
 
-Le projet repose sur trois profils principaux :
+## Project Description
 
-### Etudiant
-- consulter les offres
-- ajouter des offres a sa wish-list
-- postuler a une offre
-- suivre ses candidatures
+Students often rely on personal and professional networks to find internships.  
+This project aims to provide a centralized web platform to gather internship offers and store company-related data.
 
-### Pilote
-- suivre la promotion
-- consulter les candidatures des etudiants
-- ajouter des offres de stage
+The platform allows users to:
+- Search and view companies
+- Create, update, and delete companies
+- Search and view internship offers
+- Create, update, and delete offers
+- Manage student and supervisor accounts
+- Apply to internship offers
+- Track applications
+- Manage a wishlist of offers
+- Access statistics and useful information
 
-### Administrateur
-- gerer les comptes
-- superviser les offres
-- modifier les offres de stage
-- administrer la plateforme
+---
 
-## Fonctionnalites actuellement presentes
+## User Roles
 
-- page d'entree avec connexion
-- redirection automatique selon le role du compte
-- page d'accueil du projet
-- page des offres de stage avec pagination
-- dashboard etudiant
-- dashboard pilote
-- dashboard administrateur
-- ajout d'offre dans l'espace pilote
-- modification d'offre dans l'espace administrateur
+The application is based on three main user roles:
 
-## Technologies utilisees
+### Student
+- Browse internship offers
+- Add offers to a wishlist
+- Apply to offers
+- Track application status
+
+### Pilot (Academic Supervisor)
+- Monitor student progress
+- View student applications
+- Publish internship offers
+
+### Administrator
+- Manage user accounts
+- Supervise internship offers
+- Modify offers
+- Administer the platform
+
+---
+
+## Current Features
+
+- Authentication system (login page)
+- Automatic redirection based on user role
+- Homepage
+- Internship offers page with pagination
+- Student dashboard
+- Pilot dashboard
+- Administrator dashboard
+- Add offers (pilot area)
+- Edit offers (administrator area)
+
+---
+
+## Technologies Used
 
 - PHP
 - HTML5
@@ -83,30 +97,53 @@ Le projet repose sur trois profils principaux :
 - JavaScript
 - MySQL
 - Apache
-- architecture MVC
+- MVC architecture
 
-## Lancer le projet en local
+---
 
-1. Placer le projet dans `C:\xampp\htdocs\projet web`
-2. Demarrer Apache et MySQL sur XAMPP
-3. Creer la base de donnees `web4stage`
-4. Importer :
-   - `database/01_schema.sql`
-   - `database/02_seed.sql`
-5. Ouvrir dans le navigateur :
-   `http://localhost/projet%20web/public/index.php/`
+## Local Setup
 
-## Comptes de test
+To run the project locally:
 
-- Etudiant : `lea.martin@viacesi.fr`
-- Pilote : `pilote-01@web4stage.local`
-- Admin : `admin-01@web4stage.local`
+1. Place the project in:  
+   C:\xampp\htdocs\projet_web  
 
-Mot de passe :
-`ChangeMe123!`
+2. Start Apache and MySQL using XAMPP  
 
-## Cadre du projet
+3. Create a database named:  
+   web4stage  
 
-Ce projet est realise dans un contexte pedagogique.
-Il s'inscrit dans le cahier des charges CESI autour de la gestion des stages, des utilisateurs, des offres et des candidatures.
+4. Import the following files:  
+   - database/01_schema.sql  
+   - database/02_seed.sql  
 
+5. Open your browser and go to:  
+   http://localhost/projet%20web/public/index.php/  
+
+---
+
+## Test Accounts
+
+- Student: lea.martin@viacesi.fr  
+- Pilot: pilote-01@web4stage.local  
+- Admin: admin-01@web4stage.local  
+
+Password:  
+ChangeMe123!  
+
+---
+
+## Project Context
+
+This project was developed in an academic context as part of the CESI curriculum.  
+It follows a specification focused on managing internships, users, offers, and applications.
+
+---
+
+## Authors
+
+This project was designed and developed by:
+
+- Lyna  
+- Sarah  
+- Nouara  
