@@ -4,6 +4,8 @@
 !/public/uploads/cv/.gitkeep
 /tests/.sessions/*
 !/tests/.sessions/.gitkeep
+/storage/sessions/*
+!/storage/sessions/.gitkeep
 
 .idea/
 .DS_Store

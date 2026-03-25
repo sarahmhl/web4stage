@@ -21,13 +21,18 @@ if ((bool) ($config['force_https'] ?? false) && !$isHttps) {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
-    $sessionPath = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/index.php')), '/');
-    $sessionPath = ($sessionPath === '' || $sessionPath === '.') ? '/' : $sessionPath;
+    $sessionStoragePath = $rootPath . '/storage/sessions';
+
+    if (!is_dir($sessionStoragePath)) {
+        mkdir($sessionStoragePath, 0775, true);
+    }
+
+    session_save_path($sessionStoragePath);
 
     session_name((string) ($config['session_name'] ?? 'WEB4STAGESESSID'));
     session_set_cookie_params([
         'lifetime' => 0,
-        'path' => $sessionPath,
+        'path' => '/',
         'secure' => (bool) ($config['session_secure'] ?? false) || $isHttps || (bool) ($config['force_https'] ?? false),
         'httponly' => true,
         'samesite' => (string) ($config['session_samesite'] ?? 'Lax'),
