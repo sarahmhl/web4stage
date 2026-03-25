@@ -20,9 +20,9 @@ ON DUPLICATE KEY UPDATE
 
 INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role)
 VALUES
-  ('Admin', 'Web4Stage', 'admin-01@web4stage.local', '$2y$10$UqIrI1PlOQk0cIPN0RXbS.upMs7.uw5koZmADBX.4W75NvxNWNg06', 'ADMIN'),
-  ('Pilote', 'CESI', 'pilote-01@web4stage.local', '$2y$10$UqIrI1PlOQk0cIPN0RXbS.upMs7.uw5koZmADBX.4W75NvxNWNg06', 'PILOTE'),
-  ('Martin', 'Lea', 'lea.martin@viacesi.fr', '$2y$10$UqIrI1PlOQk0cIPN0RXbS.upMs7.uw5koZmADBX.4W75NvxNWNg06', 'ETUDIANT')
+  ('Admin', 'Web4Stage', 'admin-01@web4stage.local', '$2y$10$7hf3vjZRsWKHmsi0zLZYw.VTY7lisi0PG8xRAMQzktHNfENBRwNkC', 'ADMIN'),
+  ('Pilote', 'CESI', 'pilote-01@web4stage.local', '$2y$10$7hf3vjZRsWKHmsi0zLZYw.VTY7lisi0PG8xRAMQzktHNfENBRwNkC', 'PILOTE'),
+  ('Martin', 'Lea', 'lea.martin@viacesi.fr', '$2y$10$7hf3vjZRsWKHmsi0zLZYw.VTY7lisi0PG8xRAMQzktHNfENBRwNkC', 'ETUDIANT')
 ON DUPLICATE KEY UPDATE
   nom = VALUES(nom),
   prenom = VALUES(prenom),
