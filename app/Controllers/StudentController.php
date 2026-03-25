@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce controleur gere l espace etudiant : dashboard, avis, documents et evaluation des entreprises.
 
 namespace App\Controllers;
 
@@ -214,3 +213,4 @@ class StudentController extends BaseController
         $this->redirect('/etudiant/documents');
     }
 }
+

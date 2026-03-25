@@ -1,37 +1,50 @@
-<?php // Vue des mentions legales et des informations legales du projet. ?>
 <section class="section" aria-labelledby="titre-mentions">
   <div class="section-header">
     <div>
-      <h1 class="section-title" id="titre-mentions">Mentions légales</h1>
+      <h1 class="section-title" id="titre-mentions">Mentions legales</h1>
       <p class="section-subtitle">
-        Exemple de page légale à adapter avec les vraies informations de ton groupe.
+        Informations generales sur l application Web4Stage et sur son cadre d utilisation.
       </p>
     </div>
   </div>
 
   <article class="side-card">
-    <h2 class="side-card-title">Éditeur du site</h2>
+    <h2 class="side-card-title">Editeur du site</h2>
     <p class="side-card-text">
-      Web4Stage est un site fictif réalisé dans le cadre d'un projet pédagogique au sein du
-      campus CESI. Il ne constitue pas un service commercial réel.
+      Web4Stage est une application web realisee dans le cadre d un projet pedagogique CESI autour de la gestion
+      des offres de stage, des candidatures et du suivi des utilisateurs.
     </p>
 
-    <h2 class="side-card-title">Responsable de publication</h2>
+    <h2 class="side-card-title">Responsable du projet</h2>
     <p class="side-card-text">
-      Nom, prénom d'un membre de ton groupe (à adapter) - Étudiant(e) CESI.
+      <?= htmlspecialchars((string) ($legalOwner ?? 'Equipe projet Web4Stage - CESI'), ENT_QUOTES) ?>
     </p>
 
-    <h2 class="side-card-title">Hébergement</h2>
+    <h2 class="side-card-title">Contact</h2>
     <p class="side-card-text">
-      Hébergement local ou serveur de l'école (indiquer ici la solution retenue : Apache,
-      etc.).
+      Pour toute question relative au projet, vous pouvez contacter l equipe via
+      <a href="mailto:<?= htmlspecialchars((string) ($legalContactEmail ?? 'contact@web4stage.local'), ENT_QUOTES) ?>">
+        <?= htmlspecialchars((string) ($legalContactEmail ?? 'contact@web4stage.local'), ENT_QUOTES) ?>
+      </a>.
     </p>
 
-    <h2 class="side-card-title">Données personnelles</h2>
+    <h2 class="side-card-title">Hebergement</h2>
     <p class="side-card-text">
-      Ce site pédagogique peut manipuler des données de test (comptes étudiants, pilotes,
-      entreprises). Pour un déploiement réel, il conviendrait de se conformer au RGPD
-      (registre des traitements, base légale, droits des personnes, etc.).
+      <?= htmlspecialchars((string) ($legalHosting ?? ''), ENT_QUOTES) ?>
+    </p>
+
+    <h2 class="side-card-title">Propriete intellectuelle</h2>
+    <p class="side-card-text">
+      Les contenus, maquettes, interfaces, textes et elements techniques presentes dans cette application sont
+      utilises pour la demonstration du projet. Toute reutilisation doit rester conforme au cadre pedagogique et
+      citer le projet lorsqu elle est partagee.
+    </p>
+
+    <h2 class="side-card-title">Donnees personnelles</h2>
+    <p class="side-card-text">
+      Le projet manipule des comptes et donnees de demonstration afin d illustrer des parcours de candidature.
+      Les donnees ne sont pas destinees a un usage commercial reel. Une politique de confidentialite est disponible
+      pour decrire plus precisement leur traitement.
     </p>
   </article>
 </section>

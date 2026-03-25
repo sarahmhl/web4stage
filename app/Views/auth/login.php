@@ -18,7 +18,8 @@
       </p>
     <?php endif; ?>
 
-    <form method="post" action="<?= htmlspecialchars(\Core\Url::route('login'), ENT_QUOTES) ?>">
+    <form method="post" action="<?= htmlspecialchars(\Core\Url::route('login'), ENT_QUOTES) ?>" data-js-validate>
+      <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) ($csrfToken ?? ''), ENT_QUOTES) ?>" />
       <div class="form-group">
         <label for="email">Adresse e-mail</label>
         <input

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce modele manipule les candidatures en base : creation, listes et donnees utiles aux vues.
 
 namespace App\Models;
 
@@ -178,3 +177,4 @@ class Application
         return (int) $pdo->lastInsertId();
     }
 }
+

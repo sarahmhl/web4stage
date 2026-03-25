@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce controleur affiche les entreprises referencees et le detail d une entreprise avec ses avis et ses offres.
 
 namespace App\Controllers;
 
@@ -15,9 +14,15 @@ class CompanyController extends BaseController
 {
     public function index(): void
     {
+        $filters = [
+            'keyword' => trim((string) ($_GET['keyword'] ?? '')),
+            'city' => trim((string) ($_GET['city'] ?? '')),
+            'sector' => trim((string) ($_GET['sector'] ?? '')),
+        ];
+
         $companies = [];
         try {
-            $companies = Company::allWithStats();
+            $companies = Company::allWithStats($filters);
         } catch (\Throwable $e) {
             $this->flash('error', 'Impossible de charger les entreprises pour le moment.');
         }
@@ -25,6 +30,9 @@ class CompanyController extends BaseController
         View::render('companies/index', [
             'title' => 'Web4Stage - Entreprises',
             'companies' => $companies,
+            'filters' => $filters,
+            'metaDescription' => 'Consultez les entreprises partenaires, leurs coordonnees et les offres de stage associees sur Web4Stage.',
+            'metaKeywords' => 'entreprises, stages, cesi, partenaires, web4stage',
         ]);
     }
 
@@ -53,6 +61,8 @@ class CompanyController extends BaseController
             'company' => $company,
             'canReview' => Auth::checkRole(Auth::ROLE_ETUDIANT),
             'csrfToken' => Security::generateCsrfToken(),
+            'metaDescription' => 'Fiche entreprise ' . (string) $company['nom'] . ' : contact, offres liees et avis etudiants.',
+            'metaKeywords' => 'entreprise, fiche entreprise, avis, offres, web4stage',
         ]);
     }
 

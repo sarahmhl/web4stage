@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce modele gere les offres de stage : liste, filtres, detail, creation et modification.
 
 namespace App\Models;
 
@@ -458,6 +457,40 @@ class Offer
         }
     }
 
+    public static function delete(int $offerId): void
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare('DELETE FROM offre WHERE id_offre = :id_offre');
+        $stmt->execute(['id_offre' => $offerId]);
+    }
+
+    /**
+     * @return array{offers:int,companies:int,cities:int,skills:int}
+     */
+    public static function overviewStats(): array
+    {
+        $pdo = Database::getConnection();
+        $sql = "
+            SELECT
+              COUNT(DISTINCT o.id_offre) AS offers_count,
+              COUNT(DISTINCT o.id_entreprise) AS companies_count,
+              COUNT(DISTINCT NULLIF(e.ville, '')) AS cities_count,
+              COUNT(DISTINCT oc.libelle_competence) AS skills_count
+            FROM offre o
+            JOIN entreprise e ON e.id_entreprise = o.id_entreprise
+            LEFT JOIN offre_competence oc ON oc.id_offre = o.id_offre
+            WHERE o.statut = 'PUBLIEE'
+        ";
+
+        $row = $pdo->query($sql)->fetch(PDO::FETCH_ASSOC) ?: [];
+        return [
+            'offers' => (int) ($row['offers_count'] ?? 0),
+            'companies' => (int) ($row['companies_count'] ?? 0),
+            'cities' => (int) ($row['cities_count'] ?? 0),
+            'skills' => (int) ($row['skills_count'] ?? 0),
+        ];
+    }
+
     /**
      * @param array<string, string> $filters
      * @return array{0:string,1:array<string, mixed>}
@@ -642,3 +675,4 @@ class Offer
         return 'Offre enregistree dans la base.';
     }
 }
+

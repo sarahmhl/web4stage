@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce controleur gere la wish-list de l etudiant : ajout, retrait et affichage des offres favorites.
 
 namespace App\Controllers;
 
@@ -60,3 +59,4 @@ class WishlistController extends BaseController
         $this->redirect($redirectTo === '' ? '/wishlist' : $redirectTo);
     }
 }
+

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Bootstrap minimal pour charger les classes du projet pendant les tests PHPUnit.
 
 if (session_status() === PHP_SESSION_NONE) {
     $sessionPath = dirname(__DIR__) . '/tests/.sessions';
@@ -35,3 +34,4 @@ spl_autoload_register(function (string $class): void {
         }
     }
 });
+

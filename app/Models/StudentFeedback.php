@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce modele gere les avis des etudiants sur la formation et la plateforme.
 
 namespace App\Models;
 
@@ -114,3 +113,4 @@ class StudentFeedback
         return $letters !== '' ? $letters : 'ET';
     }
 }
+

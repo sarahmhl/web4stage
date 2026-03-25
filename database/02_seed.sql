@@ -1,5 +1,3 @@
--- Donnees de demonstration pour alimenter le site avec des comptes, entreprises et offres de test.
--- Web4Stage seed data
 SET NAMES utf8mb4;
 
 INSERT INTO entreprise (nom, description, ville, secteur, site_web, email_contact, telephone_contact)
@@ -20,7 +18,6 @@ ON DUPLICATE KEY UPDATE
   email_contact = VALUES(email_contact),
   telephone_contact = VALUES(telephone_contact);
 
--- Optional seeded accounts (password = ChangeMe123!)
 INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role)
 VALUES
   ('Admin', 'Web4Stage', 'admin-01@web4stage.local', '$2y$10$UqIrI1PlOQk0cIPN0RXbS.upMs7.uw5koZmADBX.4W75NvxNWNg06', 'ADMIN'),
@@ -233,3 +230,4 @@ WHERE u.email = 'lea.martin@viacesi.fr'
 ON DUPLICATE KEY UPDATE
   note = VALUES(note),
   commentaire = VALUES(commentaire);
+

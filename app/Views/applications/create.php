@@ -1,11 +1,13 @@
-<?php // Vue du formulaire de candidature a une offre avec CV et lettre de motivation. ?>
-<?php $hasStoredCv = !empty($documents['cv_path']); ?>
+<?php
+
+$hasStoredCv = !empty($documents['cv_path']);
+?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Postuler</span>
-    <h1 class="page-heading-title">Candidater à <?= htmlspecialchars((string) $offer['title'], ENT_QUOTES) ?></h1>
+    <h1 class="page-heading-title">Candidater a <?= htmlspecialchars((string) $offer['title'], ENT_QUOTES) ?></h1>
     <p class="page-heading-subtitle">
-      Complétez votre lettre de motivation et indiquez le CV à joindre à votre candidature.
+      Completez votre lettre de motivation et joignez votre CV a votre candidature.
     </p>
   </div>
 </header>
@@ -20,14 +22,14 @@
       </li>
       <li>
         <span>Ville</span>
-        <strong><?= htmlspecialchars((string) ($offer['city'] ?: 'Non précisée'), ENT_QUOTES) ?></strong>
+        <strong><?= htmlspecialchars((string) ($offer['city'] ?: 'Non precisee'), ENT_QUOTES) ?></strong>
       </li>
       <li>
-        <span>Durée</span>
+        <span>Duree</span>
         <strong><?= htmlspecialchars((string) $offer['duration'], ENT_QUOTES) ?></strong>
       </li>
       <li>
-        <span>Rémunération</span>
+        <span>Remuneration</span>
         <strong><?= htmlspecialchars((string) $offer['salary'], ENT_QUOTES) ?></strong>
       </li>
     </ul>
@@ -39,7 +41,12 @@
       <span class="pill-small">CV + lettre</span>
     </header>
 
-    <form method="post" action="<?= htmlspecialchars(\Core\Url::route('candidatures'), ENT_QUOTES) ?>" enctype="multipart/form-data">
+    <form
+      method="post"
+      action="<?= htmlspecialchars(\Core\Url::route('candidatures'), ENT_QUOTES) ?>"
+      enctype="multipart/form-data"
+      data-js-validate
+    >
       <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $csrfToken, ENT_QUOTES) ?>" />
       <input type="hidden" name="offer_id" value="<?= (int) $offer['id'] ?>" />
       <input type="hidden" name="existing_cv_path" value="<?= htmlspecialchars((string) ($documents['cv_path'] ?? ''), ENT_QUOTES) ?>" />
@@ -61,6 +68,7 @@
             name="cv_file"
             class="form-control"
             accept=".pdf,.doc,.docx"
+            data-max-bytes="5242880"
             <?= $hasStoredCv ? '' : 'required' ?>
           />
           <p class="auth-hint offer-form-hint">Formats acceptes : PDF, DOC, DOCX. Taille maximale : 5 Mo.</p>
@@ -73,22 +81,23 @@
             name="lettre_motivation"
             class="form-control form-control--textarea"
             required
+            minlength="30"
           ><?= htmlspecialchars((string) ($documents['lettre_type'] ?? ''), ENT_QUOTES) ?></textarea>
         </div>
 
         <div class="form-group form-group--full">
-          <label for="commentaire">Note complémentaire</label>
+          <label for="commentaire">Note complementaire</label>
           <textarea
             id="commentaire"
             name="commentaire"
             class="form-control form-control--textarea"
-            placeholder="Informations complémentaires à joindre à votre dossier."
+            placeholder="Informations complementaires a joindre a votre dossier."
           ></textarea>
         </div>
       </div>
 
       <div class="form-footer offer-form-actions">
-        <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $offer['id']), ENT_QUOTES) ?>" class="btn btn-outline">Retour à l offre</a>
+        <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $offer['id']), ENT_QUOTES) ?>" class="btn btn-outline">Retour a l offre</a>
         <button type="submit" class="btn btn-primary">Envoyer la candidature</button>
       </div>
     </form>

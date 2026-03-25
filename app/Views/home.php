@@ -142,12 +142,12 @@
     </div>
     <div class="hero-notes">
       <div class="hero-kpi">
-        <strong>150+ offres</strong>
-        <span>Triées par ville, durée et compétences</span>
+        <strong><?= (int) ($overviewStats['offers'] ?? 0) ?> offres</strong>
+        <span><?= (int) ($overviewStats['cities'] ?? 0) ?> villes et plusieurs filtres actifs</span>
       </div>
       <div class="hero-kpi">
-        <strong>Suivi centralisé</strong>
-        <span>Offres, candidatures et tableaux de bord</span>
+        <strong><?= (int) ($overviewStats['companies'] ?? 0) ?> entreprises</strong>
+        <span><?= (int) ($overviewStats['skills'] ?? 0) ?> competences deja referencees</span>
       </div>
     </div>
   </div>

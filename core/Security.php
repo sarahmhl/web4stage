@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce fichier regroupe les protections simples du projet, notamment le token CSRF.
 
 namespace Core;
 
@@ -35,3 +34,4 @@ class Security
         return $isValid;
     }
 }
+

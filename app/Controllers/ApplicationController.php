@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce controleur gere le depot d une candidature et la liste des candidatures de l etudiant connecte.
 
 namespace App\Controllers;
 
@@ -123,3 +122,4 @@ class ApplicationController extends BaseController
         ]);
     }
 }
+

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce controleur de base regroupe les helpers communs utilises par les autres controleurs.
 
 namespace App\Controllers;
 
@@ -123,3 +122,4 @@ abstract class BaseController
         };
     }
 }
+

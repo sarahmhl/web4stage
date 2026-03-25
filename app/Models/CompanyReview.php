@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce modele enregistre et relit les evaluations publiees sur les entreprises.
 
 namespace App\Models;
 
@@ -83,3 +82,4 @@ class CompanyReview
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+

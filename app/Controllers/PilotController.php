@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce controleur gere l espace pilote : tableau de bord, suivi promo, avis et creation d offres.
 
 namespace App\Controllers;
 
@@ -234,3 +233,4 @@ class PilotController extends BaseController
         ];
     }
 }
+

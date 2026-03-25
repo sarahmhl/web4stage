@@ -1,5 +1,3 @@
-// Script principal du front : menu mobile et quelques effets d interaction sur les cartes.
-// Menu burger pour mobile
 document.addEventListener("DOMContentLoaded", () => {
   const canUseTilt =
     window.matchMedia("(hover: hover)").matches &&
@@ -18,18 +16,20 @@ document.addEventListener("DOMContentLoaded", () => {
         spans[1].style.opacity = "0";
         spans[2].style.transform = "translateY(-4px) rotate(-45deg)";
       } else {
-        spans.forEach((s) => {
-          s.style.transform = "";
-          s.style.opacity = "";
+        spans.forEach((span) => {
+          span.style.transform = "";
+          span.style.opacity = "";
         });
       }
     });
   }
 
   if (canUseTilt && !isFlatWorkspace) {
-    const tiltTargets = Array.from(document.querySelectorAll(
-      ".hero-card, .offer-card, .side-card, .dash-card, .entry-card, .entry-reboot-panel, .btn-primary"
-    ));
+    const tiltTargets = Array.from(
+      document.querySelectorAll(
+        ".hero-card, .offer-card, .side-card, .dash-card, .entry-card, .entry-reboot-panel, .btn-primary"
+      )
+    );
 
     tiltTargets.forEach((el) => {
       el.classList.add("tilt-3d");
@@ -54,4 +54,105 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  const forms = Array.from(document.querySelectorAll("form[data-js-validate]"));
+  forms.forEach((form) => {
+    const fields = Array.from(form.querySelectorAll("input, textarea, select"));
+
+    const validateField = (field) => {
+      if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement)) {
+        return true;
+      }
+
+      field.setCustomValidity("");
+
+      if (field.disabled || field.type === "hidden") {
+        return true;
+      }
+
+      const value = field.value.trim();
+
+      if (field.required && value === "") {
+        field.setCustomValidity("Merci de renseigner ce champ.");
+        return false;
+      }
+
+      if (field instanceof HTMLInputElement && field.type === "email" && value !== "") {
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        if (!isValidEmail) {
+          field.setCustomValidity("Merci de saisir une adresse e-mail valide.");
+          return false;
+        }
+      }
+
+      if (field instanceof HTMLInputElement && field.type === "password" && field.minLength > 0 && value !== "" && value.length < field.minLength) {
+        field.setCustomValidity(`Merci de saisir au moins ${field.minLength} caracteres.`);
+        return false;
+      }
+
+      if (field instanceof HTMLInputElement && field.type === "number" && value !== "") {
+        const numericValue = Number(field.value);
+        if (Number.isNaN(numericValue)) {
+          field.setCustomValidity("Merci de saisir une valeur numerique valide.");
+          return false;
+        }
+        if (field.min !== "" && numericValue < Number(field.min)) {
+          field.setCustomValidity(`La valeur minimale autorisee est ${field.min}.`);
+          return false;
+        }
+      }
+
+      if (field instanceof HTMLInputElement && field.type === "file" && field.files && field.files.length > 0) {
+        const file = field.files[0];
+        const accept = field.getAttribute("accept");
+        const maxBytes = Number(field.dataset.maxBytes || "0");
+
+        if (accept) {
+          const allowedExtensions = accept
+            .split(",")
+            .map((item) => item.trim().toLowerCase())
+            .filter(Boolean);
+          const lowerName = file.name.toLowerCase();
+          const isAllowed = allowedExtensions.some((extension) => lowerName.endsWith(extension));
+          if (!isAllowed) {
+            field.setCustomValidity("Format de fichier non autorise.");
+            return false;
+          }
+        }
+
+        if (maxBytes > 0 && file.size > maxBytes) {
+          field.setCustomValidity("Le fichier depasse la taille maximale autorisee.");
+          return false;
+        }
+      }
+
+      return true;
+    };
+
+    fields.forEach((field) => {
+      field.addEventListener("input", () => {
+        validateField(field);
+      });
+      field.addEventListener("change", () => {
+        validateField(field);
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      let firstInvalidField = null;
+
+      fields.forEach((field) => {
+        const isValid = validateField(field);
+        if (!isValid && firstInvalidField === null) {
+          firstInvalidField = field;
+        }
+      });
+
+      if (firstInvalidField !== null) {
+        event.preventDefault();
+        firstInvalidField.reportValidity();
+        firstInvalidField.focus();
+      }
+    });
+  });
 });

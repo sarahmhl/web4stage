@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce controleur gere le catalogue des offres, les filtres de recherche et la fiche detail d une offre.
 
 namespace App\Controllers;
 
@@ -62,6 +61,8 @@ class OfferController extends BaseController
             'totalPages' => $totalPages,
             'totalOffers' => $totalOffers,
             'csrfToken' => Security::generateCsrfToken(),
+            'metaDescription' => 'Catalogue des offres de stage Web4Stage avec filtres par ville, competences et duree.',
+            'metaKeywords' => 'offres de stage, stage web, candidature, cesi, web4stage',
         ]);
     }
 
@@ -104,6 +105,8 @@ class OfferController extends BaseController
             'isWishlisted' => $isWishlisted,
             'canApply' => Auth::checkRole(Auth::ROLE_ETUDIANT),
             'csrfToken' => Security::generateCsrfToken(),
+            'metaDescription' => 'Detail de l offre ' . (string) $offer['title'] . ' chez ' . (string) $offer['company'] . '.',
+            'metaKeywords' => 'detail offre, stage, entreprise, candidature, web4stage',
         ]);
     }
 
@@ -115,3 +118,4 @@ class OfferController extends BaseController
         ]);
     }
 }
+

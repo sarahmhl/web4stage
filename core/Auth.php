@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce service centralise la session utilisateur, les roles et les controles d acces.
 
 namespace Core;
 
@@ -26,6 +25,7 @@ class Auth
             return false;
         }
 
+        session_regenerate_id(true);
         $_SESSION['user'] = [
             'id' => (int) $user['id_utilisateur'],
             'nom' => $user['nom'],
@@ -39,7 +39,27 @@ class Auth
 
     public static function logout(): void
     {
-        unset($_SESSION['user']);
+        $_SESSION = [];
+
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                [
+                    'expires' => time() - 42000,
+                    'path' => $params['path'] ?: '/',
+                    'domain' => $params['domain'] ?: '',
+                    'secure' => (bool) $params['secure'],
+                    'httponly' => (bool) $params['httponly'],
+                    'samesite' => $params['samesite'] ?: 'Lax',
+                ]
+            );
+        }
+
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_destroy();
+        }
     }
 
     /**
@@ -81,4 +101,5 @@ class Auth
         }
     }
 }
+
 

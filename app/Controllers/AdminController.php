@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce controleur gere les ecrans admin : dashboard, comptes, moderation, qualite et edition des offres.
 
 namespace App\Controllers;
 
@@ -47,7 +46,7 @@ class AdminController extends BaseController
                 'pendingActions' => count($feedbacks) + count($companyReviews),
             ];
         } catch (\Throwable $e) {
-            $this->flash('error', 'Certaines données d administration n ont pas pu être chargées.');
+            $this->flash('error', 'Certaines donnees d administration n ont pas pu etre chargees.');
         }
 
         View::render('admin/dashboard', [
@@ -58,6 +57,8 @@ class AdminController extends BaseController
             'offers' => array_slice($offers, 0, 5),
             'feedbacks' => array_slice($feedbacks, 0, 4),
             'companyReviews' => array_slice($companyReviews, 0, 4),
+            'metaDescription' => 'Tableau de bord administrateur Web4Stage pour gerer les comptes, les offres, les entreprises et la moderation.',
+            'metaKeywords' => 'administration, back office, comptes, offres, entreprises, web4stage',
         ]);
     }
 
@@ -96,6 +97,8 @@ class AdminController extends BaseController
             'csrfToken' => Security::generateCsrfToken(),
             'error' => null,
             'success' => null,
+            'metaDescription' => 'Gestion administrateur des offres de stage publiees sur Web4Stage.',
+            'metaKeywords' => 'administration offres, modifier offre, supprimer offre, web4stage',
         ]);
     }
 
@@ -110,7 +113,7 @@ class AdminController extends BaseController
         }
 
         if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
-            $this->flash('error', 'Session invalide. Merci de réessayer.');
+            $this->flash('error', 'Session invalide. Merci de reessayer.');
             $this->redirect('/admin/offres/modifier?id=' . $offerId);
         }
 
@@ -127,12 +130,38 @@ class AdminController extends BaseController
         try {
             Offer::update($offerId, $data);
             unset($_SESSION['admin_offer_old']);
-            $this->flash('success', 'Les modifications de l offre ont bien été enregistrées.');
+            $this->flash('success', 'Les modifications de l offre ont bien ete enregistrees.');
         } catch (\Throwable $e) {
             $this->flash('error', 'Impossible de modifier cette offre pour le moment.');
         }
 
         $this->redirect('/admin/offres/modifier?id=' . $offerId);
+    }
+
+    public function deleteOffer(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        $offerId = (int) ($_POST['id_offre'] ?? 0);
+        if ($offerId <= 0) {
+            $this->flash('error', 'Offre introuvable.');
+            $this->redirect('/admin/offres/modifier');
+        }
+
+        if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
+            $this->flash('error', 'Session invalide. Merci de reessayer.');
+            $this->redirect('/admin/offres/modifier?id=' . $offerId);
+        }
+
+        try {
+            Offer::delete($offerId);
+            unset($_SESSION['admin_offer_old']);
+            $this->flash('success', 'L offre a bien ete supprimee.');
+            $this->redirect('/admin/offres/modifier');
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de supprimer cette offre pour le moment.');
+            $this->redirect('/admin/offres/modifier?id=' . $offerId);
+        }
     }
 
     public function accounts(): void
@@ -146,10 +175,280 @@ class AdminController extends BaseController
             $this->flash('error', 'Impossible de charger la liste des comptes.');
         }
 
+        $selectedUserId = max(0, (int) ($_GET['id'] ?? 0));
+        $isNewAccount = isset($_GET['new']);
+
+        if (!$isNewAccount && $selectedUserId === 0 && $users !== []) {
+            $selectedUserId = (int) ($users[0]['id_utilisateur'] ?? 0);
+        }
+
+        $selectedUser = (!$isNewAccount && $selectedUserId > 0) ? User::findById($selectedUserId) : null;
+        if ($isNewAccount) {
+            $selectedUser = [
+                'id_utilisateur' => 0,
+                'nom' => '',
+                'prenom' => '',
+                'email' => '',
+                'role' => Auth::ROLE_ETUDIANT,
+            ];
+        }
+
+        $oldInput = $_SESSION['admin_account_old'] ?? null;
+        unset($_SESSION['admin_account_old']);
+        if (is_array($oldInput)) {
+            $selectedUser = array_merge($selectedUser ?? [], $oldInput);
+            $selectedUserId = (int) ($selectedUser['id_utilisateur'] ?? 0);
+            $isNewAccount = (bool) ($oldInput['is_new'] ?? $isNewAccount);
+        }
+
+        $roleCounts = [
+            Auth::ROLE_ETUDIANT => count(array_filter($users, static fn (array $user): bool => (string) ($user['role'] ?? '') === Auth::ROLE_ETUDIANT)),
+            Auth::ROLE_PILOTE => count(array_filter($users, static fn (array $user): bool => (string) ($user['role'] ?? '') === Auth::ROLE_PILOTE)),
+            Auth::ROLE_ADMIN => count(array_filter($users, static fn (array $user): bool => (string) ($user['role'] ?? '') === Auth::ROLE_ADMIN)),
+        ];
+
         View::render('admin/accounts', [
             'title' => 'Web4Stage - Gestion des comptes',
             'users' => $users,
+            'selectedUser' => $selectedUser,
+            'selectedUserId' => $selectedUserId,
+            'isNewAccount' => $isNewAccount,
+            'roleOptions' => $this->roleOptions(),
+            'roleCounts' => $roleCounts,
+            'csrfToken' => Security::generateCsrfToken(),
+            'metaDescription' => 'Gestion des comptes et des roles utilisateurs dans l administration Web4Stage.',
+            'metaKeywords' => 'comptes, utilisateurs, roles, administration, web4stage',
         ]);
+    }
+
+    public function saveAccount(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
+            $this->flash('error', 'Session invalide. Merci de reessayer.');
+            $this->redirect('/admin/comptes');
+        }
+
+        $data = $this->sanitizeAccountInput($_POST);
+        $_SESSION['admin_account_old'] = $data;
+
+        $error = $this->validateAccountInput($data);
+        if ($error !== null) {
+            $this->flash('error', $error);
+            $this->redirect($this->accountRedirectPath($data));
+        }
+
+        if (User::emailExists((string) $data['email'], (int) ($data['id_utilisateur'] ?: 0) ?: null)) {
+            $this->flash('error', 'Cette adresse e-mail est deja utilisee.');
+            $this->redirect($this->accountRedirectPath($data));
+        }
+
+        $currentAdminId = (int) ($this->currentUser()['id'] ?? 0);
+        $existingUser = (int) $data['id_utilisateur'] > 0 ? User::findById((int) $data['id_utilisateur']) : null;
+
+        if (
+            $existingUser !== null
+            && (string) $existingUser['role'] === Auth::ROLE_ADMIN
+            && (string) $data['role'] !== Auth::ROLE_ADMIN
+            && User::countByRole(Auth::ROLE_ADMIN) <= 1
+        ) {
+            $this->flash('error', 'Au moins un compte administrateur doit etre conserve.');
+            $this->redirect($this->accountRedirectPath($data));
+        }
+
+        if ($existingUser !== null && (int) $existingUser['id_utilisateur'] === $currentAdminId && (string) $data['role'] !== Auth::ROLE_ADMIN) {
+            $this->flash('error', 'Vous ne pouvez pas retirer le role admin de votre session active.');
+            $this->redirect($this->accountRedirectPath($data));
+        }
+
+        try {
+            $passwordHash = trim((string) $data['mot_de_passe']) !== ''
+                ? password_hash((string) $data['mot_de_passe'], PASSWORD_DEFAULT)
+                : null;
+
+            if ((int) $data['id_utilisateur'] > 0) {
+                User::update((int) $data['id_utilisateur'], [
+                    'nom' => $data['nom'],
+                    'prenom' => $data['prenom'],
+                    'email' => $data['email'],
+                    'role' => $data['role'],
+                    'mot_de_passe' => $passwordHash,
+                ]);
+                $this->flash('success', 'Le compte utilisateur a bien ete mis a jour.');
+                unset($_SESSION['admin_account_old']);
+                $this->redirect('/admin/comptes?id=' . (int) $data['id_utilisateur']);
+            }
+
+            $newId = User::create([
+                'nom' => $data['nom'],
+                'prenom' => $data['prenom'],
+                'email' => $data['email'],
+                'role' => $data['role'],
+                'mot_de_passe' => $passwordHash,
+            ]);
+            $this->flash('success', 'Le nouveau compte a bien ete cree.');
+            unset($_SESSION['admin_account_old']);
+            $this->redirect('/admin/comptes?id=' . $newId);
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible d enregistrer ce compte pour le moment.');
+            $this->redirect($this->accountRedirectPath($data));
+        }
+    }
+
+    public function deleteAccount(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
+            $this->flash('error', 'Session invalide. Merci de reessayer.');
+            $this->redirect('/admin/comptes');
+        }
+
+        $userId = (int) ($_POST['id_utilisateur'] ?? 0);
+        if ($userId <= 0) {
+            $this->flash('error', 'Compte introuvable.');
+            $this->redirect('/admin/comptes');
+        }
+
+        $currentAdminId = (int) ($this->currentUser()['id'] ?? 0);
+        if ($userId === $currentAdminId) {
+            $this->flash('error', 'Vous ne pouvez pas supprimer le compte actuellement connecte.');
+            $this->redirect('/admin/comptes?id=' . $userId);
+        }
+
+        $user = User::findById($userId);
+        if ($user === null) {
+            $this->flash('error', 'Compte introuvable.');
+            $this->redirect('/admin/comptes');
+        }
+
+        if ((string) $user['role'] === Auth::ROLE_ADMIN && User::countByRole(Auth::ROLE_ADMIN) <= 1) {
+            $this->flash('error', 'Le dernier compte administrateur ne peut pas etre supprime.');
+            $this->redirect('/admin/comptes?id=' . $userId);
+        }
+
+        try {
+            User::delete($userId);
+            $this->flash('success', 'Le compte a bien ete supprime.');
+            $this->redirect('/admin/comptes');
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de supprimer ce compte pour le moment.');
+            $this->redirect('/admin/comptes?id=' . $userId);
+        }
+    }
+
+    public function companies(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        $companies = [];
+        try {
+            $companies = Company::allWithStats();
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de charger la liste des entreprises.');
+        }
+
+        $selectedCompanyId = max(0, (int) ($_GET['id'] ?? 0));
+        $isNewCompany = isset($_GET['new']);
+
+        if (!$isNewCompany && $selectedCompanyId === 0 && $companies !== []) {
+            $selectedCompanyId = (int) ($companies[0]['id_entreprise'] ?? 0);
+        }
+
+        $selectedCompany = (!$isNewCompany && $selectedCompanyId > 0) ? Company::findById($selectedCompanyId) : null;
+        if ($isNewCompany) {
+            $selectedCompany = [
+                'id_entreprise' => 0,
+                'nom' => '',
+                'description' => '',
+                'ville' => '',
+                'secteur' => '',
+                'site_web' => '',
+                'email_contact' => '',
+                'telephone_contact' => '',
+            ];
+        }
+
+        $oldInput = $_SESSION['admin_company_old'] ?? null;
+        unset($_SESSION['admin_company_old']);
+        if (is_array($oldInput)) {
+            $selectedCompany = array_merge($selectedCompany ?? [], $oldInput);
+            $selectedCompanyId = (int) ($selectedCompany['id_entreprise'] ?? 0);
+            $isNewCompany = (bool) ($oldInput['is_new'] ?? $isNewCompany);
+        }
+
+        View::render('admin/companies', [
+            'title' => 'Web4Stage - Gestion des entreprises',
+            'companies' => $companies,
+            'selectedCompany' => $selectedCompany,
+            'selectedCompanyId' => $selectedCompanyId,
+            'isNewCompany' => $isNewCompany,
+            'csrfToken' => Security::generateCsrfToken(),
+            'metaDescription' => 'Gestion des entreprises partenaires dans le back-office Web4Stage.',
+            'metaKeywords' => 'entreprises, partenaires, administration, web4stage',
+        ]);
+    }
+
+    public function saveCompany(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
+            $this->flash('error', 'Session invalide. Merci de reessayer.');
+            $this->redirect('/admin/entreprises');
+        }
+
+        $data = $this->sanitizeCompanyInput($_POST);
+        $_SESSION['admin_company_old'] = $data;
+
+        $error = $this->validateCompanyInput($data);
+        if ($error !== null) {
+            $this->flash('error', $error);
+            $this->redirect($this->companyRedirectPath($data));
+        }
+
+        try {
+            if ((int) $data['id_entreprise'] > 0) {
+                Company::update((int) $data['id_entreprise'], $data);
+                $this->flash('success', 'La fiche entreprise a bien ete mise a jour.');
+                unset($_SESSION['admin_company_old']);
+                $this->redirect('/admin/entreprises?id=' . (int) $data['id_entreprise']);
+            }
+
+            $newId = Company::create($data);
+            $this->flash('success', 'La nouvelle entreprise a bien ete ajoutee.');
+            unset($_SESSION['admin_company_old']);
+            $this->redirect('/admin/entreprises?id=' . $newId);
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible d enregistrer cette entreprise pour le moment.');
+            $this->redirect($this->companyRedirectPath($data));
+        }
+    }
+
+    public function deleteCompany(): void
+    {
+        Auth::requireRole(Auth::ROLE_ADMIN);
+
+        if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
+            $this->flash('error', 'Session invalide. Merci de reessayer.');
+            $this->redirect('/admin/entreprises');
+        }
+
+        $companyId = (int) ($_POST['id_entreprise'] ?? 0);
+        if ($companyId <= 0) {
+            $this->flash('error', 'Entreprise introuvable.');
+            $this->redirect('/admin/entreprises');
+        }
+
+        try {
+            Company::delete($companyId);
+            $this->flash('success', 'L entreprise a bien ete supprimee.');
+            $this->redirect('/admin/entreprises');
+        } catch (\Throwable $e) {
+            $this->flash('error', 'Impossible de supprimer cette entreprise tant que des offres lui sont rattachees.');
+            $this->redirect('/admin/entreprises?id=' . $companyId);
+        }
     }
 
     public function moderation(): void
@@ -166,9 +465,11 @@ class AdminController extends BaseController
         }
 
         View::render('admin/moderation', [
-            'title' => 'Web4Stage - Modération',
+            'title' => 'Web4Stage - Moderation',
             'feedbacks' => $feedbacks,
             'companyReviews' => $companyReviews,
+            'metaDescription' => 'Moderation des avis et evaluations utilisateurs sur Web4Stage.',
+            'metaKeywords' => 'moderation, avis, evaluations, web4stage',
         ]);
     }
 
@@ -182,13 +483,15 @@ class AdminController extends BaseController
             $offers = Offer::allForManagement();
             $companies = Company::allWithStats();
         } catch (\Throwable $e) {
-            $this->flash('error', 'Impossible de charger les indicateurs de qualité.');
+            $this->flash('error', 'Impossible de charger les indicateurs de qualite.');
         }
 
         View::render('admin/quality', [
-            'title' => 'Web4Stage - Qualité globale',
+            'title' => 'Web4Stage - Qualite globale',
             'offers' => $offers,
             'companies' => $companies,
+            'metaDescription' => 'Vue synthese de la qualite globale de la plateforme Web4Stage.',
+            'metaKeywords' => 'qualite, indicateurs, administration, web4stage',
         ]);
     }
 
@@ -219,7 +522,7 @@ class AdminController extends BaseController
     private function validateOfferInput(array $data): ?string
     {
         if ((int) $data['id_entreprise'] <= 0) {
-            return 'Merci de sélectionner une entreprise.';
+            return 'Merci de selectionner une entreprise.';
         }
 
         if ((string) $data['titre'] === '') {
@@ -235,14 +538,130 @@ class AdminController extends BaseController
         }
 
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $data['date_offre'])) {
-            return 'La date de publication doit être au format AAAA-MM-JJ.';
+            return 'La date de publication doit etre au format AAAA-MM-JJ.';
         }
 
         if ($data['duree_mois'] !== null && (int) $data['duree_mois'] <= 0) {
-            return 'La durée doit être supérieure à zéro.';
+            return 'La duree doit etre superieure a zero.';
         }
 
         return null;
+    }
+
+    /**
+     * @param array<string, mixed> $input
+     * @return array<string, mixed>
+     */
+    private function sanitizeAccountInput(array $input): array
+    {
+        return [
+            'id_utilisateur' => (int) ($input['id_utilisateur'] ?? 0),
+            'nom' => trim((string) ($input['nom'] ?? '')),
+            'prenom' => trim((string) ($input['prenom'] ?? '')),
+            'email' => mb_strtolower(trim((string) ($input['email'] ?? ''))),
+            'role' => trim((string) ($input['role'] ?? Auth::ROLE_ETUDIANT)),
+            'mot_de_passe' => trim((string) ($input['mot_de_passe'] ?? '')),
+            'is_new' => (bool) ((int) ($input['id_utilisateur'] ?? 0) === 0),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function validateAccountInput(array $data): ?string
+    {
+        if ((string) $data['nom'] === '' || (string) $data['prenom'] === '') {
+            return 'Merci de renseigner le nom et le prenom.';
+        }
+
+        if (!filter_var((string) $data['email'], FILTER_VALIDATE_EMAIL)) {
+            return 'Merci de renseigner une adresse e-mail valide.';
+        }
+
+        if (!in_array((string) $data['role'], array_keys($this->roleOptions()), true)) {
+            return 'Role utilisateur invalide.';
+        }
+
+        $password = (string) $data['mot_de_passe'];
+        if ((int) $data['id_utilisateur'] === 0 && strlen($password) < 8) {
+            return 'Le mot de passe doit contenir au moins 8 caracteres pour un nouveau compte.';
+        }
+
+        if ((int) $data['id_utilisateur'] > 0 && $password !== '' && strlen($password) < 8) {
+            return 'Le nouveau mot de passe doit contenir au moins 8 caracteres.';
+        }
+
+        return null;
+    }
+
+    private function accountRedirectPath(array $data): string
+    {
+        return (int) ($data['id_utilisateur'] ?? 0) > 0
+            ? '/admin/comptes?id=' . (int) $data['id_utilisateur']
+            : '/admin/comptes?new=1';
+    }
+
+    /**
+     * @param array<string, mixed> $input
+     * @return array<string, mixed>
+     */
+    private function sanitizeCompanyInput(array $input): array
+    {
+        $site = trim((string) ($input['site_web'] ?? ''));
+        if ($site !== '' && !preg_match('#^https?://#i', $site)) {
+            $site = 'https://' . $site;
+        }
+
+        return [
+            'id_entreprise' => (int) ($input['id_entreprise'] ?? 0),
+            'nom' => trim((string) ($input['nom'] ?? '')),
+            'description' => trim((string) ($input['description'] ?? '')),
+            'ville' => trim((string) ($input['ville'] ?? '')),
+            'secteur' => trim((string) ($input['secteur'] ?? '')),
+            'site_web' => $site,
+            'email_contact' => mb_strtolower(trim((string) ($input['email_contact'] ?? ''))),
+            'telephone_contact' => trim((string) ($input['telephone_contact'] ?? '')),
+            'is_new' => (bool) ((int) ($input['id_entreprise'] ?? 0) === 0),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function validateCompanyInput(array $data): ?string
+    {
+        if ((string) $data['nom'] === '') {
+            return 'Merci de renseigner le nom de l entreprise.';
+        }
+
+        if ((string) $data['email_contact'] !== '' && !filter_var((string) $data['email_contact'], FILTER_VALIDATE_EMAIL)) {
+            return 'Merci de renseigner un e-mail de contact valide.';
+        }
+
+        if ((string) $data['site_web'] !== '' && !filter_var((string) $data['site_web'], FILTER_VALIDATE_URL)) {
+            return 'Merci de renseigner une URL de site web valide.';
+        }
+
+        return null;
+    }
+
+    private function companyRedirectPath(array $data): string
+    {
+        return (int) ($data['id_entreprise'] ?? 0) > 0
+            ? '/admin/entreprises?id=' . (int) $data['id_entreprise']
+            : '/admin/entreprises?new=1';
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function roleOptions(): array
+    {
+        return [
+            Auth::ROLE_ETUDIANT => 'Etudiant',
+            Auth::ROLE_PILOTE => 'Pilote',
+            Auth::ROLE_ADMIN => 'Administrateur',
+        ];
     }
 
     /**
@@ -251,9 +670,9 @@ class AdminController extends BaseController
     private function imageOptions(): array
     {
         return [
-            ['file' => 'devfontend.jpeg', 'label' => 'Développement front-end'],
-            ['file' => 'devphp.jpeg', 'label' => 'Développement PHP / back-end'],
-            ['file' => 'devweb.jpeg', 'label' => 'Développement web général'],
+            ['file' => 'devfontend.jpeg', 'label' => 'Developpement front-end'],
+            ['file' => 'devphp.jpeg', 'label' => 'Developpement PHP / back-end'],
+            ['file' => 'devweb.jpeg', 'label' => 'Developpement web general'],
             ['file' => 'design.jpg', 'label' => 'Design / UX / UI'],
             ['file' => 'Marketing.jpeg', 'label' => 'Marketing / communication'],
             ['file' => 'default.svg', 'label' => 'Illustration neutre'],

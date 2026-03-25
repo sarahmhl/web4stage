@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce helper construit les URLs de routes et d assets selon le chemin actuel du projet.
 
 namespace Core;
 
@@ -54,8 +53,14 @@ class Url
         $cleanPath = ltrim($path, '/');
         $projectRoot = dirname(__DIR__);
         $filePath = $projectRoot . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $cleanPath);
-        $url = (self::projectBase() === '' ? '' : self::projectBase()) . '/' . $cleanPath;
-        $url = str_replace(' ', '%20', $url);
+        $staticBaseUrl = rtrim((string) Config::get('static_base_url', ''), '/');
+
+        if ($staticBaseUrl !== '' && str_starts_with($cleanPath, 'assets/')) {
+            $url = $staticBaseUrl . '/' . $cleanPath;
+        } else {
+            $url = (self::projectBase() === '' ? '' : self::projectBase()) . '/' . $cleanPath;
+            $url = str_replace(' ', '%20', $url);
+        }
 
         if (is_file($filePath)) {
             $url .= '?v=' . filemtime($filePath);
@@ -63,4 +68,20 @@ class Url
 
         return $url;
     }
+
+    public static function absolute(string $path = ''): string
+    {
+        $baseUrl = rtrim((string) Config::get('app_public_url', ''), '/');
+        if ($baseUrl === '') {
+            return self::route($path);
+        }
+
+        $cleanPath = ltrim($path, '/');
+        if ($cleanPath === '') {
+            return $baseUrl;
+        }
+
+        return $baseUrl . '/' . str_replace(' ', '%20', $cleanPath);
+    }
 }
+

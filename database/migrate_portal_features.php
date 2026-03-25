@@ -330,3 +330,4 @@ if ($studentId > 0) {
 }
 
 echo "Migration portail appliquee.\n";
+

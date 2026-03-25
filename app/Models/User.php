@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce modele gere les utilisateurs : authentification, profils et listes admin/pilote.
 
 namespace App\Models;
 
@@ -122,6 +121,21 @@ class User
         $localPart = trim($localPart);
         $defaultNom = $localPart !== '' ? ucfirst($localPart) : 'Etudiant';
 
+        return self::create([
+            'nom' => $defaultNom,
+            'prenom' => '',
+            'email' => $email,
+            'mot_de_passe' => $passwordHash,
+            'role' => 'ETUDIANT',
+        ]);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function create(array $data): int
+    {
+        $pdo = Database::getConnection();
         $sql = <<<SQL
             INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role)
             VALUES (:nom, :prenom, :email, :mot_de_passe, :role)
@@ -129,13 +143,76 @@ class User
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-            'nom' => $defaultNom,
-            'prenom' => '',
-            'email' => $email,
-            'mot_de_passe' => $passwordHash,
-            'role' => 'ETUDIANT',
+            'nom' => (string) $data['nom'],
+            'prenom' => (string) ($data['prenom'] ?? ''),
+            'email' => (string) $data['email'],
+            'mot_de_passe' => (string) $data['mot_de_passe'],
+            'role' => (string) $data['role'],
         ]);
 
         return (int) $pdo->lastInsertId();
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function update(int $userId, array $data): void
+    {
+        $pdo = Database::getConnection();
+
+        $fields = [
+            'nom = :nom',
+            'prenom = :prenom',
+            'email = :email',
+            'role = :role',
+        ];
+        $params = [
+            'id_utilisateur' => $userId,
+            'nom' => (string) $data['nom'],
+            'prenom' => (string) ($data['prenom'] ?? ''),
+            'email' => (string) $data['email'],
+            'role' => (string) $data['role'],
+        ];
+
+        if (!empty($data['mot_de_passe'])) {
+            $fields[] = 'mot_de_passe = :mot_de_passe';
+            $params['mot_de_passe'] = (string) $data['mot_de_passe'];
+        }
+
+        $sql = 'UPDATE utilisateur SET ' . implode(', ', $fields) . ' WHERE id_utilisateur = :id_utilisateur';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+    }
+
+    public static function delete(int $userId): void
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare('DELETE FROM utilisateur WHERE id_utilisateur = :id_utilisateur');
+        $stmt->execute(['id_utilisateur' => $userId]);
+    }
+
+    public static function emailExists(string $email, ?int $excludeUserId = null): bool
+    {
+        $pdo = Database::getConnection();
+        $sql = 'SELECT 1 FROM utilisateur WHERE email = :email';
+        $params = ['email' => $email];
+
+        if ($excludeUserId !== null) {
+            $sql .= ' AND id_utilisateur <> :exclude_user_id';
+            $params['exclude_user_id'] = $excludeUserId;
+        }
+
+        $sql .= ' LIMIT 1';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchColumn() !== false;
+    }
+
+    public static function countByRole(string $role): int
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare('SELECT COUNT(*) FROM utilisateur WHERE role = :role');
+        $stmt->execute(['role' => $role]);
+        return (int) $stmt->fetchColumn();
     }
 }

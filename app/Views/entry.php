@@ -27,7 +27,8 @@
       </p>
     <?php endif; ?>
 
-    <form method="post" action="<?= $routeUrl('login') ?>" class="entry-login-form">
+    <form method="post" action="<?= $routeUrl('login') ?>" class="entry-login-form" data-js-validate>
+      <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) ($csrfToken ?? ''), ENT_QUOTES) ?>" />
       <input type="hidden" name="return_to" value="entry" />
 
       <div class="form-group">

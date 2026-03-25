@@ -2,26 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://localhost/projet%20web/public/index.php/</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost/projet%20web/public/index.php/accueil</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost/projet%20web/public/index.php/offres</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost/projet%20web/public/index.php/entreprises</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost/projet%20web/public/index.php/login</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost/projet%20web/public/index.php/mentions-legales</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/projet%20web/public/index.php/politique-confidentialite</loc>
+    <lastmod>2026-03-25</lastmod>
   </url>
 </urlset>

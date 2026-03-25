@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce routeur associe chaque URL du site a un controleur et gere les pages 404.
 
 namespace Core;
 
@@ -92,3 +91,4 @@ class Router
         return rtrim($path, '/') ?: '/';
     }
 }
+

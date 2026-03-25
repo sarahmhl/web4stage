@@ -1,6 +1,3 @@
--- Schema principal du projet : utilisateurs, entreprises, offres, candidatures et relations SQL.
--- Web4Stage schema (MySQL 8+)
--- Import this file in phpMyAdmin on database `web4stage`
 
 SET NAMES utf8mb4;
 SET time_zone = '+00:00';
@@ -135,3 +132,4 @@ CREATE TABLE IF NOT EXISTS document_etudiant (
     FOREIGN KEY (id_etudiant) REFERENCES utilisateur(id_utilisateur)
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce modele gere les offres ajoutees en favori par les etudiants.
 
 namespace App\Models;
 
@@ -158,3 +157,4 @@ class Wishlist
         return $letters !== '' ? $letters : 'WL';
     }
 }
+

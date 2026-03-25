@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-// Ce controleur gere la page d entree du site avant d arriver sur l accueil ou la connexion.
 
 namespace App\Controllers;
 
 use Core\Auth;
+use Core\Security;
 use Core\View;
 
 class IntroController
@@ -49,10 +49,13 @@ class IntroController
         unset($_SESSION['login_error'], $_SESSION['login_success']);
 
         View::render('entry', [
-            'title' => 'Web4Stage - Entrée',
+            'title' => 'Web4Stage - Entree',
             'error' => is_string($error) ? $error : null,
             'success' => is_string($success) ? $success : null,
             'isEntryPage' => true,
+            'csrfToken' => Security::generateCsrfToken(),
+            'metaDescription' => 'Acces a Web4Stage, la plateforme CESI de recherche de stages et de suivi des candidatures.',
+            'metaKeywords' => 'stage, cesi, web4stage, connexion, candidatures',
         ]);
     }
 }

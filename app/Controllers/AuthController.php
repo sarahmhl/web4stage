@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-// Ce controleur centralise la connexion, la deconnexion et la redirection selon le role de l utilisateur.
 
 namespace App\Controllers;
 
 use Core\Auth;
+use Core\Security;
 use Core\View;
 
 class AuthController
@@ -81,6 +81,9 @@ class AuthController
             'title' => 'Web4Stage - Connexion',
             'error' => $flash['error'],
             'success' => $flash['success'],
+            'csrfToken' => Security::generateCsrfToken(),
+            'metaDescription' => 'Connexion a la plateforme Web4Stage pour acceder aux espaces etudiant, pilote et administrateur.',
+            'metaKeywords' => 'connexion, web4stage, espace etudiant, espace pilote, administration',
         ]);
     }
 
@@ -101,18 +104,23 @@ class AuthController
 
     public function showRegister(): void
     {
-        $_SESSION['login_success'] = 'La création des comptes est gérée par les administrateurs et les pilotes.';
+        $_SESSION['login_success'] = 'La creation des comptes est geree par les administrateurs.';
         $this->redirect('/');
     }
 
     public function register(): void
     {
-        $_SESSION['login_error'] = 'La création de compte publique est désactivée sur cette version du site.';
+        $_SESSION['login_error'] = 'La creation de compte publique est desactivee sur cette version du site.';
         $this->redirect('/');
     }
 
     public function handleLogin(): void
     {
+        if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
+            $_SESSION['login_error'] = 'Session invalide. Merci de recommencer.';
+            $this->redirect($this->failurePath());
+        }
+
         $email = mb_strtolower(trim((string) ($_POST['email'] ?? '')));
         $password = (string) ($_POST['password'] ?? '');
         $failurePath = $this->failurePath();

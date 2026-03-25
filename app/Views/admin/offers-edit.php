@@ -1,20 +1,14 @@
 <?php
-  // Vue admin pour choisir une offre existante puis modifier son contenu.
-  $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
-  $routePrefix = rtrim($scriptName, '/');
-  $routeUrl = static function (string $path) use ($routePrefix): string {
-    return htmlspecialchars(str_replace(' ', '%20', $routePrefix . '/' . ltrim($path, '/')), ENT_QUOTES);
-  };
-  $selectedOffer = is_array($selectedOffer ?? null) ? $selectedOffer : null;
-  $selectedOfferId = (int) ($selectedOfferId ?? 0);
-  $skillsValue = '';
-  if ($selectedOffer !== null) {
+$selectedOffer = is_array($selectedOffer ?? null) ? $selectedOffer : null;
+$selectedOfferId = (int) ($selectedOfferId ?? 0);
+$skillsValue = '';
+if ($selectedOffer !== null) {
     if (is_array($selectedOffer['skills'] ?? null)) {
-      $skillsValue = implode(', ', $selectedOffer['skills']);
+        $skillsValue = implode(', ', $selectedOffer['skills']);
     } elseif (is_scalar($selectedOffer['skills'] ?? null)) {
-      $skillsValue = (string) $selectedOffer['skills'];
+        $skillsValue = (string) $selectedOffer['skills'];
     }
-  }
+}
 ?>
 <header class="dashboard-header">
   <div class="dashboard-title-block">
@@ -41,10 +35,17 @@
       Choisissez une offre dans la liste pour precharger le formulaire d edition.
     </p>
 
+    <div class="side-card-links">
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/entreprises'), ENT_QUOTES) ?>" class="management-offer-link">
+        <strong>Gerer les entreprises</strong>
+        <span>Mettre a jour les partenaires relies aux offres</span>
+      </a>
+    </div>
+
     <div class="management-offer-list">
       <?php foreach ($offers as $offer): ?>
         <a
-          href="<?= $routeUrl('admin/offres/modifier') ?>?id=<?= (int) $offer['id_offre'] ?>"
+          href="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier?id=' . (int) $offer['id_offre']), ENT_QUOTES) ?>"
           class="management-offer-link<?= (int) $offer['id_offre'] === $selectedOfferId ? ' management-offer-link--active' : '' ?>"
         >
           <strong><?= htmlspecialchars((string) $offer['titre'], ENT_QUOTES) ?></strong>
@@ -63,7 +64,7 @@
     <?php if ($selectedOffer === null): ?>
       <p class="auth-hint">Aucune offre n est disponible pour la modification.</p>
     <?php else: ?>
-      <form method="post" action="<?= $routeUrl('admin/offres/modifier') ?>">
+      <form method="post" action="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier'), ENT_QUOTES) ?>" data-js-validate>
         <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $csrfToken, ENT_QUOTES) ?>" />
         <input type="hidden" name="id_offre" value="<?= (int) $selectedOffer['id_offre'] ?>" />
 
@@ -169,9 +170,20 @@
           </div>
         </div>
 
-        <div class="form-footer offer-form-actions">
-          <a href="<?= $routeUrl('dashboard-admin') ?>" class="btn btn-outline">Retour au tableau de bord</a>
-          <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        <div class="form-footer offer-form-actions offer-form-actions--split">
+          <div class="offer-form-actions-group">
+            <a href="<?= htmlspecialchars(\Core\Url::route('dashboard-admin'), ENT_QUOTES) ?>" class="btn btn-outline">Retour au tableau de bord</a>
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+          </div>
+          <button
+            type="submit"
+            formaction="<?= htmlspecialchars(\Core\Url::route('admin/offres/supprimer'), ENT_QUOTES) ?>"
+            formmethod="post"
+            class="btn btn-outline btn-outline--danger"
+            onclick="return confirm('Supprimer cette offre ?');"
+          >
+            Supprimer l offre
+          </button>
         </div>
       </form>
     <?php endif; ?>

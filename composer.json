@@ -18,6 +18,12 @@
       "Tests\\": "tests/"
     }
   },
+  "config": {
+    "process-timeout": 900,
+    "preferred-install": {
+      "*": "dist"
+    }
+  },
   "scripts": {
     "test": "phpunit --configuration phpunit.xml"
   }

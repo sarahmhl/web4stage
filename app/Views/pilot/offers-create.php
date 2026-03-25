@@ -57,7 +57,7 @@
       <span class="pill-small">Ajout pilote</span>
     </header>
 
-    <form method="post" action="<?= $routeUrl('pilote/offres/ajouter') ?>">
+    <form method="post" action="<?= $routeUrl('pilote/offres/ajouter') ?>" data-js-validate>
       <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $csrfToken, ENT_QUOTES) ?>" />
 
       <div class="offer-form-grid">

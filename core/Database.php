@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Ce service fournit la connexion PDO unique utilisee par tout le projet.
 
 namespace Core;
 
@@ -19,13 +18,8 @@ class Database
             return self::$pdo;
         }
 
-        $configFile = __DIR__ . '/../config/config.php';
-        if (!is_file($configFile)) {
-            throw new \RuntimeException('Fichier de configuration BDD manquant (config/config.php).');
-        }
-
         /** @var array{db_dsn:string, db_user:string, db_pass:string} $config */
-        $config = require $configFile;
+        $config = Config::all();
 
         try {
             self::$pdo = new PDO(
@@ -45,4 +39,5 @@ class Database
         return self::$pdo;
     }
 }
+
 
