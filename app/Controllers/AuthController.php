@@ -165,3 +165,4 @@ class AuthController
         $this->redirect('/');
     }
 }
+

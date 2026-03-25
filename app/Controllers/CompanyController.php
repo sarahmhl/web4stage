@@ -74,3 +74,4 @@ class CompanyController extends BaseController
         ]);
     }
 }
+

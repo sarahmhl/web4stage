@@ -32,3 +32,8 @@ class LegalController
         ]);
     }
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b8404803689677cc08eb949c0cef87ab83ad7473
