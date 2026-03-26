@@ -1,5 +1,4 @@
 <?php
-  // Vue du catalogue des offres avec filtres, cartes d offres et pagination.
   $filters = is_array($filters ?? null) ? $filters : [];
   $wishlistIds = is_array($wishlistIds ?? null) ? $wishlistIds : [];
   $returnToValue = 'offres' . (!empty($_SERVER['QUERY_STRING']) ? '?' . (string) $_SERVER['QUERY_STRING'] : '');
@@ -83,7 +82,11 @@
     </div>
     <?php if (\Core\Auth::checkRole(\Core\Auth::ROLE_ETUDIANT)): ?>
       <div class="section-actions">
-        <a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>" class="link-soft">Voir ma wish-list -></a>
+        <a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>" class="link-soft">Voir ma wish-list -&gt;</a>
+      </div>
+    <?php elseif (!\Core\Auth::check()): ?>
+      <div class="section-actions">
+        <a href="<?= htmlspecialchars(\Core\Url::route('login') . '?' . http_build_query(['redirect' => 'offres']), ENT_QUOTES) ?>" class="link-soft">Se connecter pour postuler -&gt;</a>
       </div>
     <?php endif; ?>
   </div>
@@ -130,7 +133,7 @@
                   <input type="hidden" name="offer_id" value="<?= (int) $offer['id'] ?>" />
                   <input type="hidden" name="redirect_to" value="<?= htmlspecialchars($returnToValue, ENT_QUOTES) ?>" />
                   <button type="submit" class="btn-icon btn-icon--wish<?= in_array((int) $offer['id'], $wishlistIds, true) ? ' active' : '' ?>" aria-label="Modifier la wish-list">
-                    ♥
+                    &#9829;
                   </button>
                 </form>
               <?php endif; ?>
@@ -156,9 +159,9 @@
   <?php if (($totalPages ?? 1) > 1): ?>
     <nav class="pagination" aria-label="Pagination des offres">
       <?php if (($currentPage ?? 1) > 1): ?>
-        <a class="page-btn" href="<?= $buildPageUrl(((int) $currentPage) - 1) ?>">«</a>
+        <a class="page-btn" href="<?= $buildPageUrl(((int) $currentPage) - 1) ?>">&laquo;</a>
       <?php else: ?>
-        <span class="page-btn page-btn--disabled">«</span>
+        <span class="page-btn page-btn--disabled">&laquo;</span>
       <?php endif; ?>
 
       <?php for ($page = 1; $page <= (int) ($totalPages ?? 1); $page++): ?>
@@ -168,9 +171,9 @@
       <?php endfor; ?>
 
       <?php if (($currentPage ?? 1) < ($totalPages ?? 1)): ?>
-        <a class="page-btn" href="<?= $buildPageUrl(((int) $currentPage) + 1) ?>">»</a>
+        <a class="page-btn" href="<?= $buildPageUrl(((int) $currentPage) + 1) ?>">&raquo;</a>
       <?php else: ?>
-        <span class="page-btn page-btn--disabled">»</span>
+        <span class="page-btn page-btn--disabled">&raquo;</span>
       <?php endif; ?>
     </nav>
   <?php endif; ?>

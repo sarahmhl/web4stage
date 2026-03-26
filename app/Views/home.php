@@ -1,5 +1,4 @@
-﻿<?php
-  // Vue de la page d accueil publique avec hero, offres mises en avant et avis etudiants.
+<?php
   $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
   $baseDir = rtrim(str_replace('\\', '/', dirname($scriptName)), '/');
   $projectBase = $baseDir === '' ? '' : rtrim(str_replace('\\', '/', dirname($baseDir)), '/');
@@ -68,7 +67,6 @@
   $resolveOfferImage = static function (array $offer) use ($findOfferImage, $toOfferImageUrl, $defaultOfferImageUrl): string {
     $title = mb_strtolower((string) ($offer['title'] ?? ''));
 
-    // Priorite 1: image explicite depuis les donnees.
     if (!empty($offer['image']) && is_string($offer['image'])) {
       $explicitImage = $findOfferImage((string) $offer['image']);
       if ($explicitImage !== null) {
@@ -76,7 +74,6 @@
       }
     }
 
-    // Priorite 2: photo par categorie de titre.
     if (str_contains($title, 'marketing')) {
       $marketingImage = $findOfferImage('marketing');
       if ($marketingImage !== null) {
@@ -135,7 +132,7 @@
         Consulter les offres
       </a>
       <?php if (!$isLoggedIn): ?>
-        <a href="<?= htmlspecialchars(\Core\Url::route('entry'), ENT_QUOTES) ?>" class="btn btn-outline">
+        <a href="<?= htmlspecialchars(\Core\Url::route('login'), ENT_QUOTES) ?>" class="btn btn-outline">
           Se connecter
         </a>
       <?php endif; ?>
@@ -147,7 +144,7 @@
       </div>
       <div class="hero-kpi">
         <strong><?= (int) ($overviewStats['companies'] ?? 0) ?> entreprises</strong>
-        <span><?= (int) ($overviewStats['skills'] ?? 0) ?> competences deja referencees</span>
+        <span><?= (int) ($overviewStats['skills'] ?? 0) ?> compétences déjà référencées</span>
       </div>
     </div>
   </div>
@@ -155,12 +152,12 @@
   <aside class="hero-card hero-card--summary" aria-labelledby="titre-apercu-plateforme">
     <div class="hero-card-inner">
       <div class="hero-card-title">
-        <span class="pill">Acces rapides</span>
+        <span class="pill">Accès rapides</span>
         <div class="hero-card-logo">Go</div>
       </div>
       <h2 class="hero-login-title" id="titre-apercu-plateforme">Un accueil plus simple</h2>
       <p class="hero-login-copy">
-        Retrouvez rapidement les principales entrees du site sans surcharger la page d'accueil.
+        Retrouvez rapidement les principales entrées du site sans surcharger la page d'accueil.
       </p>
 
       <div class="home-summary-list">
@@ -169,14 +166,14 @@
           <span>Consulter rapidement les stages disponibles.</span>
         </a>
         <?php if (!$isLoggedIn): ?>
-          <a href="<?= htmlspecialchars(\Core\Url::route('entry'), ENT_QUOTES) ?>" class="home-summary-item">
+          <a href="<?= htmlspecialchars(\Core\Url::route('login'), ENT_QUOTES) ?>" class="home-summary-item">
             <strong>Se connecter</strong>
-            <span>Acceder directement a son espace personnel.</span>
+            <span>Accéder directement à son espace personnel.</span>
           </a>
         <?php endif; ?>
         <a href="<?= htmlspecialchars(\Core\Url::route('mentions-legales'), ENT_QUOTES) ?>" class="home-summary-item">
           <strong>Infos du projet</strong>
-          <span>Voir le cadre pedagogique et les mentions legales.</span>
+          <span>Voir le cadre pédagogique et les mentions légales.</span>
         </a>
       </div>
     </div>
@@ -187,14 +184,14 @@
   <section class="section section--compact" aria-labelledby="section-avis-etudiants">
     <div class="section-header">
       <div>
-        <h2 class="section-title" id="section-avis-etudiants">Avis des etudiants</h2>
+        <h2 class="section-title" id="section-avis-etudiants">Avis des étudiants</h2>
         <p class="section-subtitle">
-          Retours deja postes apres candidature ou debut de stage.
+          Retours déjà postés après candidature ou début de stage.
         </p>
       </div>
     </div>
 
-    <div class="testimonials-grid" aria-label="Avis etudiants deja publies">
+    <div class="testimonials-grid" aria-label="Avis étudiants déjà publiés">
       <?php foreach ($studentReviews as $review): ?>
         <article class="testimonial-card">
           <div class="testimonial-head">
@@ -209,7 +206,7 @@
                 <?= htmlspecialchars((string) ($review['role'] ?? ''), ENT_QUOTES) ?>
               </p>
             </div>
-            <div class="testimonial-rating" aria-label="Note etudiante">
+            <div class="testimonial-rating" aria-label="Note étudiante">
               <?php for ($i = 0; $i < (int) ($review['rating'] ?? 0); $i++): ?>
                 <span>&#9733;</span>
               <?php endfor; ?>
@@ -276,7 +273,7 @@
       </p>
     </div>
     <div class="section-actions">
-      <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="link-soft">Voir toutes les offres -></a>
+      <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="link-soft">Voir toutes les offres -&gt;</a>
     </div>
   </div>
 
@@ -326,4 +323,3 @@
     <?php endforeach; ?>
   </div>
 </section>
-

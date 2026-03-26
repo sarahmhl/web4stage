@@ -23,7 +23,7 @@ $dashboardLabel = null;
 
 if ($userRole === \Core\Auth::ROLE_ETUDIANT) {
     $dashboardPath = '/dashboard-etudiant';
-    $dashboardLabel = 'Espace etudiant';
+    $dashboardLabel = 'Espace étudiant';
 } elseif ($userRole === \Core\Auth::ROLE_PILOTE) {
     $dashboardPath = '/dashboard-pilote';
     $dashboardLabel = 'Espace pilote';
@@ -63,11 +63,11 @@ if ($isWorkspaceFlat) {
 }
 
 $metaDescription = htmlspecialchars(
-    (string) ($metaDescription ?? 'Plateforme professionnelle pour gerer les offres de stage, les candidatures et le suivi etudiant.'),
+    (string) ($metaDescription ?? 'Plateforme professionnelle pour gérer les offres de stage, les candidatures et le suivi étudiant.'),
     ENT_QUOTES
 );
 $metaKeywords = htmlspecialchars(
-    (string) ($metaKeywords ?? 'stages, offres, candidatures, cesi, web4stage, entreprise, etudiant'),
+    (string) ($metaKeywords ?? 'stages, offres, candidatures, cesi, web4stage, entreprise, étudiant'),
     ENT_QUOTES
 );
 $canonicalTarget = $currentPath === '/' ? '' : ltrim($currentPath, '/');
@@ -113,7 +113,7 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
             <?php if (!$isLoggedIn): ?>
               <a href="<?= $routeUrl('login') ?>" class="btn btn-outline">Se connecter</a>
             <?php else: ?>
-              <a href="<?= $routeUrl('logout') ?>" class="btn btn-primary">Se deconnecter</a>
+              <a href="<?= $routeUrl('logout') ?>" class="btn btn-primary">Se déconnecter</a>
             <?php endif; ?>
             <button class="burger" aria-label="Ouvrir le menu mobile">
               <span></span>
@@ -132,14 +132,14 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
           <?php if (!$isLoggedIn): ?>
             <a href="<?= $routeUrl('login') ?>" class="nav-link<?= str_starts_with($currentPath, '/login') ? ' nav-link--active' : '' ?>">Se connecter</a>
           <?php else: ?>
-            <a href="<?= $routeUrl('logout') ?>" class="nav-link">Se deconnecter</a>
+            <a href="<?= $routeUrl('logout') ?>" class="nav-link">Se déconnecter</a>
           <?php endif; ?>
         </div>
       </header>
 
       <main class="app-shell">
         <?php if ($flashMessages !== []): ?>
-          <section class="flash-stack" aria-label="Messages systeme">
+          <section class="flash-stack" aria-label="Messages système">
             <?php foreach ($flashMessages as $flash): ?>
               <div class="flash flash--<?= htmlspecialchars((string) $flash['type'], ENT_QUOTES) ?>">
                 <?= htmlspecialchars((string) $flash['message'], ENT_QUOTES) ?>
@@ -153,10 +153,10 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
 
       <footer class="footer">
         <div class="footer-inner">
-          <span>&copy; 2026 · Web4Stage · Projet pedagogique CESI</span>
+          <span>&copy; 2026 · Web4Stage · Projet pédagogique CESI</span>
           <div class="footer-links">
-            <a href="<?= $routeUrl('mentions-legales') ?>">Mentions legales</a>
-            <a href="<?= $routeUrl('politique-confidentialite') ?>">Politique de confidentialite</a>
+            <a href="<?= $routeUrl('mentions-legales') ?>">Mentions légales</a>
+            <a href="<?= $routeUrl('politique-confidentialite') ?>">Politique de confidentialité</a>
           </div>
         </div>
       </footer>

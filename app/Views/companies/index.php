@@ -4,17 +4,17 @@ $filters = is_array($filters ?? null) ? $filters : [];
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Entreprises</span>
-    <h1 class="page-heading-title">Entreprises referencees</h1>
+    <h1 class="page-heading-title">Entreprises référencées</h1>
     <p class="page-heading-subtitle">
-      Consultez les structures partenaires, leurs coordonnees et les offres de stage liees.
+      Consultez les structures partenaires, leurs coordonnées et les offres de stage liées.
     </p>
   </div>
 </header>
 
-<section class="search-section search-section--compact" aria-label="Recherche d entreprises">
+<section class="search-section search-section--compact" aria-label="Recherche d’entreprises">
   <form method="get" action="<?= htmlspecialchars(\Core\Url::route('entreprises'), ENT_QUOTES) ?>" class="search-grid" data-js-validate>
     <div>
-      <label class="field-label" for="company-keyword">Mot-cle</label>
+      <label class="field-label" for="company-keyword">Mot-clé</label>
       <input
         type="text"
         id="company-keyword"
@@ -43,7 +43,7 @@ $filters = is_array($filters ?? null) ? $filters : [];
         name="sector"
         class="field-input"
         value="<?= htmlspecialchars((string) ($filters['sector'] ?? ''), ENT_QUOTES) ?>"
-        placeholder="Ex : Developpement web, UX/UI..."
+        placeholder="Ex : Développement web, UX/UI..."
       />
     </div>
     <div class="search-actions">
@@ -58,16 +58,16 @@ $filters = is_array($filters ?? null) ? $filters : [];
       <article class="dash-card">
         <header class="dash-card-header">
           <span class="dash-card-title"><?= htmlspecialchars((string) $company['nom'], ENT_QUOTES) ?></span>
-          <span class="pill-small"><?= htmlspecialchars((string) ($company['ville'] ?: 'Ville non precisee'), ENT_QUOTES) ?></span>
+          <span class="pill-small"><?= htmlspecialchars((string) ($company['ville'] ?: 'Ville non précisée'), ENT_QUOTES) ?></span>
         </header>
         <p class="action-card-text"><?= htmlspecialchars((string) ($company['description'] ?: 'Aucune description disponible pour le moment.'), ENT_QUOTES) ?></p>
         <ul class="list-compact">
           <li>
             <span>Secteur</span>
-            <strong><?= htmlspecialchars((string) ($company['secteur'] ?: 'Non renseigne'), ENT_QUOTES) ?></strong>
+            <strong><?= htmlspecialchars((string) ($company['secteur'] ?: 'Non renseigné'), ENT_QUOTES) ?></strong>
           </li>
           <li>
-            <span>Offres publiees</span>
+            <span>Offres publiées</span>
             <strong><?= (int) ($company['offers_count'] ?? 0) ?></strong>
           </li>
           <li>
@@ -81,11 +81,11 @@ $filters = is_array($filters ?? null) ? $filters : [];
   </section>
 <?php else: ?>
   <section class="empty-state">
-    <span class="pill-small">Aucun resultat</span>
-    <h1 class="empty-state-title">Aucune entreprise ne correspond a votre recherche</h1>
+    <span class="pill-small">Aucun résultat</span>
+    <h1 class="empty-state-title">Aucune entreprise ne correspond à votre recherche</h1>
     <p class="empty-state-text">Modifiez les filtres pour afficher de nouvelles structures partenaires.</p>
     <div class="empty-state-actions">
-      <a href="<?= htmlspecialchars(\Core\Url::route('entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">Reinitialiser les filtres</a>
+      <a href="<?= htmlspecialchars(\Core\Url::route('entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">Réinitialiser les filtres</a>
     </div>
   </section>
 <?php endif; ?>

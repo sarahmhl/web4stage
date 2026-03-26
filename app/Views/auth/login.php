@@ -1,25 +1,34 @@
-<?php // Vue du formulaire de connexion commun a tous les profils. ?>
+<?php ?>
 <section class="auth-wrapper">
   <section class="auth-card" aria-labelledby="titre-login">
     <h1 class="auth-title" id="titre-login">Connexion</h1>
     <p class="auth-subtitle">
-      Connectez-vous avec l'adresse e-mail associee a votre compte.
+      Connectez-vous avec l’adresse e-mail associée à votre compte.
     </p>
+
+    <?php if (!empty($authPrompt)): ?>
+      <p class="auth-hint">
+        <?= htmlspecialchars((string) $authPrompt, ENT_QUOTES) ?>
+      </p>
+    <?php endif; ?>
 
     <?php if (!empty($success)): ?>
       <p class="auth-hint auth-hint--success">
-        <?= htmlspecialchars($success, ENT_QUOTES) ?>
+        <?= htmlspecialchars((string) $success, ENT_QUOTES) ?>
       </p>
     <?php endif; ?>
 
     <?php if (!empty($error)): ?>
       <p class="auth-hint auth-hint--error">
-        <?= htmlspecialchars($error, ENT_QUOTES) ?>
+        <?= htmlspecialchars((string) $error, ENT_QUOTES) ?>
       </p>
     <?php endif; ?>
 
     <form method="post" action="<?= htmlspecialchars(\Core\Url::route('login'), ENT_QUOTES) ?>" data-js-validate>
       <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) ($csrfToken ?? ''), ENT_QUOTES) ?>" />
+      <input type="hidden" name="redirect_to" value="<?= htmlspecialchars((string) ($redirectTo ?? ''), ENT_QUOTES) ?>" />
+      <input type="hidden" name="intent" value="<?= htmlspecialchars((string) ($intent ?? ''), ENT_QUOTES) ?>" />
+
       <div class="form-group">
         <label for="email">Adresse e-mail</label>
         <input
@@ -48,5 +57,16 @@
         <button type="submit" class="btn btn-primary btn-full">Se connecter</button>
       </div>
     </form>
+
+    <div class="home-summary-list">
+      <a href="<?= htmlspecialchars(\Core\Url::route('accueil'), ENT_QUOTES) ?>" class="home-summary-item">
+        <strong>Retour à l’accueil</strong>
+        <span>Continuer à explorer le portail public.</span>
+      </a>
+      <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="home-summary-item">
+        <strong>Voir les offres</strong>
+        <span>Consulter les stages avant de vous connecter.</span>
+      </a>
+    </div>
   </section>
 </section>

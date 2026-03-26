@@ -674,5 +674,6 @@ class Offer
 
         return 'Offre enregistree dans la base.';
     }
+
 }
 

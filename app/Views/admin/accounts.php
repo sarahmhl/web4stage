@@ -9,7 +9,7 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
     <span class="page-heading-kicker">Comptes</span>
     <h1 class="page-heading-title">Gestion des utilisateurs</h1>
     <p class="page-heading-subtitle">
-      Creez, modifiez ou supprimez les comptes etudiant, pilote et administrateur.
+      Créez, modifiez ou supprimez les comptes étudiant, pilote et administrateur.
     </p>
   </div>
 </header>
@@ -17,7 +17,7 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
 <section class="dashboard-grid dashboard-grid--summary">
   <article class="dash-card">
     <header class="dash-card-header">
-      <span class="dash-card-title">Etudiants</span>
+      <span class="dash-card-title">Étudiants</span>
       <span class="pill-small"><?= (int) ($roleCounts[\Core\Auth::ROLE_ETUDIANT] ?? 0) ?></span>
     </header>
     <p class="action-card-text">Comptes de recherche de stage et de candidatures.</p>
@@ -28,7 +28,7 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
       <span class="dash-card-title">Pilotes</span>
       <span class="pill-small"><?= (int) ($roleCounts[\Core\Auth::ROLE_PILOTE] ?? 0) ?></span>
     </header>
-    <p class="action-card-text">Comptes pedagogiques pour le suivi de la promotion.</p>
+    <p class="action-card-text">Comptes pédagogiques pour le suivi de la promotion.</p>
   </article>
 
   <article class="dash-card">
@@ -36,7 +36,7 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
       <span class="dash-card-title">Administrateurs</span>
       <span class="pill-small"><?= (int) ($roleCounts[\Core\Auth::ROLE_ADMIN] ?? 0) ?></span>
     </header>
-    <p class="action-card-text">Acces back-office, moderation et gestion globale.</p>
+    <p class="action-card-text">Accès back-office, modération et gestion globale.</p>
   </article>
 </section>
 
@@ -44,13 +44,13 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
   <aside class="side-card">
     <h2 class="side-card-title">Comptes disponibles</h2>
     <p class="side-card-text">
-      Selectionnez un utilisateur pour modifier son profil ou creez un nouveau compte.
+      Sélectionnez un utilisateur pour modifier son profil ou créez un nouveau compte.
     </p>
 
     <div class="side-card-links">
       <a href="<?= htmlspecialchars(\Core\Url::route('admin/comptes?new=1'), ENT_QUOTES) ?>" class="management-offer-link<?= $isNewAccount ? ' management-offer-link--active' : '' ?>">
         <strong>Nouveau compte</strong>
-        <span>Ajouter un etudiant, un pilote ou un administrateur</span>
+        <span>Ajouter un étudiant, un pilote ou un administrateur</span>
       </a>
     </div>
 
@@ -69,12 +69,12 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
 
   <article class="dash-card offer-editor-card">
     <header class="dash-card-header">
-      <span class="dash-card-title"><?= $isNewAccount ? 'Nouveau compte' : 'Edition du compte' ?></span>
-      <span class="pill-small"><?= $isNewAccount ? 'Creation' : 'Mise a jour' ?></span>
+      <span class="dash-card-title"><?= $isNewAccount ? 'Nouveau compte' : 'Édition du compte' ?></span>
+      <span class="pill-small"><?= $isNewAccount ? 'Création' : 'Mise à jour' ?></span>
     </header>
 
     <?php if ($selectedUser === null): ?>
-      <p class="auth-hint">Aucun compte n est disponible pour le moment.</p>
+      <p class="auth-hint">Aucun compte n’est disponible pour le moment.</p>
     <?php else: ?>
       <form method="post" action="<?= htmlspecialchars(\Core\Url::route('admin/comptes'), ENT_QUOTES) ?>" data-js-validate>
         <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) ($csrfToken ?? ''), ENT_QUOTES) ?>" />
@@ -82,7 +82,7 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
 
         <div class="offer-form-grid">
           <div class="form-group">
-            <label for="prenom">Prenom</label>
+            <label for="prenom">Prénom</label>
             <input type="text" id="prenom" name="prenom" class="form-control" value="<?= htmlspecialchars((string) ($selectedUser['prenom'] ?? ''), ENT_QUOTES) ?>" required />
           </div>
 
@@ -97,7 +97,7 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
           </div>
 
           <div class="form-group">
-            <label for="role">Role</label>
+            <label for="role">Rôle</label>
             <select id="role" name="role" class="form-control" required>
               <?php foreach (($roleOptions ?? []) as $roleValue => $roleLabel): ?>
                 <option value="<?= htmlspecialchars((string) $roleValue, ENT_QUOTES) ?>" <?= (string) ($selectedUser['role'] ?? '') === (string) $roleValue ? 'selected' : '' ?>>
@@ -118,7 +118,7 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
               <?= $isNewAccount ? 'required' : '' ?>
             />
             <p class="auth-hint offer-form-hint">
-              <?= $isNewAccount ? 'Minimum 8 caracteres.' : 'Laissez vide pour conserver le mot de passe actuel.' ?>
+              <?= $isNewAccount ? 'Minimum 8 caractères.' : 'Laissez vide pour conserver le mot de passe actuel.' ?>
             </p>
           </div>
         </div>
@@ -126,18 +126,21 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
         <div class="form-footer offer-form-actions offer-form-actions--split">
           <div class="offer-form-actions-group">
             <a href="<?= htmlspecialchars(\Core\Url::route('dashboard-admin'), ENT_QUOTES) ?>" class="btn btn-outline">Retour au tableau de bord</a>
-            <button type="submit" class="btn btn-primary"><?= $isNewAccount ? 'Creer le compte' : 'Enregistrer les modifications' ?></button>
+            <button type="submit" class="btn btn-primary"><?= $isNewAccount ? 'Créer le compte' : 'Enregistrer les modifications' ?></button>
           </div>
+          <?php if (!$isNewAccount && (int) ($selectedUser['id_utilisateur'] ?? 0) > 0): ?>
+            <button
+              type="submit"
+              formaction="<?= htmlspecialchars(\Core\Url::route('admin/comptes/supprimer'), ENT_QUOTES) ?>"
+              formmethod="post"
+              class="btn btn-outline btn-outline--danger"
+              onclick="return confirm('Supprimer ce compte ?');"
+            >
+              Supprimer le compte
+            </button>
+          <?php endif; ?>
         </div>
       </form>
-
-      <?php if (!$isNewAccount && (int) ($selectedUser['id_utilisateur'] ?? 0) > 0): ?>
-        <form method="post" action="<?= htmlspecialchars(\Core\Url::route('admin/comptes/supprimer'), ENT_QUOTES) ?>" class="inline-action-form" onsubmit="return confirm('Supprimer ce compte ?');">
-          <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) ($csrfToken ?? ''), ENT_QUOTES) ?>" />
-          <input type="hidden" name="id_utilisateur" value="<?= (int) ($selectedUser['id_utilisateur'] ?? 0) ?>" />
-          <button type="submit" class="btn btn-outline btn-outline--danger">Supprimer le compte</button>
-        </form>
-      <?php endif; ?>
     <?php endif; ?>
   </article>
 </section>
@@ -145,8 +148,8 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
 <section class="section">
   <div class="section-header">
     <div>
-      <h2 class="section-title">Vue d ensemble</h2>
-      <p class="section-subtitle">Resume des comptes et de leur activite sur la plateforme.</p>
+      <h2 class="section-title">Vue d’ensemble</h2>
+      <p class="section-subtitle">Résumé des comptes et de leur activité sur la plateforme.</p>
     </div>
   </div>
 
@@ -156,9 +159,10 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
         <tr>
           <th>Nom</th>
           <th>Email</th>
-          <th>Role</th>
+          <th>Rôle</th>
           <th>Candidatures</th>
           <th>Wish-list</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -173,6 +177,11 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
             <td><?= htmlspecialchars((string) $user['role'], ENT_QUOTES) ?></td>
             <td><?= (int) ($user['applications_count'] ?? 0) ?></td>
             <td><?= (int) ($user['wishlist_count'] ?? 0) ?></td>
+            <td>
+              <div class="table-actions">
+                <a href="<?= htmlspecialchars(\Core\Url::route('admin/comptes?id=' . (int) $user['id_utilisateur']), ENT_QUOTES) ?>" class="btn btn-outline">Modifier</a>
+              </div>
+            </td>
           </tr>
         <?php endforeach; ?>
       </tbody>

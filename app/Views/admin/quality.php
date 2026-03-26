@@ -1,10 +1,10 @@
-<?php // Vue admin des indicateurs de qualite et de quelques statistiques globales. ?>
+<?php ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Qualité</span>
     <h1 class="page-heading-title">Indicateurs de qualité globale</h1>
     <p class="page-heading-subtitle">
-      Gardez une vue synthétique sur les offres actives et le portefeuille d entreprises.
+      Gardez une vue synthétique sur les offres actives et le portefeuille d’entreprises.
     </p>
   </div>
 </header>

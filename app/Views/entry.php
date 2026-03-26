@@ -1,5 +1,4 @@
 <?php
-  // Vue d entree du site avec le premier contact visuel et l acces a la connexion.
   $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
   $routePrefix = rtrim($scriptName, '/');
   $routeUrl = static function (string $path) use ($routePrefix): string {
@@ -15,21 +14,31 @@
     <p class="entry-premium-kicker">Stages &amp; candidatures</p>
     <h1 id="entry-title" class="entry-premium-title">Connectez-vous</h1>
 
+    <?php if (!empty($authPrompt)): ?>
+      <p class="auth-hint entry-login-feedback">
+        <?= htmlspecialchars((string) $authPrompt, ENT_QUOTES) ?>
+      </p>
+    <?php endif; ?>
+
     <?php if (!empty($success)): ?>
       <p class="auth-hint auth-hint--success entry-login-feedback">
-        <?= htmlspecialchars($success, ENT_QUOTES) ?>
+        <?= htmlspecialchars((string) $success, ENT_QUOTES) ?>
       </p>
     <?php endif; ?>
 
     <?php if (!empty($error)): ?>
       <p class="auth-hint auth-hint--error entry-login-feedback">
-        <?= htmlspecialchars($error, ENT_QUOTES) ?>
+        <?= htmlspecialchars((string) $error, ENT_QUOTES) ?>
       </p>
     <?php endif; ?>
 
     <form method="post" action="<?= $routeUrl('login') ?>" class="entry-login-form" data-js-validate>
       <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) ($csrfToken ?? ''), ENT_QUOTES) ?>" />
-      <input type="hidden" name="return_to" value="entry" />
+      <?php if (!empty($returnTo)): ?>
+        <input type="hidden" name="return_to" value="<?= htmlspecialchars((string) $returnTo, ENT_QUOTES) ?>" />
+      <?php endif; ?>
+      <input type="hidden" name="redirect_to" value="<?= htmlspecialchars((string) ($redirectTo ?? ''), ENT_QUOTES) ?>" />
+      <input type="hidden" name="intent" value="<?= htmlspecialchars((string) ($intent ?? ''), ENT_QUOTES) ?>" />
 
       <div class="form-group">
         <label for="entry-email">Adresse e-mail</label>

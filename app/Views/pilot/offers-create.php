@@ -1,5 +1,4 @@
 <?php
-  // Vue pilote pour publier une nouvelle offre de stage.
   $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
   $routePrefix = rtrim($scriptName, '/');
   $routeUrl = static function (string $path) use ($routePrefix): string {
@@ -15,10 +14,10 @@
   <div class="dashboard-title-block">
     <h1 class="dashboard-title">Ajouter une offre de stage</h1>
     <p class="dashboard-subtitle">
-      Creez une nouvelle offre pilotee par votre promotion avec son entreprise, ses competences et son illustration.
+      Créez une nouvelle offre pilotée par votre promotion avec son entreprise, ses compétences et son illustration.
     </p>
   </div>
-  <span class="pill-role">Role : Pilote</span>
+  <span class="pill-role">Rôle : Pilote</span>
 </header>
 
 <?php if (!empty($success)): ?>
@@ -33,7 +32,7 @@
   <aside class="side-card">
     <h2 class="side-card-title">Avant de publier</h2>
     <p class="side-card-text">
-      Verifiez que le titre est clair, que la duree est precisee et que les competences sont separees par des virgules.
+      Vérifiez que le titre est clair, que la durée est précisée et que les compétences sont séparées par des virgules.
     </p>
     <div class="stat-row">
       <div class="stat-pill">
@@ -42,11 +41,11 @@
       </div>
       <div class="stat-pill">
         <span>Statut</span>
-        <strong>Publication immediate</strong>
+        <strong>Publication immédiate</strong>
       </div>
       <div class="stat-pill">
         <span>Image</span>
-        <strong>Choix guide</strong>
+        <strong>Choix guidé</strong>
       </div>
     </div>
   </aside>
@@ -64,7 +63,7 @@
         <div class="form-group">
           <label for="id_entreprise">Entreprise</label>
           <select id="id_entreprise" name="id_entreprise" class="form-control" required>
-            <option value="">Selectionner une entreprise</option>
+            <option value="">Sélectionner une entreprise</option>
             <?php foreach ($companies as $company): ?>
               <option
                 value="<?= (int) $company['id'] ?>"
@@ -84,7 +83,7 @@
             name="titre"
             class="form-control"
             value="<?= htmlspecialchars($value('titre'), ENT_QUOTES) ?>"
-            placeholder="Ex : Stage Developpeur Web PHP / JS"
+            placeholder="Ex : Stage Développeur Web PHP / JS"
             required
           />
         </div>
@@ -102,7 +101,7 @@
         </div>
 
         <div class="form-group">
-          <label for="duree_mois">Duree en mois</label>
+          <label for="duree_mois">Durée en mois</label>
           <input
             type="number"
             id="duree_mois"
@@ -115,7 +114,7 @@
         </div>
 
         <div class="form-group">
-          <label for="base_remuneration">Base de remuneration</label>
+          <label for="base_remuneration">Base de rémunération</label>
           <input
             type="number"
             step="0.01"
@@ -130,7 +129,7 @@
         <div class="form-group">
           <label for="image_path">Illustration</label>
           <select id="image_path" name="image_path" class="form-control">
-            <option value="">Selectionner une image</option>
+            <option value="">Sélectionner une image</option>
             <?php foreach ($imageOptions as $option): ?>
               <option
                 value="<?= htmlspecialchars($option['file'], ENT_QUOTES) ?>"
@@ -143,7 +142,7 @@
         </div>
 
         <div class="form-group form-group--full">
-          <label for="skills">Competences</label>
+          <label for="skills">Compétences</label>
           <input
             type="text"
             id="skills"
@@ -152,7 +151,7 @@
             value="<?= htmlspecialchars($value('skills'), ENT_QUOTES) ?>"
             placeholder="Ex : PHP, MVC, MySQL"
           />
-          <p class="auth-hint offer-form-hint">Separez les competences avec des virgules.</p>
+          <p class="auth-hint offer-form-hint">Séparez les compétences avec des virgules.</p>
         </div>
 
         <div class="form-group form-group--full">
@@ -161,7 +160,7 @@
             id="description"
             name="description"
             class="form-control form-control--textarea"
-            placeholder="Decrivez la mission, le contexte et les attentes du stage."
+            placeholder="Décrivez la mission, le contexte et les attentes du stage."
             required
           ><?= htmlspecialchars($value('description'), ENT_QUOTES) ?></textarea>
         </div>

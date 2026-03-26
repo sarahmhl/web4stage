@@ -68,12 +68,12 @@ VALUES
     900,
     '2026-02-02',
     6,
-    'devweb.jpeg',
+    'image4.jpeg',
     'PUBLIEE'
   ),
   (
     (SELECT id_entreprise FROM entreprise WHERE nom='Studio Interface' LIMIT 1),
-    'Stage UX / UI Designer junior',
+    'Stage UX / UI Designer',
     'Conception de wireframes, maquettes et composants d interface pour des produits web.',
     NULL,
     '2026-01-28',
@@ -110,6 +110,36 @@ VALUES
     6,
     'devphp.jpeg',
     'PUBLIEE'
+  ),
+  (
+    (SELECT id_entreprise FROM entreprise WHERE nom='Tech Horizon' LIMIT 1),
+    'Stage Product Designer Web',
+    'Conception de parcours utilisateurs, maquettes et prototypes pour des interfaces web.',
+    NULL,
+    '2026-03-24',
+    5,
+    'stage1.jpeg',
+    'PUBLIEE'
+  ),
+  (
+    (SELECT id_entreprise FROM entreprise WHERE nom='Nova Media' LIMIT 1),
+    'Stage Content & Community Manager',
+    'Preparation du planning editorial, animation des reseaux sociaux et suivi des performances de contenus.',
+    700,
+    '2026-03-23',
+    4,
+    'stage2.jpeg',
+    'PUBLIEE'
+  ),
+  (
+    (SELECT id_entreprise FROM entreprise WHERE nom='Data Insight' LIMIT 1),
+    'Stage Analyste Data',
+    'Nettoyage de donnees, creation de tableaux de bord et production d indicateurs d aide a la decision.',
+    950,
+    '2026-03-22',
+    6,
+    'stage3.jpeg',
+    'PUBLIEE'
   )
 ON DUPLICATE KEY UPDATE
   description = VALUES(description),
@@ -135,9 +165,9 @@ JOIN (
   UNION ALL SELECT 'Stage Developpeur Web PHP / JS', 'PHP POO'
   UNION ALL SELECT 'Stage Developpeur Web PHP / JS', 'JavaScript'
   UNION ALL SELECT 'Stage Developpeur Web PHP / JS', 'MySQL'
-  UNION ALL SELECT 'Stage UX / UI Designer junior', 'Wireframes'
-  UNION ALL SELECT 'Stage UX / UI Designer junior', 'Figma'
-  UNION ALL SELECT 'Stage UX / UI Designer junior', 'Design system'
+  UNION ALL SELECT 'Stage UX / UI Designer', 'Wireframes'
+  UNION ALL SELECT 'Stage UX / UI Designer', 'Figma'
+  UNION ALL SELECT 'Stage UX / UI Designer', 'Design system'
   UNION ALL SELECT 'Stage Data & BI', 'SQL'
   UNION ALL SELECT 'Stage Data & BI', 'Power BI'
   UNION ALL SELECT 'Stage Data & BI', 'Reporting'
@@ -146,6 +176,15 @@ JOIN (
   UNION ALL SELECT 'Stage Admin Systemes & Reseaux', 'Linux'
   UNION ALL SELECT 'Stage Admin Systemes & Reseaux', 'Securite'
   UNION ALL SELECT 'Stage Admin Systemes & Reseaux', 'Scripts'
+  UNION ALL SELECT 'Stage Product Designer Web', 'Figma'
+  UNION ALL SELECT 'Stage Product Designer Web', 'Prototypage'
+  UNION ALL SELECT 'Stage Product Designer Web', 'UX Research'
+  UNION ALL SELECT 'Stage Content & Community Manager', 'Canva'
+  UNION ALL SELECT 'Stage Content & Community Manager', 'Community management'
+  UNION ALL SELECT 'Stage Content & Community Manager', 'Calendrier editorial'
+  UNION ALL SELECT 'Stage Analyste Data', 'SQL'
+  UNION ALL SELECT 'Stage Analyste Data', 'Excel'
+  UNION ALL SELECT 'Stage Analyste Data', 'Data visualisation'
 ) c ON c.titre = o.titre;
 
 INSERT INTO document_etudiant (id_etudiant, cv_path, lettre_type)

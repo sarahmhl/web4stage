@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controllers;
 
 use Core\Auth;
@@ -40,15 +39,70 @@ class AuthController
         ];
     }
 
+    private function appendQuery(string $path, array $params): string
+    {
+        $filtered = [];
+        foreach ($params as $key => $value) {
+            if (!is_scalar($value)) {
+                continue;
+            }
+
+            $value = trim((string) $value);
+            if ($value === '') {
+                continue;
+            }
+
+            $filtered[$key] = $value;
+        }
+
+        if ($filtered === []) {
+            return $path;
+        }
+
+        return $path . (str_contains($path, '?') ? '&' : '?') . http_build_query($filtered);
+    }
+
+    private function normalizeRedirectTarget(mixed $target): ?string
+    {
+        if (!is_scalar($target)) {
+            return null;
+        }
+
+        $target = trim((string) $target);
+        if ($target === '' || str_contains($target, "\r") || str_contains($target, "\n")) {
+            return null;
+        }
+
+        if (preg_match('#^(?:https?:)?//#i', $target) === 1) {
+            return null;
+        }
+
+        return '/' . ltrim($target, '/');
+    }
+
+    private function authPrompt(string $intent): ?string
+    {
+        return match ($intent) {
+            'wishlist' => 'Connectez-vous avec un compte étudiant pour ajouter cette offre à votre wish-list.',
+            'apply' => 'Connectez-vous avec un compte étudiant pour postuler à cette offre.',
+            default => null,
+        };
+    }
+
     private function failurePath(): string
     {
         $returnTo = trim((string) ($_POST['return_to'] ?? ''));
-
         if ($returnTo === 'entry') {
             return '/';
         }
 
-        return '/login';
+        $redirectTo = $this->normalizeRedirectTarget($_POST['redirect_to'] ?? null);
+        $intent = trim((string) ($_POST['intent'] ?? ''));
+
+        return $this->appendQuery('/login', [
+            'redirect' => $redirectTo !== null ? ltrim($redirectTo, '/') : '',
+            'intent' => $intent,
+        ]);
     }
 
     private function redirectToDashboardByRole(string $role): void
@@ -76,41 +130,48 @@ class AuthController
         }
 
         $flash = $this->popFlash();
+        $redirectTo = $this->normalizeRedirectTarget($_GET['redirect'] ?? null);
+        $intent = trim((string) ($_GET['intent'] ?? ''));
 
-        View::render('auth/login', [
+        View::render('entry', [
             'title' => 'Web4Stage - Connexion',
             'error' => $flash['error'],
             'success' => $flash['success'],
+            'authPrompt' => $this->authPrompt($intent),
+            'redirectTo' => $redirectTo ?? '',
+            'intent' => $intent,
+            'returnTo' => '',
+            'isEntryPage' => true,
             'csrfToken' => Security::generateCsrfToken(),
-            'metaDescription' => 'Connexion a la plateforme Web4Stage pour acceder aux espaces etudiant, pilote et administrateur.',
-            'metaKeywords' => 'connexion, web4stage, espace etudiant, espace pilote, administration',
+            'metaDescription' => 'Connexion à la plateforme Web4Stage pour accéder aux espaces étudiant, pilote et administrateur.',
+            'metaKeywords' => 'connexion, web4stage, espace étudiant, espace pilote, administration',
         ]);
     }
 
     public function studentLogin(): void
     {
-        $this->redirect('/');
+        $this->redirect('/login');
     }
 
     public function pilotLogin(): void
     {
-        $this->redirect('/');
+        $this->redirect('/login');
     }
 
     public function adminLogin(): void
     {
-        $this->redirect('/');
+        $this->redirect('/login');
     }
 
     public function showRegister(): void
     {
-        $_SESSION['login_success'] = 'La creation des comptes est geree par les administrateurs.';
+        $_SESSION['login_success'] = 'La création des comptes est gérée par les administrateurs.';
         $this->redirect('/');
     }
 
     public function register(): void
     {
-        $_SESSION['login_error'] = 'La creation de compte publique est desactivee sur cette version du site.';
+        $_SESSION['login_error'] = 'La création de compte publique est désactivée sur cette version du site.';
         $this->redirect('/');
     }
 
@@ -140,6 +201,11 @@ class AuthController
             $this->redirect($failurePath);
         }
 
+        $redirectTo = $this->normalizeRedirectTarget($_POST['redirect_to'] ?? null);
+        if ($redirectTo !== null) {
+            $this->redirect($redirectTo);
+        }
+
         $user = Auth::user();
         $this->redirectToDashboardByRole((string) ($user['role'] ?? ''));
     }
@@ -165,4 +231,3 @@ class AuthController
         $this->redirect('/');
     }
 }
-

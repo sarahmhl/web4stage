@@ -1,4 +1,4 @@
-<?php // Vue admin pour consulter les avis et evaluations publies sur la plateforme. ?>
+<?php ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Modération</span>

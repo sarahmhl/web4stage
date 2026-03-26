@@ -61,7 +61,7 @@ class OfferController extends BaseController
             'totalPages' => $totalPages,
             'totalOffers' => $totalOffers,
             'csrfToken' => Security::generateCsrfToken(),
-            'metaDescription' => 'Catalogue des offres de stage Web4Stage avec filtres par ville, competences et duree.',
+            'metaDescription' => 'Catalogue des offres de stage Web4Stage avec filtres par ville, compétences et durée.',
             'metaKeywords' => 'offres de stage, stage web, candidature, cesi, web4stage',
         ]);
     }
@@ -105,8 +105,8 @@ class OfferController extends BaseController
             'isWishlisted' => $isWishlisted,
             'canApply' => Auth::checkRole(Auth::ROLE_ETUDIANT),
             'csrfToken' => Security::generateCsrfToken(),
-            'metaDescription' => 'Detail de l offre ' . (string) $offer['title'] . ' chez ' . (string) $offer['company'] . '.',
-            'metaKeywords' => 'detail offre, stage, entreprise, candidature, web4stage',
+            'metaDescription' => 'Détail de l’offre ' . (string) $offer['title'] . ' chez ' . (string) $offer['company'] . '.',
+            'metaKeywords' => 'détail offre, stage, entreprise, candidature, web4stage',
         ]);
     }
 

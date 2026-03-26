@@ -49,7 +49,7 @@ class WishlistController extends BaseController
         try {
             $result = Wishlist::toggle((int) ($this->currentUser()['id'] ?? 0), $offerId);
             $this->flash(
-                'success',
+                $result['active'] ? 'success-wishlist' : 'success-wishlist-remove',
                 $result['active'] ? 'Offre ajoutée à votre wish-list.' : 'Offre retirée de votre wish-list.'
             );
         } catch (\Throwable $e) {

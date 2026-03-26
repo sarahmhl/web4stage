@@ -1,10 +1,10 @@
-<?php // Vue pilote qui centralise les avis publies par les etudiants. ?>
+<?php ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Retours étudiants</span>
     <h1 class="page-heading-title">Avis publiés par les étudiants</h1>
     <p class="page-heading-subtitle">
-      Consultez les retours sur l accompagnement, la plateforme et la préparation au stage.
+      Consultez les retours sur l’accompagnement, la plateforme et la préparation au stage.
     </p>
   </div>
 </header>

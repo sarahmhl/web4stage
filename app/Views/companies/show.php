@@ -1,4 +1,4 @@
-<?php // Vue detail d une entreprise avec coordonnees, avis et offres liees. ?>
+<?php ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Fiche entreprise</span>
@@ -73,7 +73,7 @@
 
       <?php if (!empty($canReview)): ?>
         <div class="detail-actions">
-          <a href="<?= htmlspecialchars(\Core\Url::route('etudiant/entreprises/evaluer?id=' . (int) $company['id_entreprise']), ENT_QUOTES) ?>" class="btn btn-primary">
+          <a href="<?= htmlspecialchars(\Core\Url::route('entreprises/evaluer?id=' . (int) $company['id_entreprise']), ENT_QUOTES) ?>" class="btn btn-primary">
             Évaluer cette entreprise
           </a>
         </div>
@@ -92,9 +92,9 @@
         <span>Continuer la recherche</span>
       </a>
       <?php if (!empty($canReview)): ?>
-        <a href="<?= htmlspecialchars(\Core\Url::route('etudiant/entreprises/evaluer?id=' . (int) $company['id_entreprise']), ENT_QUOTES) ?>" class="management-offer-link">
+        <a href="<?= htmlspecialchars(\Core\Url::route('entreprises/evaluer?id=' . (int) $company['id_entreprise']), ENT_QUOTES) ?>" class="management-offer-link">
           <strong>Laisser une évaluation</strong>
-          <span>Partager votre retour sur l entreprise</span>
+          <span>Partager votre retour sur l’entreprise</span>
         </a>
       <?php endif; ?>
     </div>
@@ -163,7 +163,7 @@
     </div>
   <?php else: ?>
     <div class="dash-card">
-      <p class="action-card-text">Aucun avis n a encore été publié pour cette entreprise.</p>
+      <p class="action-card-text">Aucun avis n’a encore été publié pour cette entreprise.</p>
     </div>
   <?php endif; ?>
 </section>

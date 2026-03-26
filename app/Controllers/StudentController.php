@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controllers;
 
 use App\Models\Application;
@@ -32,29 +31,42 @@ class StudentController extends BaseController
             'accepted' => 0,
             'rejected' => 0,
         ];
-        $wishlistOffers = [];
         $applications = [];
         $documents = null;
+        $featuredCompanies = [];
 
         try {
             $stats = array_merge(
                 ['wishlist' => Wishlist::countForStudent($studentId)],
                 Application::statusCountsForStudent($studentId)
             );
-            $wishlistOffers = array_slice(Wishlist::listForStudent($studentId), 0, 2);
-            $applications = array_slice(Application::listForStudent($studentId), 0, 4);
+            $applications = array_slice(Application::listForStudent($studentId), 0, 6);
             $documents = StudentDocument::findByStudent($studentId);
+
+            $featuredCompanies = Company::allWithStats();
+            usort(
+                $featuredCompanies,
+                static function (array $left, array $right): int {
+                    $offersCompare = (int) ($right['offers_count'] ?? 0) <=> (int) ($left['offers_count'] ?? 0);
+                    if ($offersCompare !== 0) {
+                        return $offersCompare;
+                    }
+
+                    return ((float) ($right['average_rating'] ?? 0)) <=> ((float) ($left['average_rating'] ?? 0));
+                }
+            );
+            $featuredCompanies = array_slice($featuredCompanies, 0, 4);
         } catch (\Throwable $e) {
-            $this->flash('error', 'Certaines informations du tableau de bord n ont pas pu être chargées.');
+            $this->flash('error', 'Certaines informations du tableau de bord n’ont pas pu être chargées.');
         }
 
         View::render('student/dashboard', [
             'title' => 'Web4Stage - Espace étudiant',
             'studentName' => $user['prenom'] ?? 'Étudiant',
             'stats' => $stats,
-            'wishlistOffers' => $wishlistOffers,
             'applications' => $applications,
             'documents' => $documents,
+            'featuredCompanies' => $featuredCompanies,
             'csrfToken' => Security::generateCsrfToken(),
         ]);
     }
@@ -98,7 +110,7 @@ class StudentController extends BaseController
             StudentFeedback::create((int) ($this->currentUser()['id'] ?? 0), $rating, $comment);
             $this->flash('success', 'Votre avis étudiant a bien été enregistré.');
         } catch (\Throwable $e) {
-            $this->flash('error', 'Impossible d enregistrer votre avis pour le moment.');
+            $this->flash('error', 'Impossible d’enregistrer votre avis pour le moment.');
         }
 
         $this->redirect('/etudiant/avis');
@@ -106,7 +118,17 @@ class StudentController extends BaseController
 
     public function companyReview(): void
     {
-        Auth::requireRole(Auth::ROLE_ETUDIANT);
+        if (!Auth::check()) {
+            $this->redirect('/login');
+        }
+
+        if (!Auth::checkRole(Auth::ROLE_PILOTE) && !Auth::checkRole(Auth::ROLE_ADMIN)) {
+            http_response_code(403);
+            \Core\View::render('errors/403', [
+                'title' => 'Web4Stage - Accès refusé',
+            ]);
+            return;
+        }
 
         $selectedCompanyId = (int) ($_GET['id'] ?? 0);
 
@@ -132,11 +154,21 @@ class StudentController extends BaseController
 
     public function storeCompanyReview(): void
     {
-        Auth::requireRole(Auth::ROLE_ETUDIANT);
+        if (!Auth::check()) {
+            $this->redirect('/login');
+        }
+
+        if (!Auth::checkRole(Auth::ROLE_PILOTE) && !Auth::checkRole(Auth::ROLE_ADMIN)) {
+            http_response_code(403);
+            \Core\View::render('errors/403', [
+                'title' => 'Web4Stage - Accès refusé',
+            ]);
+            return;
+        }
 
         if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
             $this->flash('error', 'Session expirée, merci de recommencer.');
-            $this->redirect('/etudiant/entreprises/evaluer');
+            $this->redirect('/entreprises/evaluer');
         }
 
         $companyId = (int) ($_POST['company_id'] ?? 0);
@@ -145,17 +177,17 @@ class StudentController extends BaseController
 
         if ($companyId <= 0 || $rating < 1 || $rating > 5 || $comment === '') {
             $this->flash('error', 'Merci de sélectionner une entreprise, une note et un commentaire.');
-            $this->redirect('/etudiant/entreprises/evaluer' . ($companyId > 0 ? '?id=' . $companyId : ''));
+            $this->redirect('/entreprises/evaluer' . ($companyId > 0 ? '?id=' . $companyId : ''));
         }
 
         try {
             CompanyReview::create((int) ($this->currentUser()['id'] ?? 0), $companyId, $rating, $comment);
-            $this->flash('success', 'Votre évaluation d entreprise a bien été enregistrée.');
+            $this->flash('success', 'Votre évaluation d’entreprise a bien été enregistrée.');
         } catch (\Throwable $e) {
-            $this->flash('error', 'Impossible d enregistrer cette évaluation pour le moment.');
+            $this->flash('error', 'Impossible d’enregistrer cette évaluation pour le moment.');
         }
 
-        $this->redirect('/etudiant/entreprises/evaluer?id=' . $companyId);
+        $this->redirect('/entreprises/evaluer?id=' . $companyId);
     }
 
     public function documents(): void
@@ -207,10 +239,9 @@ class StudentController extends BaseController
             StudentDocument::save((int) ($this->currentUser()['id'] ?? 0), $letterTemplate, $cvPath === '' ? null : $cvPath);
             $this->flash('success', 'Vos documents ont bien été enregistrés.');
         } catch (\Throwable $e) {
-            $this->flash('error', 'Impossible d enregistrer vos documents pour le moment.');
+            $this->flash('error', 'Impossible d’enregistrer vos documents pour le moment.');
         }
 
         $this->redirect('/etudiant/documents');
     }
 }
-

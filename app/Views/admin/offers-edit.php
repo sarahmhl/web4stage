@@ -1,6 +1,7 @@
 <?php
 $selectedOffer = is_array($selectedOffer ?? null) ? $selectedOffer : null;
 $selectedOfferId = (int) ($selectedOfferId ?? 0);
+$isNewOffer = (bool) ($isNewOffer ?? false);
 $skillsValue = '';
 if ($selectedOffer !== null) {
     if (is_array($selectedOffer['skills'] ?? null)) {
@@ -12,12 +13,12 @@ if ($selectedOffer !== null) {
 ?>
 <header class="dashboard-header">
   <div class="dashboard-title-block">
-    <h1 class="dashboard-title">Modifier les offres de stage</h1>
+    <h1 class="dashboard-title">Gérer les offres de stage</h1>
     <p class="dashboard-subtitle">
-      Selectionnez une offre existante, ajustez son contenu puis enregistrez les modifications.
+      Créez, modifiez ou supprimez les offres de stage depuis l’administration.
     </p>
   </div>
-  <span class="pill-role">Role : Admin</span>
+  <span class="pill-role">Rôle : Admin</span>
 </header>
 
 <?php if (!empty($success)): ?>
@@ -30,15 +31,19 @@ if ($selectedOffer !== null) {
 
 <section class="page-layout offer-management-layout">
   <aside class="side-card">
-    <h2 class="side-card-title">Offres a modifier</h2>
+    <h2 class="side-card-title">Offres à modifier</h2>
     <p class="side-card-text">
-      Choisissez une offre dans la liste pour precharger le formulaire d edition.
+      Choisissez une offre dans la liste pour la modifier ou créez une nouvelle publication.
     </p>
 
     <div class="side-card-links">
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier?new=1'), ENT_QUOTES) ?>" class="management-offer-link<?= $isNewOffer ? ' management-offer-link--active' : '' ?>">
+        <strong>Nouvelle offre</strong>
+        <span>Ajouter une nouvelle offre de stage</span>
+      </a>
       <a href="<?= htmlspecialchars(\Core\Url::route('admin/entreprises'), ENT_QUOTES) ?>" class="management-offer-link">
-        <strong>Gerer les entreprises</strong>
-        <span>Mettre a jour les partenaires relies aux offres</span>
+        <strong>Gérer les entreprises</strong>
+        <span>Mettre à jour les partenaires liés aux offres</span>
       </a>
     </div>
 
@@ -46,7 +51,7 @@ if ($selectedOffer !== null) {
       <?php foreach ($offers as $offer): ?>
         <a
           href="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier?id=' . (int) $offer['id_offre']), ENT_QUOTES) ?>"
-          class="management-offer-link<?= (int) $offer['id_offre'] === $selectedOfferId ? ' management-offer-link--active' : '' ?>"
+          class="management-offer-link<?= (int) $offer['id_offre'] === $selectedOfferId && !$isNewOffer ? ' management-offer-link--active' : '' ?>"
         >
           <strong><?= htmlspecialchars((string) $offer['titre'], ENT_QUOTES) ?></strong>
           <span><?= htmlspecialchars((string) $offer['entreprise_nom'], ENT_QUOTES) ?></span>
@@ -57,12 +62,12 @@ if ($selectedOffer !== null) {
 
   <article class="dash-card offer-editor-card">
     <header class="dash-card-header">
-      <span class="dash-card-title">Edition de l offre</span>
-      <span class="pill-small">Mise a jour admin</span>
+      <span class="dash-card-title"><?= $isNewOffer ? 'Nouvelle offre' : 'Édition de l’offre' ?></span>
+      <span class="pill-small"><?= $isNewOffer ? 'Création' : 'Mise à jour admin' ?></span>
     </header>
 
     <?php if ($selectedOffer === null): ?>
-      <p class="auth-hint">Aucune offre n est disponible pour la modification.</p>
+      <p class="auth-hint">Aucune offre n’est disponible pour la modification.</p>
     <?php else: ?>
       <form method="post" action="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier'), ENT_QUOTES) ?>" data-js-validate>
         <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $csrfToken, ENT_QUOTES) ?>" />
@@ -72,7 +77,7 @@ if ($selectedOffer !== null) {
           <div class="form-group">
             <label for="id_entreprise">Entreprise</label>
             <select id="id_entreprise" name="id_entreprise" class="form-control" required>
-              <option value="">Selectionner une entreprise</option>
+              <option value="">Sélectionner une entreprise</option>
               <?php foreach ($companies as $company): ?>
                 <option
                   value="<?= (int) $company['id'] ?>"
@@ -109,7 +114,7 @@ if ($selectedOffer !== null) {
           </div>
 
           <div class="form-group">
-            <label for="duree_mois">Duree en mois</label>
+            <label for="duree_mois">Durée en mois</label>
             <input
               type="number"
               id="duree_mois"
@@ -121,7 +126,7 @@ if ($selectedOffer !== null) {
           </div>
 
           <div class="form-group">
-            <label for="base_remuneration">Base de remuneration</label>
+            <label for="base_remuneration">Base de rémunération</label>
             <input
               type="number"
               step="0.01"
@@ -135,7 +140,7 @@ if ($selectedOffer !== null) {
           <div class="form-group">
             <label for="image_path">Illustration</label>
             <select id="image_path" name="image_path" class="form-control">
-              <option value="">Selectionner une image</option>
+              <option value="">Sélectionner une image</option>
               <?php foreach ($imageOptions as $option): ?>
                 <option
                   value="<?= htmlspecialchars($option['file'], ENT_QUOTES) ?>"
@@ -148,7 +153,7 @@ if ($selectedOffer !== null) {
           </div>
 
           <div class="form-group form-group--full">
-            <label for="skills">Competences</label>
+            <label for="skills">Compétences</label>
             <input
               type="text"
               id="skills"
@@ -173,17 +178,19 @@ if ($selectedOffer !== null) {
         <div class="form-footer offer-form-actions offer-form-actions--split">
           <div class="offer-form-actions-group">
             <a href="<?= htmlspecialchars(\Core\Url::route('dashboard-admin'), ENT_QUOTES) ?>" class="btn btn-outline">Retour au tableau de bord</a>
-            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            <button type="submit" class="btn btn-primary"><?= $isNewOffer ? 'Créer l’offre' : 'Enregistrer les modifications' ?></button>
           </div>
-          <button
-            type="submit"
-            formaction="<?= htmlspecialchars(\Core\Url::route('admin/offres/supprimer'), ENT_QUOTES) ?>"
-            formmethod="post"
-            class="btn btn-outline btn-outline--danger"
-            onclick="return confirm('Supprimer cette offre ?');"
-          >
-            Supprimer l offre
-          </button>
+          <?php if (!$isNewOffer && (int) ($selectedOffer['id_offre'] ?? 0) > 0): ?>
+            <button
+              type="submit"
+              formaction="<?= htmlspecialchars(\Core\Url::route('admin/offres/supprimer'), ENT_QUOTES) ?>"
+              formmethod="post"
+              class="btn btn-outline btn-outline--danger"
+              onclick="return confirm('Supprimer cette offre ?');"
+            >
+              Supprimer l’offre
+            </button>
+          <?php endif; ?>
         </div>
       </form>
     <?php endif; ?>

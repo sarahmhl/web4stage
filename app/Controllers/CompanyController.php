@@ -31,7 +31,7 @@ class CompanyController extends BaseController
             'title' => 'Web4Stage - Entreprises',
             'companies' => $companies,
             'filters' => $filters,
-            'metaDescription' => 'Consultez les entreprises partenaires, leurs coordonnees et les offres de stage associees sur Web4Stage.',
+            'metaDescription' => 'Consultez les entreprises partenaires, leurs coordonnées et les offres de stage associées sur Web4Stage.',
             'metaKeywords' => 'entreprises, stages, cesi, partenaires, web4stage',
         ]);
     }
@@ -59,9 +59,9 @@ class CompanyController extends BaseController
         View::render('companies/show', [
             'title' => 'Web4Stage - ' . (string) $company['nom'],
             'company' => $company,
-            'canReview' => Auth::checkRole(Auth::ROLE_ETUDIANT),
+            'canReview' => Auth::checkRole(Auth::ROLE_PILOTE) || Auth::checkRole(Auth::ROLE_ADMIN),
             'csrfToken' => Security::generateCsrfToken(),
-            'metaDescription' => 'Fiche entreprise ' . (string) $company['nom'] . ' : contact, offres liees et avis etudiants.',
+            'metaDescription' => 'Fiche entreprise ' . (string) $company['nom'] . ' : contact, offres liées et avis étudiants.',
             'metaKeywords' => 'entreprise, fiche entreprise, avis, offres, web4stage',
         ]);
     }

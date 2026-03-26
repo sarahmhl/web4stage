@@ -1,4 +1,4 @@
-<?php // Vue pilote pour suivre les entreprises partenaires et leur statut. ?>
+<?php ?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Entreprises partenaires</span>

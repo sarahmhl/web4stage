@@ -41,7 +41,7 @@ class HomeController extends BaseController
             'popularOffers' => $popularOffers,
             'studentReviews' => $studentReviews,
             'overviewStats' => $overviewStats,
-            'metaDescription' => 'Plateforme de recherche de stages, candidatures et suivi pedagogique pour les etudiants CESI.',
+            'metaDescription' => 'Plateforme de recherche de stages, candidatures et suivi pédagogique pour les étudiants CESI.',
             'metaKeywords' => 'stage, cesi, portail de stages, candidatures, web4stage',
         ]);
     }

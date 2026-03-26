@@ -13,27 +13,22 @@ class LegalController
     public function mentions(): void
     {
         View::render('legal/mentions', [
-            'title' => 'Web4Stage - Mentions legales',
-            'legalOwner' => (string) Config::get('legal_owner', 'Equipe projet Web4Stage - CESI'),
+            'title' => 'Web4Stage - Mentions légales',
+            'legalOwner' => (string) Config::get('legal_owner', 'Équipe projet Web4Stage - CESI'),
             'legalContactEmail' => (string) Config::get('legal_contact_email', 'contact@web4stage.local'),
             'legalHosting' => (string) Config::get('legal_hosting', ''),
-            'metaDescription' => 'Mentions legales du projet pedagogique Web4Stage realise dans le cadre de la formation CESI.',
-            'metaKeywords' => 'mentions legales, cesi, web4stage, projet pedagogique',
+            'metaDescription' => 'Mentions légales du projet pédagogique Web4Stage réalisé dans le cadre de la formation CESI.',
+            'metaKeywords' => 'mentions légales, cesi, web4stage, projet pédagogique',
         ]);
     }
 
     public function privacy(): void
     {
         View::render('legal/privacy', [
-            'title' => 'Web4Stage - Politique de confidentialite',
+            'title' => 'Web4Stage - Politique de confidentialité',
             'legalContactEmail' => (string) Config::get('legal_contact_email', 'contact@web4stage.local'),
-            'metaDescription' => 'Politique de confidentialite et traitement des donnees du projet Web4Stage.',
-            'metaKeywords' => 'confidentialite, donnees personnelles, rgpd, web4stage',
+            'metaDescription' => 'Politique de confidentialité et traitement des données du projet Web4Stage.',
+            'metaKeywords' => 'confidentialité, données personnelles, rgpd, web4stage',
         ]);
     }
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> b8404803689677cc08eb949c0cef87ab83ad7473
