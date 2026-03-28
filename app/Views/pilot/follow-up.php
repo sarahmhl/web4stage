@@ -23,7 +23,7 @@
             <th>Email</th>
             <th>Candidatures</th>
             <th>En attente</th>
-            <th>Wish-list</th>
+            <th>&#9829; Wish-list</th>
           </tr>
         </thead>
         <tbody>
@@ -104,3 +104,4 @@
     <?php endforeach; ?>
   </section>
 <?php endif; ?>
+
