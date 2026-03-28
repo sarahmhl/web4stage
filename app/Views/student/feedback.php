@@ -61,7 +61,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
       <p class="auth-hint">Conseil : restez simple, précis et utile pour les autres étudiants.</p>
 
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary">Publier mon avis</button>
+        <button type="submit" class="btn btn-primary">? Publier mon avis</button>
       </div>
     </form>
   </article>
@@ -89,7 +89,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
     </div>
   <?php else: ?>
     <div class="empty-state">
-      <span class="pill-small">Aucun avis</span>
+      <span class="pill-small">? Aucun avis</span>
       <h3 class="empty-state-title">Aucun avis n’a encore été publié</h3>
       <p class="empty-state-text">Le premier retour peut être ajouté depuis le formulaire ci-dessus.</p>
     </div>

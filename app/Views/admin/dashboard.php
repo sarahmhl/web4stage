@@ -121,23 +121,41 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
   <div class="action-grid">
     <article class="action-card">
       <span class="pill-small">&#128101; Comptes</span>
+<<<<<<< HEAD
       <h3 class="action-card-title">G&eacute;rer les comptes</h3>
       <p class="action-card-text">Cr&eacute;ez, modifiez ou supprimez les profils &eacute;tudiants, pilotes et administrateurs.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('admin/comptes'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les comptes</a>
+=======
+      <h3 class="action-card-title">Gérer les comptes</h3>
+      <p class="action-card-text">Créez, modifiez ou supprimez les profils étudiants, pilotes et administrateurs.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/comptes'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les comptes</a>
+>>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
 
     <article class="action-card">
       <span class="pill-small">&#127970; Entreprises</span>
+<<<<<<< HEAD
       <h3 class="action-card-title">G&eacute;rer les entreprises</h3>
       <p class="action-card-text">Maintenez les partenaires, contacts et fiches entreprise &agrave; jour.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('admin/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les entreprises</a>
+=======
+      <h3 class="action-card-title">Gérer les entreprises</h3>
+      <p class="action-card-text">Maintenez les partenaires, contacts et fiches entreprise à jour.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les entreprises</a>
+>>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
 
     <article class="action-card">
       <span class="pill-small">&#128188; Offres</span>
+<<<<<<< HEAD
       <h3 class="action-card-title">G&eacute;rer les offres de stage</h3>
       <p class="action-card-text">Cr&eacute;ez, mettez &agrave; jour ou supprimez les fiches d&rsquo;offres depuis l&rsquo;interface d&rsquo;administration.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les offres</a>
+=======
+      <h3 class="action-card-title">Gérer les offres de stage</h3>
+      <p class="action-card-text">Créez, mettez à jour ou supprimez les fiches d’offres depuis l’interface d’administration.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les offres</a>
+>>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
 
     <article class="action-card">

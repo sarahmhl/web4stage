@@ -188,16 +188,34 @@ if (!$hasCv) {
 
     <article class="action-card">
       <span class="pill-small">&#9829; Wish-list</span>
+<<<<<<< HEAD
       <h3 class="action-card-title">Ouvrir ma wish-list</h3>
       <p class="action-card-text">Retrouvez les offres d&eacute;j&agrave; rep&eacute;r&eacute;es et comparez-les plus facilement.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>" class="btn btn-outline">Voir ma wish-list</a>
+=======
+      <h3 class="action-card-title action-card-title--icon">
+        <span class="card-title-icon" aria-hidden="true">&#9829;</span>
+        <span>Ouvrir ma wish-list</span>
+      </h3>
+      <p class="action-card-text">Retrouvez les offres déjà repérées et comparez-les plus facilement.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>" class="btn btn-outline">&#9829; Voir ma wish-list</a>
+>>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
 
     <article class="action-card">
       <span class="pill-small">&#9733; Avis</span>
+<<<<<<< HEAD
       <h3 class="action-card-title">Donner son avis sur la formation</h3>
       <p class="action-card-text">Partagez un retour utile sur l&rsquo;accompagnement et l&rsquo;organisation de la formation.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('etudiant/avis'), ENT_QUOTES) ?>" class="btn btn-outline">Donner mon avis</a>
+=======
+      <h3 class="action-card-title action-card-title--icon">
+        <span class="card-title-icon" aria-hidden="true">&#9733;</span>
+        <span>Donner son avis sur la formation</span>
+      </h3>
+      <p class="action-card-text">Partagez un retour utile sur l’accompagnement et l’organisation de la formation.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('etudiant/avis'), ENT_QUOTES) ?>" class="btn btn-outline">? Donner mon avis</a>
+>>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
   </div>
 </section>
