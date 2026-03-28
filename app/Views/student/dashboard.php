@@ -35,7 +35,7 @@ if (!$hasCv) {
     $priorityAction = 'Ouvrir ma wish-list';
 } elseif ((int) ($stats['pending'] ?? 0) > 0) {
     $priorityLabel = 'Suivre les dossiers en attente';
-    $priorityText = 'Certaines candidatures sont encore en cours. Suivez-les pour savoir quand relancee.';
+    $priorityText = 'Certaines candidatures sont encore en cours. Suivez-les pour savoir quand relancer.';
     $priorityRoute = 'candidatures';
     $priorityAction = 'Voir mes candidatures';
 }
