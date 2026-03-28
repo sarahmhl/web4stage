@@ -14,7 +14,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
 <section class="section" aria-labelledby="section-form-avis">
   <div class="section-header">
     <div>
-      <h2 class="section-title" id="section-form-avis">Publier un avis</h2>
+      <h2 class="section-title" id="section-form-avis">? Publier un avis</h2>
       <p class="section-subtitle">Un retour clair et concret suffit.</p>
     </div>
   </div>
@@ -22,7 +22,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title dash-card-title--icon">
-        <span class="card-title-icon" aria-hidden="true">&#9734;</span>
+        <span class="card-title-icon" aria-hidden="true">?</span>
         <span>Mon avis</span>
       </span>
       <span class="pill-small">Formation</span>
@@ -61,7 +61,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
       <p class="auth-hint">Conseil : restez simple, précis et utile pour les autres étudiants.</p>
 
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary">Publier mon avis</button>
+        <button type="submit" class="btn btn-primary">? Publier mon avis</button>
       </div>
     </form>
   </article>
@@ -89,9 +89,10 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
     </div>
   <?php else: ?>
     <div class="empty-state">
-      <span class="pill-small">Aucun avis</span>
+      <span class="pill-small">? Aucun avis</span>
       <h3 class="empty-state-title">Aucun avis n’a encore été publié</h3>
       <p class="empty-state-text">Le premier retour peut être ajouté depuis le formulaire ci-dessus.</p>
     </div>
   <?php endif; ?>
 </section>
+
