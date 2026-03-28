@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Core\Auth;
+use Core\Flash;
 use Core\Security;
 use Core\View;
 
@@ -105,28 +106,15 @@ class AuthController
         ]);
     }
 
-    private function redirectToDashboardByRole(string $role): void
+    private function redirectAfterLogin(): void
     {
-        if ($role === Auth::ROLE_ETUDIANT) {
-            $this->redirect('/dashboard-etudiant');
-        }
-
-        if ($role === Auth::ROLE_PILOTE) {
-            $this->redirect('/dashboard-pilote');
-        }
-
-        if ($role === Auth::ROLE_ADMIN) {
-            $this->redirect('/dashboard-admin');
-        }
-
         $this->redirect('/accueil');
     }
 
     public function login(): void
     {
         if (Auth::check()) {
-            $user = Auth::user();
-            $this->redirectToDashboardByRole((string) ($user['role'] ?? ''));
+            $this->redirectAfterLogin();
         }
 
         $flash = $this->popFlash();
@@ -201,13 +189,7 @@ class AuthController
             $this->redirect($failurePath);
         }
 
-        $redirectTo = $this->normalizeRedirectTarget($_POST['redirect_to'] ?? null);
-        if ($redirectTo !== null) {
-            $this->redirect($redirectTo);
-        }
-
-        $user = Auth::user();
-        $this->redirectToDashboardByRole((string) ($user['role'] ?? ''));
+        $this->redirectAfterLogin();
     }
 
     public function handleStudentLogin(): void
@@ -227,7 +209,13 @@ class AuthController
 
     public function logout(): void
     {
+        if (!Security::checkCsrfToken((string) ($_POST['_csrf'] ?? ''))) {
+            Flash::add('error', 'Action de déconnexion invalide.');
+            $this->redirect('/accueil');
+        }
+
         Auth::logout();
-        $this->redirect('/');
+        Flash::add('success', 'Vous avez été déconnecté avec succès.');
+        $this->redirect('/accueil');
     }
 }
