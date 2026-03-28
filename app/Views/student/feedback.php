@@ -14,7 +14,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
 <section class="section" aria-labelledby="section-form-avis">
   <div class="section-header">
     <div>
-      <h2 class="section-title" id="section-form-avis">Publier un avis</h2>
+      <h2 class="section-title" id="section-form-avis">? Publier un avis</h2>
       <p class="section-subtitle">Un retour clair et concret suffit.</p>
     </div>
   </div>
@@ -22,7 +22,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title dash-card-title--icon">
-        <span class="card-title-icon" aria-hidden="true">&#9734;</span>
+        <span class="card-title-icon" aria-hidden="true">?</span>
         <span>Mon avis</span>
       </span>
       <span class="pill-small">Formation</span>
@@ -95,3 +95,4 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
     </div>
   <?php endif; ?>
 </section>
+

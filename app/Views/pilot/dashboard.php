@@ -98,14 +98,14 @@ $latestFeedbacks = is_array($latestFeedbacks ?? null) ? $latestFeedbacks : [];
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title">Retours terrain</span>
-      <span class="pill-small"><?= (int) ($stats['feedbacks'] ?? 0) ?> avis</span>
+      <span class="pill-small">&#9733; <?= (int) ($stats['feedbacks'] ?? 0) ?> avis</span>
     </header>
     <ul class="list-compact">
       <li><span>Avis étudiants</span><strong><?= (int) ($stats['feedbacks'] ?? 0) ?></strong></li>
       <li><span>Moyenne récente</span><strong><?= ($attentionStats['averageFeedback'] ?? null) !== null ? htmlspecialchars((string) $attentionStats['averageFeedback'], ENT_QUOTES) . '/5' : 'N/A' ?></strong></li>
       <li><span>Accès direct</span><strong><a href="<?= htmlspecialchars(\Core\Url::route('pilote/avis'), ENT_QUOTES) ?>">Ouvrir</a></strong></li>
     </ul>
-    <p class="dashboard-card-note">Les signaux faibles remontent ici plus vite pour garder un vrai suivi pedagogique.</p>
+    <p class="dashboard-card-note">Les signaux faibles remontent ici plus vite pour garder un vrai suivi pédagogique.</p>
   </article>
 </section>
 
@@ -119,37 +119,37 @@ $latestFeedbacks = is_array($latestFeedbacks ?? null) ? $latestFeedbacks : [];
 
   <div class="action-grid">
     <article class="action-card">
-      <span class="pill-small">Offres</span>
-      <h3 class="action-card-title">Gérer les offres de stage</h3>
-      <p class="action-card-text">Créer, modifier ou supprimer les offres rattachées aux entreprises suivies.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/offres'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les offres</a>
+      <span class="pill-small">&#128188; Offres</span>
+      <h3 class="action-card-title">G&eacute;rer les offres de stage</h3>
+      <p class="action-card-text">Cr&eacute;er, modifier ou supprimer les offres rattach&eacute;es aux entreprises suivies.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/offres'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les offres</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Étudiants</span>
-      <h3 class="action-card-title">Gérer les comptes étudiants</h3>
-      <p class="action-card-text">Créer, mettre à jour ou supprimer les comptes étudiants de la promotion.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/etudiants'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les étudiants</a>
+      <span class="pill-small">&#128101; &Eacute;tudiants</span>
+      <h3 class="action-card-title">G&eacute;rer les comptes &eacute;tudiants</h3>
+      <p class="action-card-text">Cr&eacute;er, mettre &agrave; jour ou supprimer les comptes &eacute;tudiants de la promotion.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/etudiants'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les &eacute;tudiants</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Suivi</span>
-      <h3 class="action-card-title">Préparer les relances</h3>
-      <p class="action-card-text">Repérez les profils peu actifs ou sans candidature récente.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/relances'), ENT_QUOTES) ?>" class="btn btn-outline">Préparer les relances</a>
+      <span class="pill-small">&#128221; Suivi</span>
+      <h3 class="action-card-title">Pr&eacute;parer les relances</h3>
+      <p class="action-card-text">Rep&eacute;rez les profils peu actifs ou sans candidature r&eacute;cente.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/relances'), ENT_QUOTES) ?>" class="btn btn-outline">Pr&eacute;parer les relances</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Entreprises</span>
-      <h3 class="action-card-title">Gérer les entreprises</h3>
-      <p class="action-card-text">Maintenez les fiches partenaires et leurs coordonnées à jour.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les entreprises</a>
+      <span class="pill-small">&#127970; Entreprises</span>
+      <h3 class="action-card-title">G&eacute;rer les entreprises</h3>
+      <p class="action-card-text">Maintenez les fiches partenaires et leurs coordonn&eacute;es &agrave; jour.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les entreprises</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Avis</span>
+      <span class="pill-small">&#9733; Avis</span>
       <h3 class="action-card-title">Consulter les avis sur la formation</h3>
-      <p class="action-card-text">Visualisez les retours laissés par les étudiants sans quitter l’espace pilote.</p>
+      <p class="action-card-text">Visualisez les retours laiss&eacute;s par les &eacute;tudiants sans quitter l&rsquo;espace pilote.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('pilote/avis'), ENT_QUOTES) ?>" class="btn btn-outline">Voir les retours</a>
     </article>
   </div>
@@ -227,7 +227,7 @@ $latestFeedbacks = is_array($latestFeedbacks ?? null) ? $latestFeedbacks : [];
             <th>Candidatures</th>
             <th>En attente</th>
             <th>Entretiens</th>
-            <th>Wish-list</th>
+            <th>&#9829; Wish-list</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -273,7 +273,7 @@ $latestFeedbacks = is_array($latestFeedbacks ?? null) ? $latestFeedbacks : [];
     <article class="dash-card">
       <header class="dash-card-header">
         <span class="dash-card-title">Candidatures récentes</span>
-        <span class="pill-small"><?= count($recentApplications) ?> elements</span>
+        <span class="pill-small"><?= count($recentApplications) ?> éléments</span>
       </header>
       <ul class="list-compact">
         <?php foreach ($recentApplications as $application): ?>
@@ -308,7 +308,7 @@ $latestFeedbacks = is_array($latestFeedbacks ?? null) ? $latestFeedbacks : [];
 
     <article class="dash-card">
       <header class="dash-card-header">
-        <span class="dash-card-title">Derniers avis</span>
+        <span class="dash-card-title">&#9733; Derniers avis</span>
         <span class="pill-small"><?= count($latestFeedbacks) ?> retours</span>
       </header>
       <ul class="list-compact">
@@ -320,8 +320,10 @@ $latestFeedbacks = is_array($latestFeedbacks ?? null) ? $latestFeedbacks : [];
         <?php endforeach; ?>
       </ul>
       <p class="dashboard-card-note">
-        <a href="<?= htmlspecialchars(\Core\Url::route('pilote/avis'), ENT_QUOTES) ?>" class="link-soft">Voir tous les avis -></a>
+        <a href="<?= htmlspecialchars(\Core\Url::route('pilote/avis'), ENT_QUOTES) ?>" class="link-soft">&#9733; Voir tous les avis -></a>
       </p>
     </article>
   </div>
 </section>
+
+

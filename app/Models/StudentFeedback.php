@@ -58,10 +58,10 @@ class StudentFeedback
                 'id' => (int) $row['id_avis'],
                 'initials' => self::initials($prenom . ' ' . $nom),
                 'name' => trim($prenom . ' ' . $nom),
-                'role' => 'Etudiant CESI',
+                'role' => 'Étudiant CESI',
                 'rating' => (int) $row['note'],
                 'text' => (string) $row['commentaire'],
-                'date' => 'Avis poste le ' . date('d/m/Y', strtotime((string) $row['created_at'])),
+                'date' => 'Commentaire publié le ' . date('d/m/Y', strtotime((string) $row['created_at'])),
             ];
         }
 

@@ -1,9 +1,5 @@
 <?php
-  $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
-  $baseDir = rtrim(str_replace('\\', '/', dirname($scriptName)), '/');
-  $projectBase = $baseDir === '' ? '' : rtrim(str_replace('\\', '/', dirname($baseDir)), '/');
-  $assetBase = str_replace(' ', '%20', $projectBase);
-  $basePath = '/assets/img/offers/';
+  $basePath = 'assets/img/offers/';
   $offersDir = dirname(__DIR__, 2) . '/assets/img/offers';
   if (!is_dir($offersDir)) {
     $offersDir = dirname(__DIR__, 3) . '/assets/img/offers';
@@ -45,14 +41,8 @@
     return null;
   };
 
-  $toOfferImageUrl = static function (string $fileName) use ($assetBase, $basePath, $offersDir): string {
-    $url = ($assetBase === '' ? '' : $assetBase) . $basePath . $fileName;
-    $mtime = @filemtime($offersDir . DIRECTORY_SEPARATOR . $fileName);
-    if ($mtime !== false) {
-      $url .= '?v=' . $mtime;
-    }
-
-    return $url;
+  $toOfferImageUrl = static function (string $fileName) use ($basePath): string {
+    return \Core\Url::asset($basePath . $fileName);
   };
 
   $defaultOfferImage = $findOfferImage('default.svg')
@@ -61,7 +51,7 @@
     ?? null;
   $defaultOfferImageUrl = $defaultOfferImage !== null
     ? $toOfferImageUrl($defaultOfferImage)
-    : (($assetBase === '' ? '' : $assetBase) . $basePath . 'default.svg');
+    : \Core\Url::asset($basePath . 'default.svg');
   $isLoggedIn = \Core\Auth::check();
 
   $resolveOfferImage = static function (array $offer) use ($findOfferImage, $toOfferImageUrl, $defaultOfferImageUrl): string {
@@ -152,28 +142,28 @@
   <aside class="hero-card hero-card--summary" aria-labelledby="titre-apercu-plateforme">
     <div class="hero-card-inner">
       <div class="hero-card-title">
-        <span class="pill">Accès rapides</span>
-        <div class="hero-card-logo">Go</div>
+        <span class="pill">Navigation</span>
+        <div class="hero-card-logo">&rarr;</div>
       </div>
-      <h2 class="hero-login-title" id="titre-apercu-plateforme">Un accueil plus simple</h2>
+      <h2 class="hero-login-title" id="titre-apercu-plateforme">Accès directs</h2>
       <p class="hero-login-copy">
-        Retrouvez rapidement les principales entrées du site sans surcharger la page d'accueil.
+        Accédez rapidement aux rubriques principales de la plateforme.
       </p>
 
       <div class="home-summary-list">
         <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="home-summary-item">
-          <strong>Parcourir les offres</strong>
-          <span>Consulter rapidement les stages disponibles.</span>
+          <strong>Consulter les offres</strong>
+          <span>Afficher le catalogue complet des stages.</span>
         </a>
         <?php if (!$isLoggedIn): ?>
           <a href="<?= htmlspecialchars(\Core\Url::route('login'), ENT_QUOTES) ?>" class="home-summary-item">
-            <strong>Se connecter</strong>
-            <span>Accéder directement à son espace personnel.</span>
+            <strong>Connexion</strong>
+            <span>Accéder à votre espace personnel.</span>
           </a>
         <?php endif; ?>
         <a href="<?= htmlspecialchars(\Core\Url::route('mentions-legales'), ENT_QUOTES) ?>" class="home-summary-item">
-          <strong>Infos du projet</strong>
-          <span>Voir le cadre pédagogique et les mentions légales.</span>
+          <strong>Mentions légales</strong>
+          <span>Consulter le cadre pédagogique et les informations du projet.</span>
         </a>
       </div>
     </div>

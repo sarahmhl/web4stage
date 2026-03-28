@@ -132,7 +132,7 @@
           <footer class="offer-footer">
             <div class="offer-tagline"><?= htmlspecialchars((string) $offer['tagline'], ENT_QUOTES) ?></div>
             <div class="offer-actions">
-              <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $offer['id']), ENT_QUOTES) ?>" class="btn btn-outline">Détails</a>
+              <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $offer['id']), ENT_QUOTES) ?>" class="btn btn-outline">Voir</a>
             </div>
           </footer>
         </article>
@@ -167,3 +167,4 @@
     </div>
   <?php endif; ?>
 </section>
+

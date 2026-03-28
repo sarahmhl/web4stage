@@ -38,18 +38,28 @@ if (session_status() === PHP_SESSION_NONE) {
         'samesite' => (string) ($config['session_samesite'] ?? 'Lax'),
     ]);
 
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.cookie_secure', ((bool) ($config['session_secure'] ?? false) || $isHttps || (bool) ($config['force_https'] ?? false)) ? '1' : '0');
+    ini_set('session.cookie_samesite', (string) ($config['session_samesite'] ?? 'Lax'));
     ini_set('session.use_strict_mode', '1');
     ini_set('session.use_only_cookies', '1');
+    ini_set('session.use_trans_sid', '0');
     session_start();
 }
 
 if ($isHttps || (bool) ($config['force_https'] ?? false)) {
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
 }
+header('Content-Type: text/html; charset=UTF-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+header('Expires: 0');
 header('X-Frame-Options: SAMEORIGIN');
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
+ini_set('default_charset', 'UTF-8');
 
 spl_autoload_register(function (string $class): void {
     $prefixes = [
@@ -77,7 +87,7 @@ use Core\Router;
 
 $router = new Router();
 
-$router->get('/', 'App\\Controllers\\IntroController@index');
+$router->get('/', 'App\\Controllers\\HomeController@index');
 $router->get('/entry', 'App\\Controllers\\IntroController@index');
 $router->get('/entree', 'App\\Controllers\\IntroController@index');
 $router->get('/accueil', 'App\\Controllers\\HomeController@index');
@@ -137,7 +147,7 @@ $router->get('/admin/moderation', 'App\\Controllers\\AdminController@moderation'
 $router->get('/admin/qualite', 'App\\Controllers\\AdminController@quality');
 $router->get('/mentions-legales', 'App\\Controllers\\LegalController@mentions');
 $router->get('/politique-confidentialite', 'App\\Controllers\\LegalController@privacy');
-$router->get('/logout', 'App\\Controllers\\AuthController@logout');
+$router->post('/logout', 'App\\Controllers\\AuthController@logout');
 
 try {
     $router->dispatch();

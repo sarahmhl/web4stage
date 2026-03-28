@@ -50,7 +50,7 @@
           </a>
         </p>
 
-        <div class="detail-facts" aria-label="Informations clés">
+        <div class="detail-facts" aria-label="Informations cl&eacute;s">
           <span><?= htmlspecialchars((string) $offer['duration'], ENT_QUOTES) ?></span>
           <span><?= htmlspecialchars((string) $offer['salary'], ENT_QUOTES) ?></span>
           <span><?= $applicationsCount ?> candidature<?= $applicationsCount > 1 ? 's' : '' ?></span>
@@ -67,10 +67,6 @@
                 <?= !empty($isWishlisted) ? 'Retirer de la wish-list' : 'Ajouter &agrave; la wish-list' ?>
               </button>
             </form>
-          <?php elseif (!\Core\Auth::check()): ?>
-            <a href="<?= $guestLoginUrl('wishlist') ?>" class="btn btn-outline">
-              Se connecter pour la wish-list
-            </a>
           <?php endif; ?>
 
           <?php if (!empty($canApply)): ?>
@@ -106,7 +102,7 @@
         <div class="detail-meta-grid">
           <div>
             <span class="detail-label">Secteur</span>
-            <strong class="detail-value"><?= htmlspecialchars((string) ($offer['company_sector'] ?? 'Non renseigné'), ENT_QUOTES) ?></strong>
+            <strong class="detail-value"><?= htmlspecialchars((string) ($offer['company_sector'] ?? 'Non renseign&eacute;'), ENT_QUOTES) ?></strong>
           </div>
           <div>
             <span class="detail-label">Contact</span>
@@ -120,7 +116,7 @@
           </div>
           <div>
             <span class="detail-label">T&eacute;l&eacute;phone</span>
-            <strong class="detail-value"><?= htmlspecialchars((string) ($offer['company_phone'] ?? 'Non renseigné'), ENT_QUOTES) ?></strong>
+            <strong class="detail-value"><?= htmlspecialchars((string) ($offer['company_phone'] ?? 'Non renseign&eacute;'), ENT_QUOTES) ?></strong>
           </div>
           <div>
             <span class="detail-label">Site</span>
@@ -202,7 +198,7 @@
           <footer class="offer-footer">
             <div class="offer-tagline"><?= htmlspecialchars((string) $related['tagline'], ENT_QUOTES) ?></div>
             <div class="offer-actions">
-              <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $related['id']), ENT_QUOTES) ?>" class="btn btn-outline">D&eacute;tails</a>
+              <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $related['id']), ENT_QUOTES) ?>" class="btn btn-outline">Voir</a>
             </div>
           </footer>
         </article>

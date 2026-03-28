@@ -74,7 +74,7 @@ if (!$hasCv) {
         <strong><?= (int) ($stats['applications'] ?? 0) ?></strong>
       </div>
       <div class="dashboard-lead-stat">
-        <span>Wish-list</span>
+        <span>&#9829; Wish-list</span>
         <strong><?= (int) ($stats['wishlist'] ?? 0) ?></strong>
       </div>
       <div class="dashboard-lead-stat">
@@ -96,7 +96,7 @@ if (!$hasCv) {
       <span class="pill-small">En cours</span>
     </header>
     <ul class="list-compact">
-      <li><span>Offres en favoris</span><strong><?= (int) ($stats['wishlist'] ?? 0) ?></strong></li>
+      <li><span>&#9829; Offres en favoris</span><strong><?= (int) ($stats['wishlist'] ?? 0) ?></strong></li>
       <li><span>Candidatures envoyées</span><strong><?= (int) ($stats['applications'] ?? 0) ?></strong></li>
       <li><span>Entretiens prévus</span><strong><?= (int) ($stats['interviews'] ?? 0) ?></strong></li>
     </ul>
@@ -174,38 +174,29 @@ if (!$hasCv) {
   <div class="section-header">
     <div>
       <h2 class="section-title" id="section-actions-etudiant">Actions rapides</h2>
-      <p class="section-subtitle">Les raccourcis essentiels pour poursuivre votre recherche sans détour.</p>
+      <p class="section-subtitle">Les raccourcis essentiels pour poursuivre votre recherche sans d&eacute;tour.</p>
     </div>
   </div>
 
   <div class="action-grid">
     <article class="action-card">
-      <span class="pill-small">Offres</span>
-      <h3 class="action-card-title action-card-title--icon">
-        <span class="card-title-icon" aria-hidden="true">&#128188;</span>
-        <span>Parcourir les offres</span>
-      </h3>
-      <p class="action-card-text">Explorez de nouvelles opportunités et alimentez votre recherche avec des pistes concrètes.</p>
+      <span class="pill-small">&#128188; Offres</span>
+      <h3 class="action-card-title">Parcourir les offres</h3>
+      <p class="action-card-text">Explorez de nouvelles opportunit&eacute;s et alimentez votre recherche avec des pistes concr&egrave;tes.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="btn btn-outline">Voir les offres</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Wish-list</span>
-      <h3 class="action-card-title action-card-title--icon">
-        <span class="card-title-icon" aria-hidden="true">&#9825;</span>
-        <span>Ouvrir ma wish-list</span>
-      </h3>
-      <p class="action-card-text">Retrouvez les offres déjà repérées et comparez-les plus facilement.</p>
+      <span class="pill-small">&#9829; Wish-list</span>
+      <h3 class="action-card-title">Ouvrir ma wish-list</h3>
+      <p class="action-card-text">Retrouvez les offres d&eacute;j&agrave; rep&eacute;r&eacute;es et comparez-les plus facilement.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>" class="btn btn-outline">Voir ma wish-list</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Retour</span>
-      <h3 class="action-card-title action-card-title--icon">
-        <span class="card-title-icon" aria-hidden="true">&#9734;</span>
-        <span>Donner son avis sur la formation</span>
-      </h3>
-      <p class="action-card-text">Partagez un retour utile sur l’accompagnement et l’organisation de la formation.</p>
+      <span class="pill-small">&#9733; Avis</span>
+      <h3 class="action-card-title">Donner son avis sur la formation</h3>
+      <p class="action-card-text">Partagez un retour utile sur l&rsquo;accompagnement et l&rsquo;organisation de la formation.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('etudiant/avis'), ENT_QUOTES) ?>" class="btn btn-outline">Donner mon avis</a>
     </article>
   </div>
@@ -296,3 +287,4 @@ if (!$hasCv) {
     </div>
   <?php endif; ?>
 </section>
+

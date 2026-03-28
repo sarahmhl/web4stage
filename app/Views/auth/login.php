@@ -1,9 +1,9 @@
 <?php ?>
 <section class="auth-wrapper">
   <section class="auth-card" aria-labelledby="titre-login">
-    <h1 class="auth-title" id="titre-login">Connexion</h1>
+    <h1 class="auth-title" id="titre-login">Se connecter</h1>
     <p class="auth-subtitle">
-      Connectez-vous avec l’adresse e-mail associée à votre compte.
+      Connectez-vous avec l&apos;adresse e-mail associ&eacute;e &agrave; votre compte.
     </p>
 
     <?php if (!empty($authPrompt)): ?>
@@ -60,8 +60,8 @@
 
     <div class="home-summary-list">
       <a href="<?= htmlspecialchars(\Core\Url::route('accueil'), ENT_QUOTES) ?>" class="home-summary-item">
-        <strong>Retour à l’accueil</strong>
-        <span>Continuer à explorer le portail public.</span>
+        <strong>Retour &agrave; l&apos;accueil</strong>
+        <span>Continuer &agrave; explorer le portail public.</span>
       </a>
       <a href="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="home-summary-item">
         <strong>Voir les offres</strong>

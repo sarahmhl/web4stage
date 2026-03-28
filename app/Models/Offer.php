@@ -665,14 +665,14 @@ class Offer
     private static function tagline(int $applicationsCount, int $wishlistCount): string
     {
         if ($applicationsCount > 0) {
-            return $applicationsCount . ' candidature(s) deja enregistree(s) sur cette offre.';
+            return $applicationsCount . ' ' . ($applicationsCount > 1 ? 'candidatures déjà enregistrées sur cette offre.' : 'candidature déjà enregistrée sur cette offre.');
         }
 
         if ($wishlistCount > 0) {
-            return $wishlistCount . ' ajout(s) en wish-list pour cette offre.';
+            return $wishlistCount . ' ' . ($wishlistCount > 1 ? 'ajouts en wish-list pour cette offre.' : 'ajout en wish-list pour cette offre.');
         }
 
-        return 'Offre enregistree dans la base.';
+        return 'Offre enregistrée dans la base.';
     }
 
 }

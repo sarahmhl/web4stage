@@ -82,7 +82,7 @@
     </div>
     <?php if (\Core\Auth::checkRole(\Core\Auth::ROLE_ETUDIANT)): ?>
       <div class="section-actions">
-        <a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>" class="link-soft">Voir ma wish-list -&gt;</a>
+        <a href="<?= htmlspecialchars(\Core\Url::route('wishlist'), ENT_QUOTES) ?>" class="link-soft">&#9829; Voir ma wish-list -&gt;</a>
       </div>
     <?php elseif (!\Core\Auth::check()): ?>
       <div class="section-actions">
@@ -138,7 +138,7 @@
                 </form>
               <?php endif; ?>
               <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $offer['id']), ENT_QUOTES) ?>" class="btn btn-outline">
-                Détails
+                Voir
               </a>
             </div>
           </footer>
@@ -178,3 +178,4 @@
     </nav>
   <?php endif; ?>
 </section>
+

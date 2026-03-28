@@ -1,6 +1,7 @@
 <?php
 
 use Core\Flash;
+use Core\Security;
 use Core\Url;
 
 $routeUrl = static function (string $path = ''): string {
@@ -17,6 +18,7 @@ $isHome = $currentPath === '/accueil';
 $isLoggedIn = \Core\Auth::check();
 $user = \Core\Auth::user();
 $userRole = $user['role'] ?? '';
+$logoutCsrfToken = $isLoggedIn ? Security::generateCsrfToken() : null;
 $flashMessages = Flash::consume();
 $dashboardPath = null;
 $dashboardLabel = null;
@@ -94,7 +96,7 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
     <?php if (!$isEntryPage): ?>
       <header class="navbar">
         <div class="navbar-inner">
-          <a href="<?= $routeUrl('') ?>" class="brand">
+          <a href="<?= $routeUrl('accueil') ?>" class="brand">
             <div class="brand-text">
               <span class="brand-title" data-logo="Web4Stage">Web<span class="brand-four">4</span>Stage</span>
               <span class="brand-subtitle">Stages &amp; candidatures</span>
@@ -113,9 +115,18 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
             <?php if (!$isLoggedIn): ?>
               <a href="<?= $routeUrl('login') ?>" class="btn btn-outline">Se connecter</a>
             <?php else: ?>
-              <a href="<?= $routeUrl('logout') ?>" class="btn btn-primary">Se déconnecter</a>
+              <form method="post" action="<?= $routeUrl('logout') ?>" class="nav-logout-form">
+                <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $logoutCsrfToken, ENT_QUOTES) ?>" />
+                <button type="submit" class="btn btn-primary">Se déconnecter</button>
+              </form>
             <?php endif; ?>
-            <button class="burger" aria-label="Ouvrir le menu mobile">
+            <button
+              type="button"
+              class="burger"
+              aria-label="Ouvrir le menu mobile"
+              aria-expanded="false"
+              aria-controls="nav-mobile-menu"
+            >
               <span></span>
               <span></span>
               <span></span>
@@ -123,7 +134,7 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
           </div>
         </div>
 
-        <div class="nav-mobile" aria-label="Navigation mobile">
+        <div id="nav-mobile-menu" class="nav-mobile" aria-label="Navigation mobile">
           <a href="<?= $routeUrl('accueil') ?>" class="nav-link<?= $isHome ? ' nav-link--active' : '' ?>">Accueil</a>
           <a href="<?= $routeUrl('offres') ?>" class="nav-link<?= str_starts_with($currentPath, '/offres') ? ' nav-link--active' : '' ?>">Offres de stage</a>
           <?php if ($dashboardPath !== null && $dashboardLabel !== null): ?>
@@ -132,7 +143,10 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
           <?php if (!$isLoggedIn): ?>
             <a href="<?= $routeUrl('login') ?>" class="nav-link<?= str_starts_with($currentPath, '/login') ? ' nav-link--active' : '' ?>">Se connecter</a>
           <?php else: ?>
-            <a href="<?= $routeUrl('logout') ?>" class="nav-link">Se déconnecter</a>
+            <form method="post" action="<?= $routeUrl('logout') ?>" class="nav-mobile-logout">
+              <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) $logoutCsrfToken, ENT_QUOTES) ?>" />
+              <button type="submit" class="nav-link nav-link--button">Se déconnecter</button>
+            </form>
           <?php endif; ?>
         </div>
       </header>
@@ -153,7 +167,7 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
 
       <footer class="footer">
         <div class="footer-inner">
-          <span>&copy; 2026 · Web4Stage · Projet pédagogique CESI</span>
+          <span>&copy; 2026 &middot; Web4Stage &middot; Projet pédagogique CESI</span>
           <div class="footer-links">
             <a href="<?= $routeUrl('mentions-legales') ?>">Mentions légales</a>
             <a href="<?= $routeUrl('politique-confidentialite') ?>">Politique de confidentialité</a>

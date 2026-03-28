@@ -161,7 +161,7 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
           <th>Email</th>
           <th>Rôle</th>
           <th>Candidatures</th>
-          <th>Wish-list</th>
+          <th>&#9829; Wish-list</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -188,3 +188,4 @@ $isNewAccount = (bool) ($isNewAccount ?? false);
     </table>
   </div>
 </section>
+

@@ -90,7 +90,7 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
     </header>
     <ul class="list-compact">
       <li><span>Avis étudiants</span><strong><?= count($feedbacks) ?></strong></li>
-      <li><span>Avis entreprises</span><strong><?= count($companyReviews) ?></strong></li>
+      <li><span>&#9733; Avis entreprises</span><strong><?= count($companyReviews) ?></strong></li>
       <li><span>Actions en attente</span><strong><?= (int) ($stats['pendingActions'] ?? 0) ?></strong></li>
     </ul>
     <p class="dashboard-card-note">Les contenus publiés récents restent accessibles sans passer par une page vide ou trop technique.</p>
@@ -114,44 +114,44 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
   <div class="section-header">
     <div>
       <h2 class="section-title">Actions rapides</h2>
-      <p class="section-subtitle">Les tâches les plus fréquentes dans l’administration du site.</p>
+      <p class="section-subtitle">Les t&acirc;ches les plus fr&eacute;quentes dans l&rsquo;administration du site.</p>
     </div>
   </div>
 
   <div class="action-grid">
     <article class="action-card">
-      <span class="pill-small">Comptes</span>
-      <h3 class="action-card-title">Gérer les comptes</h3>
-      <p class="action-card-text">Créez, modifiez ou supprimez les profils étudiants, pilotes et administrateurs.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('admin/comptes'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les comptes</a>
+      <span class="pill-small">&#128101; Comptes</span>
+      <h3 class="action-card-title">G&eacute;rer les comptes</h3>
+      <p class="action-card-text">Cr&eacute;ez, modifiez ou supprimez les profils &eacute;tudiants, pilotes et administrateurs.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/comptes'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les comptes</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Entreprises</span>
-      <h3 class="action-card-title">Gérer les entreprises</h3>
-      <p class="action-card-text">Maintenez les partenaires, contacts et fiches entreprise à jour.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('admin/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les entreprises</a>
+      <span class="pill-small">&#127970; Entreprises</span>
+      <h3 class="action-card-title">G&eacute;rer les entreprises</h3>
+      <p class="action-card-text">Maintenez les partenaires, contacts et fiches entreprise &agrave; jour.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les entreprises</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Offres</span>
-      <h3 class="action-card-title">Gérer les offres de stage</h3>
-      <p class="action-card-text">Créez, mettez à jour ou supprimez les fiches d’offres depuis l’interface d’administration.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les offres</a>
+      <span class="pill-small">&#128188; Offres</span>
+      <h3 class="action-card-title">G&eacute;rer les offres de stage</h3>
+      <p class="action-card-text">Cr&eacute;ez, mettez &agrave; jour ou supprimez les fiches d&rsquo;offres depuis l&rsquo;interface d&rsquo;administration.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les offres</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Modération</span>
-      <h3 class="action-card-title">Contrôler les avis et retours</h3>
-      <p class="action-card-text">Relisez les retours publiés sur la plateforme et sur les entreprises.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('admin/moderation'), ENT_QUOTES) ?>" class="btn btn-outline">Ouvrir la modération</a>
+      <span class="pill-small">&#9733; Mod&eacute;ration</span>
+      <h3 class="action-card-title">Contr&ocirc;ler les avis et retours</h3>
+      <p class="action-card-text">Relisez les retours publi&eacute;s sur la plateforme et sur les entreprises.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/moderation'), ENT_QUOTES) ?>" class="btn btn-outline">Ouvrir la mod&eacute;ration</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Qualité</span>
-      <h3 class="action-card-title">Vérifier la qualité globale</h3>
-      <p class="action-card-text">Gardez une vue synthétique sur les offres, les entreprises et la satisfaction générale.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('admin/qualite'), ENT_QUOTES) ?>" class="btn btn-outline">Voir la qualité</a>
+      <span class="pill-small">&#10003; Qualit&eacute;</span>
+      <h3 class="action-card-title">V&eacute;rifier la qualit&eacute; globale</h3>
+      <p class="action-card-text">Gardez une vue synth&eacute;tique sur les offres, les entreprises et la satisfaction g&eacute;n&eacute;rale.</p>
+      <a href="<?= htmlspecialchars(\Core\Url::route('admin/qualite'), ENT_QUOTES) ?>" class="btn btn-outline">Voir la qualit&eacute;</a>
     </article>
   </div>
 </section>
@@ -211,7 +211,7 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
       </ul>
       <div class="dashboard-chip-row">
         <span class="dashboard-chip">Feedback</span>
-        <span class="dashboard-chip">Avis</span>
+        <span class="dashboard-chip">&#9733; Avis</span>
         <span class="dashboard-chip">Modération</span>
       </div>
     </article>
@@ -313,7 +313,7 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
     <article class="dash-card">
       <header class="dash-card-header">
         <span class="dash-card-title">Évaluations entreprises</span>
-        <span class="pill-small"><?= count($companyReviews) ?> avis</span>
+        <span class="pill-small">&#9733; <?= count($companyReviews) ?> avis</span>
       </header>
       <ul class="list-compact">
         <?php foreach ($companyReviews as $review): ?>
@@ -329,3 +329,6 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
     </article>
   </div>
 </section>
+
+
+
