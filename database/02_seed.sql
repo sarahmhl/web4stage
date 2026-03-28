@@ -8,40 +8,14 @@ VALUES
   ('Altis Web', 'Studio de développement web focalisé sur les outils métiers, la maintenance et l’évolutivité.', 'Bordeaux', 'Developpement Web', 'https://altisweb.example', 'jobs@altisweb.example', '05 56 44 18 22'),
   ('Studio Interface', 'Agence UX/UI centrée sur la conception d’interfaces, wireframes et design systems.', 'Lille', 'UX / UI Design', 'https://studiointerface.example', 'contact@studiointerface.example', '03 20 90 14 30'),
   ('Data Insight', 'Cabinet data orienté reporting, tableaux de bord et valorisation des données métiers.', 'Toulouse', 'Data / BI', 'https://datainsight.example', 'talents@datainsight.example', '05 61 44 23 10'),
-  ('Campus Events', 'Organisation d’événements étudiants et accompagnement communication sur des opérations campus.', 'Paris', 'Communication', 'https://campusevents.example', 'stages@campusevents.example', '01 77 11 92 50'),
-  ('Infra Secure', 'Entreprise orientée administration systèmes, supervision réseau et sécurité des postes.', 'Nantes', 'Systemes & Reseaux', 'https://infrasecure.example', 'contact@infrasecure.example', '02 40 31 88 42')
-ON DUPLICATE KEY UPDATE
-  description = VALUES(description),
-  ville = VALUES(ville),
-  secteur = VALUES(secteur),
-  site_web = VALUES(site_web),
-  email_contact = VALUES(email_contact),
-  telephone_contact = VALUES(telephone_contact);
-
-INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role)
-VALUES
-  ('Admin', 'Web4Stage', 'admin-01@web4stage.local', '$2y$10$7hf3vjZRsWKHmsi0zLZYw.VTY7lisi0PG8xRAMQzktHNfENBRwNkC', 'ADMIN'),
-  ('Pilote', 'CESI', 'pilote-01@web4stage.local', '$2y$10$7hf3vjZRsWKHmsi0zLZYw.VTY7lisi0PG8xRAMQzktHNfENBRwNkC', 'PILOTE'),
-  ('Martin', 'Lea', 'lea.martin@viacesi.fr', '$2y$10$7hf3vjZRsWKHmsi0zLZYw.VTY7lisi0PG8xRAMQzktHNfENBRwNkC', 'ETUDIANT')
-ON DUPLICATE KEY UPDATE
-  nom = VALUES(nom),
-  prenom = VALUES(prenom),
-  mot_de_passe = VALUES(mot_de_passe),
-  role = VALUES(role);
+  ('Campus Events', 'Organisation d’événements étudiants et accompagnement en communication sur des opérations campus.', 'Paris', 'Communication', 'https://campusevents.example', 'stages@campusevents.example', '01 77 11 92 50'),
+  ('Infra Secure', 'Entreprise orientée administration systèmes, supervision réseau et sécurité des postes.', 'Nantes', 'Systemes & Reseaux', 'https://infrasecure.example', 'contact@infrasecure.example', '02 40 31 88 42');
 
 INSERT INTO offre (id_entreprise, titre, description, base_remuneration, date_offre, duree_mois, image_path, statut)
 VALUES
   ((SELECT id_entreprise FROM entreprise WHERE nom='Tech Horizon' LIMIT 1),'Stage Developpeur Front-end','Participation à la conception et au développement de composants web modernes.',850,CURDATE(),6,'devfontend.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Nova Media' LIMIT 1),'Stage Marketing digital','Animation social media, reporting de campagne, création de contenus.',NULL,CURDATE(),4,'Marketing.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Cesi Digital' LIMIT 1),'Stage Developpeur PHP / MVC','Évolution de modules applicatifs et amélioration de la qualité logicielle.',900,CURDATE(),5,'devphp.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Altis Web' LIMIT 1),'Stage Developpeur Web PHP / JS','Participation au développement de modules web et à la maintenance évolutive de la plateforme.',900,'2026-02-02',6,'image4.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Studio Interface' LIMIT 1),'Stage UX / UI Designer','Conception de wireframes, maquettes et composants d’interface pour des produits web.',NULL,'2026-01-28',4,'design.jpg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Data Insight' LIMIT 1),'Stage Data & BI','Préparation de tableaux de bord, reporting et analyse de données pour les équipes métier.',1000,'2026-01-20',6,'devweb.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Campus Events' LIMIT 1),'Stage Communication & Events','Organisation d’événements, création de supports et animation de la communication campus.',600,'2026-01-15',3,'Marketing.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Infra Secure' LIMIT 1),'Stage Admin Systemes & Reseaux','Support technique, supervision des postes et participation à des scripts d’automatisation.',900,'2026-01-10',6,'devphp.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Tech Horizon' LIMIT 1),'Stage Product Designer Web','Conception de parcours utilisateurs, maquettes et prototypes pour des interfaces web.',NULL,'2026-03-24',5,'stage1.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Nova Media' LIMIT 1),'Stage Content & Community Manager','Préparation du planning éditorial, animation des réseaux sociaux et suivi des performances.',700,'2026-03-23',4,'stage2.jpeg','PUBLIEE'),
-  ((SELECT id_entreprise FROM entreprise WHERE nom='Data Insight' LIMIT 1),'Stage Analyste Data','Nettoyage de données, création de tableaux de bord et production d’indicateurs.',950,'2026-03-22',6,'stage3.jpeg','PUBLIEE');
+  ((SELECT id_entreprise FROM entreprise WHERE nom='Nova Media' LIMIT 1),'Stage Marketing digital','Animation des réseaux sociaux, reporting de campagne et création de contenus.',NULL,CURDATE(),4,'Marketing.jpeg','PUBLIEE'),
+  ((SELECT id_entreprise FROM entreprise WHERE nom='Cesi Digital' LIMIT 1),'Stage Developpeur PHP / MVC','Évolution de modules applicatifs et amélioration de la qualité logicielle.',900,CURDATE(),5,'devphp.jpeg','PUBLIEE');
 
 -- candidatures
 INSERT INTO candidature (id_offre, id_etudiant, statut, commentaire, lettre_motivation, cv_path)
