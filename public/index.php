@@ -1,46 +1,43 @@
-<VirtualHost *:80>
-    ServerName web4stage.local
-    Redirect permanent / https://web4stage.local/
+<?php
 
-    ErrorLog "logs/web4stage-error.log"
-    CustomLog "logs/web4stage-access.log" common
-</VirtualHost>
+declare(strict_types=1);
 
-<VirtualHost *:80>
-    ServerName static.web4stage.local
-    Redirect permanent / https://static.web4stage.local/
+$rootPath = dirname(__DIR__);
 
-    ErrorLog "logs/web4stage-static-error.log"
-    CustomLog "logs/web4stage-static-access.log" common
-</VirtualHost>
+require_once $rootPath . '/core/Config.php';
 
-<VirtualHost *:443>
-    ServerName web4stage.local
-    DocumentRoot "C:/xampp/htdocs/projet web/public"
+$config = \Core\Config::all();
+$isHttps = (
+    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || (int) ($_SERVER['SERVER_PORT'] ?? 0) === 443
+    || strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')) === 'https'
+);
 
-    SSLEngine on
-    SSLCertificateFile "C:/xampp/htdocs/projet web/config/apache/certs/web4stage.local.pem"
-    SSLCertificateKeyFile "C:/xampp/htdocs/projet web/config/apache/certs/web4stage.local-key.pem"
+if ((bool) ($config['force_https'] ?? false) && !$isHttps) {
+    $host = (string) ($_SERVER['HTTP_HOST'] ?? 'localhost');
+    $requestUri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
+    header('Location: https://' . $host . $requestUri, true, 302);
+    exit;
+}
 
-    <Directory "C:/xampp/htdocs/projet web/public">
-        AllowOverride All
-        Require all granted
-        Options Indexes FollowSymLinks
-    </Directory>
+if (session_status() === PHP_SESSION_NONE) {
+    $sessionStoragePath = $rootPath . '/storage/sessions';
 
-    ErrorLog "logs/web4stage-ssl-error.log"
-    CustomLog "logs/web4stage-ssl-access.log" common
-</VirtualHost>
+    if (!is_dir($sessionStoragePath)) {
+        mkdir($sessionStoragePath, 0775, true);
+    }
 
-<VirtualHost *:443>
-    ServerName static.web4stage.local
-    DocumentRoot "C:/xampp/htdocs/projet web"
+    session_save_path($sessionStoragePath);
 
-    SSLEngine on
-    SSLCertificateFile "C:/xampp/htdocs/projet web/config/apache/certs/web4stage.local.pem"
-    SSLCertificateKeyFile "C:/xampp/htdocs/projet web/config/apache/certs/web4stage.local-key.pem"
+    session_name((string) ($config['session_name'] ?? 'WEB4STAGESESSID'));
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'secure' => (bool) ($config['session_secure'] ?? false) || $isHttps || (bool) ($config['force_https'] ?? false),
+        'httponly' => true,
+        'samesite' => (string) ($config['session_samesite'] ?? 'Lax'),
+    ]);
 
-<<<<<<< HEAD
     ini_set('session.cookie_httponly', '1');
     ini_set('session.cookie_secure', ((bool) ($config['session_secure'] ?? false) || $isHttps || (bool) ($config['force_https'] ?? false)) ? '1' : '0');
     ini_set('session.cookie_samesite', (string) ($config['session_samesite'] ?? 'Lax'));
@@ -53,6 +50,7 @@
 if ($isHttps || (bool) ($config['force_https'] ?? false)) {
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
 }
+
 header('Content-Type: text/html; charset=UTF-8');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Cache-Control: post-check=0, pre-check=0', false);
@@ -157,21 +155,7 @@ try {
 } catch (Throwable $e) {
     http_response_code(500);
     echo '<h1>Erreur serveur</h1>';
-    if ($_SERVER['APP_ENV'] ?? 'prod' === 'dev') {
+    if (($_SERVER['APP_ENV'] ?? 'prod') === 'dev') {
         echo '<pre>' . htmlspecialchars($e->getMessage(), ENT_QUOTES) . '</pre>';
     }
 }
-=======
-    <Directory "C:/xampp/htdocs/projet web/assets">
-        AllowOverride None
-        Require all granted
-        Options FollowSymLinks
-    </Directory>
-
-    RewriteEngine On
-    RewriteRule ^/assets/(.*)$ /assets/$1 [L]
-
-    ErrorLog "logs/web4stage-static-ssl-error.log"
-    CustomLog "logs/web4stage-static-ssl-access.log" common
-</VirtualHost>
->>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
