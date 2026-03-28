@@ -1,9 +1,5 @@
 <?php
-  $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
-  $baseDir = rtrim(str_replace('\\', '/', dirname($scriptName)), '/');
-  $projectBase = $baseDir === '' ? '' : rtrim(str_replace('\\', '/', dirname($baseDir)), '/');
-  $assetBase = str_replace(' ', '%20', $projectBase);
-  $basePath = '/assets/img/offers/';
+  $basePath = 'assets/img/offers/';
   $offersDir = dirname(__DIR__, 2) . '/assets/img/offers';
   if (!is_dir($offersDir)) {
     $offersDir = dirname(__DIR__, 3) . '/assets/img/offers';
@@ -45,14 +41,8 @@
     return null;
   };
 
-  $toOfferImageUrl = static function (string $fileName) use ($assetBase, $basePath, $offersDir): string {
-    $url = ($assetBase === '' ? '' : $assetBase) . $basePath . $fileName;
-    $mtime = @filemtime($offersDir . DIRECTORY_SEPARATOR . $fileName);
-    if ($mtime !== false) {
-      $url .= '?v=' . $mtime;
-    }
-
-    return $url;
+  $toOfferImageUrl = static function (string $fileName) use ($basePath): string {
+    return \Core\Url::asset($basePath . $fileName);
   };
 
   $defaultOfferImage = $findOfferImage('default.svg')
@@ -61,7 +51,7 @@
     ?? null;
   $defaultOfferImageUrl = $defaultOfferImage !== null
     ? $toOfferImageUrl($defaultOfferImage)
-    : (($assetBase === '' ? '' : $assetBase) . $basePath . 'default.svg');
+    : \Core\Url::asset($basePath . 'default.svg');
   $isLoggedIn = \Core\Auth::check();
 
   $resolveOfferImage = static function (array $offer) use ($findOfferImage, $toOfferImageUrl, $defaultOfferImageUrl): string {
@@ -323,3 +313,4 @@
     <?php endforeach; ?>
   </div>
 </section>
+
