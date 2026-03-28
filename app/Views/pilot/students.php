@@ -35,7 +35,7 @@ $wishlistTotal = array_sum(array_map(static fn (array $student): int => (int) ($
 
   <article class="dash-card">
     <header class="dash-card-header">
-      <span class="dash-card-title">Wish-lists</span>
+      <span class="dash-card-title">&#9829; Wish-lists</span>
       <span class="pill-small"><?= $wishlistTotal ?></span>
     </header>
     <p class="action-card-text">Nombre total d’offres sauvegardées par les étudiants.</p>
@@ -155,7 +155,7 @@ $wishlistTotal = array_sum(array_map(static fn (array $student): int => (int) ($
           <th>Nom</th>
           <th>Email</th>
           <th>Candidatures</th>
-          <th>Wish-list</th>
+          <th>&#9829; Wish-list</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -181,3 +181,4 @@ $wishlistTotal = array_sum(array_map(static fn (array $student): int => (int) ($
     </table>
   </div>
 </section>
+
