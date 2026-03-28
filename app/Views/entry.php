@@ -12,7 +12,7 @@
   <div class="entry-premium-card entry-premium-card--compact tilt-3d">
     <div class="entry-logo" aria-label="Web4Stage" data-logo="Web4Stage">Web<span>4</span>Stage</div>
     <p class="entry-premium-kicker">Stages &amp; candidatures</p>
-    <h1 id="entry-title" class="entry-premium-title">Connectez-vous</h1>
+    <h1 id="entry-title" class="entry-premium-title">Se connecter</h1>
 
     <?php if (!empty($authPrompt)): ?>
       <p class="auth-hint entry-login-feedback">
