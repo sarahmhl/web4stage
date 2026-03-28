@@ -2,12 +2,12 @@
 
 return [
     'app_name' => 'Web4Stage',
-    'app_public_url' => 'http://localhost/projet%20web/public/index.php',
-    'static_base_url' => '',
-    'force_https' => false,
+    'app_public_url' => 'https://web4stage.local/index.php',
+    'static_base_url' => 'https://static.web4stage.local',
+    'force_https' => true,
     'session_name' => 'WEB4STAGESESSID',
     'session_samesite' => 'Lax',
-    'session_secure' => false,
+    'session_secure' => true,
     'legal_owner' => 'Equipe projet Web4Stage - CESI',
     'legal_contact_email' => 'contact@web4stage.local',
     'legal_hosting' => 'Application de demonstration hebergee sur Apache dans un environnement local XAMPP.',
