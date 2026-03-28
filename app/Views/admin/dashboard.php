@@ -90,7 +90,7 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
     </header>
     <ul class="list-compact">
       <li><span>Avis étudiants</span><strong><?= count($feedbacks) ?></strong></li>
-      <li><span>Avis entreprises</span><strong><?= count($companyReviews) ?></strong></li>
+      <li><span>&#9733; Avis entreprises</span><strong><?= count($companyReviews) ?></strong></li>
       <li><span>Actions en attente</span><strong><?= (int) ($stats['pendingActions'] ?? 0) ?></strong></li>
     </ul>
     <p class="dashboard-card-note">Les contenus publiés récents restent accessibles sans passer par une page vide ou trop technique.</p>
@@ -120,21 +120,21 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
 
   <div class="action-grid">
     <article class="action-card">
-      <span class="pill-small">Comptes</span>
+      <span class="pill-small">&#128101; Comptes</span>
       <h3 class="action-card-title">Gérer les comptes</h3>
       <p class="action-card-text">Créez, modifiez ou supprimez les profils étudiants, pilotes et administrateurs.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('admin/comptes'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les comptes</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Entreprises</span>
+      <span class="pill-small">&#127970; Entreprises</span>
       <h3 class="action-card-title">Gérer les entreprises</h3>
       <p class="action-card-text">Maintenez les partenaires, contacts et fiches entreprise à jour.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('admin/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les entreprises</a>
     </article>
 
     <article class="action-card">
-      <span class="pill-small">Offres</span>
+      <span class="pill-small">&#128188; Offres</span>
       <h3 class="action-card-title">Gérer les offres de stage</h3>
       <p class="action-card-text">Créez, mettez à jour ou supprimez les fiches d’offres depuis l’interface d’administration.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('admin/offres/modifier'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les offres</a>
@@ -211,7 +211,7 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
       </ul>
       <div class="dashboard-chip-row">
         <span class="dashboard-chip">Feedback</span>
-        <span class="dashboard-chip">Avis</span>
+        <span class="dashboard-chip">&#9733; Avis</span>
         <span class="dashboard-chip">Modération</span>
       </div>
     </article>
@@ -313,7 +313,7 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
     <article class="dash-card">
       <header class="dash-card-header">
         <span class="dash-card-title">Évaluations entreprises</span>
-        <span class="pill-small"><?= count($companyReviews) ?> avis</span>
+        <span class="pill-small">&#9733; <?= count($companyReviews) ?> avis</span>
       </header>
       <ul class="list-compact">
         <?php foreach ($companyReviews as $review): ?>
@@ -329,3 +329,6 @@ $companyReviews = is_array($companyReviews ?? null) ? $companyReviews : [];
     </article>
   </div>
 </section>
+
+
+
