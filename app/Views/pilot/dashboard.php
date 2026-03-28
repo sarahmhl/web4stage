@@ -120,15 +120,9 @@ $latestFeedbacks = is_array($latestFeedbacks ?? null) ? $latestFeedbacks : [];
   <div class="action-grid">
     <article class="action-card">
       <span class="pill-small">&#128188; Offres</span>
-<<<<<<< HEAD
       <h3 class="action-card-title">G&eacute;rer les offres de stage</h3>
       <p class="action-card-text">Cr&eacute;er, modifier ou supprimer les offres rattach&eacute;es aux entreprises suivies.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('pilote/offres'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les offres</a>
-=======
-      <h3 class="action-card-title action-card-title--icon"><span class="card-title-icon" aria-hidden="true">&#128188;</span><span>Gérer les offres de stage</span></h3>
-      <p class="action-card-text">Créer, modifier ou supprimer les offres rattachées aux entreprises suivies.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/offres'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les offres</a>
->>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
 
     <article class="action-card">
@@ -140,41 +134,23 @@ $latestFeedbacks = is_array($latestFeedbacks ?? null) ? $latestFeedbacks : [];
 
     <article class="action-card">
       <span class="pill-small">&#128221; Suivi</span>
-<<<<<<< HEAD
       <h3 class="action-card-title">Pr&eacute;parer les relances</h3>
       <p class="action-card-text">Rep&eacute;rez les profils peu actifs ou sans candidature r&eacute;cente.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('pilote/relances'), ENT_QUOTES) ?>" class="btn btn-outline">Pr&eacute;parer les relances</a>
-=======
-      <h3 class="action-card-title action-card-title--icon"><span class="card-title-icon" aria-hidden="true">&#128221;</span><span>Préparer les relances</span></h3>
-      <p class="action-card-text">Repérez les profils peu actifs ou sans candidature récente.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/relances'), ENT_QUOTES) ?>" class="btn btn-outline">Préparer les relances</a>
->>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
 
     <article class="action-card">
       <span class="pill-small">&#127970; Entreprises</span>
-<<<<<<< HEAD
       <h3 class="action-card-title">G&eacute;rer les entreprises</h3>
       <p class="action-card-text">Maintenez les fiches partenaires et leurs coordonn&eacute;es &agrave; jour.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('pilote/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">G&eacute;rer les entreprises</a>
-=======
-      <h3 class="action-card-title action-card-title--icon"><span class="card-title-icon" aria-hidden="true">&#127970;</span><span>Gérer les entreprises</span></h3>
-      <p class="action-card-text">Maintenez les fiches partenaires et leurs coordonnées à jour.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/entreprises'), ENT_QUOTES) ?>" class="btn btn-outline">Gérer les entreprises</a>
->>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
 
     <article class="action-card">
       <span class="pill-small">&#9733; Avis</span>
-<<<<<<< HEAD
       <h3 class="action-card-title">Consulter les avis sur la formation</h3>
       <p class="action-card-text">Visualisez les retours laiss&eacute;s par les &eacute;tudiants sans quitter l&rsquo;espace pilote.</p>
       <a href="<?= htmlspecialchars(\Core\Url::route('pilote/avis'), ENT_QUOTES) ?>" class="btn btn-outline">Voir les retours</a>
-=======
-      <h3 class="action-card-title action-card-title--icon"><span class="card-title-icon" aria-hidden="true">&#9733;</span><span>Consulter les avis sur la formation</span></h3>
-      <p class="action-card-text">Visualisez les retours laissés par les étudiants sans quitter l’espace pilote.</p>
-      <a href="<?= htmlspecialchars(\Core\Url::route('pilote/avis'), ENT_QUOTES) ?>" class="btn btn-outline">&#9733; Voir les retours</a>
->>>>>>> 5857f745db1e52a2bfb060eecc3d341ea919b5e2
     </article>
   </div>
 </section>
