@@ -1,7 +1,7 @@
 <?php ?>
 <header class="page-heading">
   <div class="page-heading-block">
-    <span class="page-heading-kicker">Wish-list</span>
+    <span class="page-heading-kicker">&#9829; Wish-list</span>
     <h1 class="page-heading-title">Mes offres favorites</h1>
     <p class="page-heading-subtitle">
       Retrouvez les offres enregistrées, retirez-les ou ouvrez leur fiche détaillée.
@@ -39,7 +39,7 @@
               <input type="hidden" name="redirect_to" value="wishlist" />
               <button type="submit" class="btn btn-outline">Retirer</button>
             </form>
-            <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $offer['id']), ENT_QUOTES) ?>" class="btn btn-primary">Détails</a>
+            <a href="<?= htmlspecialchars(\Core\Url::route('offres/detail?id=' . (int) $offer['id']), ENT_QUOTES) ?>" class="btn btn-primary">Voir</a>
           </div>
         </footer>
       </article>
@@ -55,3 +55,4 @@
     </div>
   </section>
 <?php endif; ?>
+
