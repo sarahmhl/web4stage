@@ -8,20 +8,50 @@ document.addEventListener("DOMContentLoaded", () => {
   const navMobile = document.querySelector(".nav-mobile");
 
   if (burger && navMobile) {
-    burger.addEventListener("click", () => {
-      navMobile.classList.toggle("open");
-      const spans = burger.querySelectorAll("span");
-      if (navMobile.classList.contains("open")) {
+    const spans = burger.querySelectorAll("span");
+    const setBurgerState = (isOpen) => {
+      navMobile.classList.toggle("open", isOpen);
+      burger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+
+      if (isOpen) {
         spans[0].style.transform = "translateY(4px) rotate(45deg)";
         spans[1].style.opacity = "0";
         spans[2].style.transform = "translateY(-4px) rotate(-45deg)";
-      } else {
-        spans.forEach((span) => {
-          span.style.transform = "";
-          span.style.opacity = "";
-        });
+        return;
+      }
+
+      spans.forEach((span) => {
+        span.style.transform = "";
+        span.style.opacity = "";
+      });
+    };
+
+    burger.addEventListener("click", () => {
+      setBurgerState(!navMobile.classList.contains("open"));
+    });
+
+    navMobile.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setBurgerState(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setBurgerState(false);
       }
     });
+
+    const desktopMedia = window.matchMedia("(min-width: 769px)");
+    const handleDesktopChange = (event) => {
+      if (event.matches) {
+        setBurgerState(false);
+      }
+    };
+
+    if (typeof desktopMedia.addEventListener === "function") {
+      desktopMedia.addEventListener("change", handleDesktopChange);
+    } else if (typeof desktopMedia.addListener === "function") {
+      desktopMedia.addListener(handleDesktopChange);
+    }
   }
 
   if (canUseTilt && !isFlatWorkspace) {
