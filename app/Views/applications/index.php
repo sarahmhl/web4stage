@@ -1,4 +1,9 @@
-<?php ?>
+<?php
+$buildPageUrl = static function (int $page): string {
+  $query = $page > 1 ? '?page=' . $page : '';
+  return htmlspecialchars(\Core\Url::route('candidatures') . $query, ENT_QUOTES);
+};
+?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Candidatures</span>
@@ -57,6 +62,28 @@
       </article>
     <?php endforeach; ?>
   </section>
+
+  <?php if (($totalPages ?? 1) > 1): ?>
+    <nav class="pagination" aria-label="Pagination des candidatures">
+      <?php if (($currentPage ?? 1) > 1): ?>
+        <a class="page-btn" href="<?= $buildPageUrl(((int) $currentPage) - 1) ?>">&laquo;</a>
+      <?php else: ?>
+        <span class="page-btn page-btn--disabled">&laquo;</span>
+      <?php endif; ?>
+
+      <?php for ($page = 1; $page <= (int) ($totalPages ?? 1); $page++): ?>
+        <a class="page-btn<?= $page === (int) ($currentPage ?? 1) ? ' page-btn--active' : '' ?>" href="<?= $buildPageUrl($page) ?>">
+          <?= $page ?>
+        </a>
+      <?php endfor; ?>
+
+      <?php if (($currentPage ?? 1) < ($totalPages ?? 1)): ?>
+        <a class="page-btn" href="<?= $buildPageUrl(((int) $currentPage) + 1) ?>">&raquo;</a>
+      <?php else: ?>
+        <span class="page-btn page-btn--disabled">&raquo;</span>
+      <?php endif; ?>
+    </nav>
+  <?php endif; ?>
 <?php else: ?>
   <section class="empty-state">
     <span class="pill-small">Aucune candidature</span>
