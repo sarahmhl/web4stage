@@ -1,5 +1,15 @@
 <?php
 $filters = is_array($filters ?? null) ? $filters : [];
+$buildPageUrl = static function (int $page) use ($filters): string {
+  $query = array_filter([
+    'page' => $page,
+    'keyword' => (string) ($filters['keyword'] ?? ''),
+    'city' => (string) ($filters['city'] ?? ''),
+    'sector' => (string) ($filters['sector'] ?? ''),
+  ], static fn ($value): bool => $value !== '');
+
+  return htmlspecialchars(\Core\Url::route('entreprises') . ($query !== [] ? '?' . http_build_query($query) : ''), ENT_QUOTES);
+};
 ?>
 <header class="page-heading">
   <div class="page-heading-block">
@@ -79,6 +89,28 @@ $filters = is_array($filters ?? null) ? $filters : [];
       </article>
     <?php endforeach; ?>
   </section>
+
+  <?php if (($totalPages ?? 1) > 1): ?>
+    <nav class="pagination" aria-label="Pagination des entreprises">
+      <?php if (($currentPage ?? 1) > 1): ?>
+        <a class="page-btn" href="<?= $buildPageUrl(((int) $currentPage) - 1) ?>">&laquo;</a>
+      <?php else: ?>
+        <span class="page-btn page-btn--disabled">&laquo;</span>
+      <?php endif; ?>
+
+      <?php for ($page = 1; $page <= (int) ($totalPages ?? 1); $page++): ?>
+        <a class="page-btn<?= $page === (int) ($currentPage ?? 1) ? ' page-btn--active' : '' ?>" href="<?= $buildPageUrl($page) ?>">
+          <?= $page ?>
+        </a>
+      <?php endfor; ?>
+
+      <?php if (($currentPage ?? 1) < ($totalPages ?? 1)): ?>
+        <a class="page-btn" href="<?= $buildPageUrl(((int) $currentPage) + 1) ?>">&raquo;</a>
+      <?php else: ?>
+        <span class="page-btn page-btn--disabled">&raquo;</span>
+      <?php endif; ?>
+    </nav>
+  <?php endif; ?>
 <?php else: ?>
   <section class="empty-state">
     <span class="pill-small">Aucun résultat</span>
