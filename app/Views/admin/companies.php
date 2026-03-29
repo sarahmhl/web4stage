@@ -117,6 +117,14 @@ $isNewCompany = (bool) ($isNewCompany ?? false);
   </article>
 </section>
 
+<?php
+$paginationCurrentPage = (int) ($currentPage ?? 1);
+$paginationTotalPages = (int) ($totalPages ?? 1);
+$paginationPageParam = 'page';
+$paginationLabel = 'Pagination des entreprises';
+require __DIR__ . '/../partials/pagination.php';
+?>
+
 <section class="section">
   <div class="section-header">
     <div>
