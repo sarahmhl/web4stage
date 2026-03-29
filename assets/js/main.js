@@ -185,4 +185,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  const carouselControls = Array.from(document.querySelectorAll("[data-carousel-target]"));
+  carouselControls.forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetId = button.getAttribute("data-carousel-target");
+      const direction = button.getAttribute("data-carousel-direction");
+      if (!targetId || !direction) {
+        return;
+      }
+
+      const carousel = document.getElementById(targetId);
+      if (!(carousel instanceof HTMLElement)) {
+        return;
+      }
+
+      const firstCard = carousel.querySelector(".stats-carousel-card");
+      const cardWidth = firstCard instanceof HTMLElement ? firstCard.offsetWidth : carousel.clientWidth * 0.9;
+      const scrollAmount = Math.max(220, cardWidth + 16);
+
+      carousel.scrollBy({
+        left: direction === "next" ? scrollAmount : -scrollAmount,
+        behavior: "smooth",
+      });
+    });
+  });
 });

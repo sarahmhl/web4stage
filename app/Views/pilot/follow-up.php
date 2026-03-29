@@ -13,7 +13,7 @@
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title">Étudiants</span>
-      <span class="pill-small"><?= count($students ?? []) ?> profils</span>
+      <span class="pill-small"><?= (int) ($studentsTotalItems ?? count($students ?? [])) ?> profils</span>
     </header>
     <div class="table-shell">
       <table class="data-table">
@@ -39,6 +39,13 @@
         </tbody>
       </table>
     </div>
+    <?php
+    $paginationCurrentPage = (int) ($studentsCurrentPage ?? 1);
+    $paginationTotalPages = (int) ($studentsTotalPages ?? 1);
+    $paginationPageParam = 'students_page';
+    $paginationLabel = 'Pagination des étudiants à relancer';
+    require __DIR__ . '/../partials/pagination.php';
+    ?>
   </article>
 
   <aside class="side-card">
@@ -56,7 +63,7 @@
 
 <?php if (!empty($applications)): ?>
   <section class="dashboard-grid">
-    <?php foreach (array_slice($applications ?? [], 0, 6) as $application): ?>
+    <?php foreach (($applications ?? []) as $application): ?>
       <article class="dash-card">
         <header class="dash-card-header">
           <span class="dash-card-title">
@@ -103,5 +110,13 @@
       </article>
     <?php endforeach; ?>
   </section>
+
+  <?php
+  $paginationCurrentPage = (int) ($applicationsCurrentPage ?? 1);
+  $paginationTotalPages = (int) ($applicationsTotalPages ?? 1);
+  $paginationPageParam = 'applications_page';
+  $paginationLabel = 'Pagination des candidatures à relancer';
+  require __DIR__ . '/../partials/pagination.php';
+  ?>
 <?php endif; ?>
 

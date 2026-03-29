@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /projet%20web/public/uploads/
+Disallow: /uploads/
 
-Sitemap: http://localhost/projet%20web/public/sitemap.xml
+Sitemap: https://web4stage.local/sitemap.xml

@@ -23,9 +23,14 @@ class WishlistController extends BaseController
             $this->flash('error', 'Impossible de charger votre wish-list pour le moment.');
         }
 
+        $pagination = $this->paginateArray($items, 6);
+
         View::render('wishlist/index', [
             'title' => 'Web4Stage - Ma wish-list',
-            'items' => $items,
+            'items' => $pagination['items'],
+            'currentPage' => $pagination['currentPage'],
+            'totalPages' => $pagination['totalPages'],
+            'totalItems' => $pagination['totalItems'],
             'csrfToken' => Security::generateCsrfToken(),
         ]);
     }

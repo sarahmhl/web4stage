@@ -20,3 +20,11 @@
     </article>
   <?php endforeach; ?>
 </section>
+
+<?php
+$paginationCurrentPage = (int) ($currentPage ?? 1);
+$paginationTotalPages = (int) ($totalPages ?? 1);
+$paginationPageParam = 'page';
+$paginationLabel = 'Pagination des retours étudiants';
+require __DIR__ . '/../partials/pagination.php';
+?>

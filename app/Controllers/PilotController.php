@@ -227,9 +227,13 @@ class PilotController extends BaseController
             $this->flash('error', 'Impossible de charger les avis étudiants.');
         }
 
+        $pagination = $this->paginateArray($feedbacks, 8);
+
         View::render('pilot/reviews', [
             'title' => 'Web4Stage - Retours étudiants',
-            'feedbacks' => $feedbacks,
+            'feedbacks' => $pagination['items'],
+            'currentPage' => $pagination['currentPage'],
+            'totalPages' => $pagination['totalPages'],
         ]);
     }
 
@@ -246,10 +250,19 @@ class PilotController extends BaseController
             $this->flash('error', 'Impossible de charger le suivi des étudiants.');
         }
 
+        $studentsPagination = $this->paginateArray($students, 8, 'students_page');
+        $applicationsPagination = $this->paginateArray($applications, 6, 'applications_page');
+
         View::render('pilot/follow-up', [
             'title' => 'Web4Stage - Relances et suivi',
-            'students' => $students,
-            'applications' => $applications,
+            'students' => $studentsPagination['items'],
+            'applications' => $applicationsPagination['items'],
+            'studentsCurrentPage' => $studentsPagination['currentPage'],
+            'studentsTotalPages' => $studentsPagination['totalPages'],
+            'studentsTotalItems' => $studentsPagination['totalItems'],
+            'applicationsCurrentPage' => $applicationsPagination['currentPage'],
+            'applicationsTotalPages' => $applicationsPagination['totalPages'],
+            'applicationsTotalItems' => $applicationsPagination['totalItems'],
         ]);
     }
 
@@ -298,12 +311,17 @@ class PilotController extends BaseController
             $isNewCompany = (bool) ($oldInput['is_new'] ?? $isNewCompany);
         }
 
+        $pagination = $this->paginateArray($companies, 8);
+
         View::render('pilot/companies-manage', [
             'title' => 'Web4Stage - Gestion des entreprises - pilote',
-            'companies' => $companies,
+            'companies' => $pagination['items'],
             'selectedCompany' => $selectedCompany,
             'selectedCompanyId' => $selectedCompanyId,
             'isNewCompany' => $isNewCompany,
+            'currentPage' => $pagination['currentPage'],
+            'totalPages' => $pagination['totalPages'],
+            'totalCompanies' => $pagination['totalItems'],
             'csrfToken' => Security::generateCsrfToken(),
         ]);
     }
@@ -416,12 +434,17 @@ class PilotController extends BaseController
             $isNewStudent = (bool) ($oldInput['is_new'] ?? $isNewStudent);
         }
 
+        $pagination = $this->paginateArray($students, 8);
+
         View::render('pilot/students', [
             'title' => 'Web4Stage - Gestion des étudiants - pilote',
-            'students' => $students,
+            'students' => $pagination['items'],
             'selectedStudent' => $selectedStudent,
             'selectedStudentId' => $selectedStudentId,
             'isNewStudent' => $isNewStudent,
+            'currentPage' => $pagination['currentPage'],
+            'totalPages' => $pagination['totalPages'],
+            'totalStudents' => $pagination['totalItems'],
             'csrfToken' => Security::generateCsrfToken(),
         ]);
     }

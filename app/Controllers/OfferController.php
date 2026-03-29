@@ -34,9 +34,11 @@ class OfferController extends BaseController
             $offset = max(0, ($currentPage - 1) * $perPage);
             $offers = Offer::search($filters, $perPage, $offset);
             $skillOptions = Offer::allSkills();
+            $statisticsCards = Offer::statisticsCarousel();
         } catch (\Throwable $e) {
             $offers = [];
             $skillOptions = [];
+            $statisticsCards = [];
             $totalOffers = 0;
             $totalPages = 1;
             $this->flash('error', 'Impossible de charger les offres pour le moment.');
@@ -56,6 +58,7 @@ class OfferController extends BaseController
             'offers' => $offers,
             'filters' => $filters,
             'skillOptions' => $skillOptions,
+            'statisticsCards' => $statisticsCards,
             'wishlistIds' => $wishlistIds,
             'currentPage' => $currentPage,
             'totalPages' => $totalPages,

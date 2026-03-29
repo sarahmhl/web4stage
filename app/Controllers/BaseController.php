@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controllers;
 
 use Core\Auth;
@@ -25,6 +24,30 @@ abstract class BaseController
     protected function flash(string $type, string $message): void
     {
         Flash::add($type, $message);
+    }
+
+    /**
+     * @template T
+     * @param array<int, T> $items
+     * @return array{items:array<int, T>,currentPage:int,totalPages:int,totalItems:int,perPage:int}
+     */
+    protected function paginateArray(array $items, int $perPage = 6, string $pageParam = 'page'): array
+    {
+        $totalItems = count($items);
+        $perPage = max(1, $perPage);
+        $requestedPage = (int) ($_GET[$pageParam] ?? 1);
+        $currentPage = max(1, $requestedPage);
+        $totalPages = max(1, (int) ceil($totalItems / $perPage));
+        $currentPage = min($currentPage, $totalPages);
+        $offset = ($currentPage - 1) * $perPage;
+
+        return [
+            'items' => array_slice($items, $offset, $perPage),
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages,
+            'totalItems' => $totalItems,
+            'perPage' => $perPage,
+        ];
     }
 
     /**
@@ -122,4 +145,3 @@ abstract class BaseController
         };
     }
 }
-

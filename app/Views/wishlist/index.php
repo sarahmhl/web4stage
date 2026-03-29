@@ -56,3 +56,11 @@
   </section>
 <?php endif; ?>
 
+<?php
+$paginationCurrentPage = (int) ($currentPage ?? 1);
+$paginationTotalPages = (int) ($totalPages ?? 1);
+$paginationPageParam = 'page';
+$paginationLabel = 'Pagination de la wish-list';
+require __DIR__ . '/../partials/pagination.php';
+?>
+

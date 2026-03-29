@@ -42,6 +42,14 @@ $wishlistTotal = array_sum(array_map(static fn (array $student): int => (int) ($
   </article>
 </section>
 
+<?php
+$paginationCurrentPage = (int) ($currentPage ?? 1);
+$paginationTotalPages = (int) ($totalPages ?? 1);
+$paginationPageParam = 'page';
+$paginationLabel = 'Pagination des étudiants';
+require __DIR__ . '/../partials/pagination.php';
+?>
+
 <section class="page-layout offer-management-layout">
   <aside class="side-card">
     <h2 class="side-card-title">Comptes disponibles</h2>

@@ -25,9 +25,14 @@ class ApplicationController extends BaseController
             $this->flash('error', 'Impossible de charger vos candidatures pour le moment.');
         }
 
+        $pagination = $this->paginateArray($applications, 5);
+
         View::render('applications/index', [
             'title' => 'Web4Stage - Mes candidatures',
-            'applications' => $applications,
+            'applications' => $pagination['items'],
+            'currentPage' => $pagination['currentPage'],
+            'totalPages' => $pagination['totalPages'],
+            'totalApplications' => $pagination['totalItems'],
         ]);
     }
 

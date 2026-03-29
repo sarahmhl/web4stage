@@ -263,14 +263,19 @@ class AdminController extends BaseController
             Auth::ROLE_ADMIN => count(array_filter($users, static fn (array $user): bool => (string) ($user['role'] ?? '') === Auth::ROLE_ADMIN)),
         ];
 
+        $pagination = $this->paginateArray($users, 8);
+
         View::render('admin/accounts', [
             'title' => 'Web4Stage - Gestion des comptes',
-            'users' => $users,
+            'users' => $pagination['items'],
             'selectedUser' => $selectedUser,
             'selectedUserId' => $selectedUserId,
             'isNewAccount' => $isNewAccount,
             'roleOptions' => $this->roleOptions(),
             'roleCounts' => $roleCounts,
+            'currentPage' => $pagination['currentPage'],
+            'totalPages' => $pagination['totalPages'],
+            'totalUsers' => $pagination['totalItems'],
             'csrfToken' => Security::generateCsrfToken(),
             'metaDescription' => 'Gestion des comptes et des rôles utilisateurs dans l’administration Web4Stage.',
             'metaKeywords' => 'comptes, utilisateurs, rôles, administration, web4stage',
@@ -434,12 +439,17 @@ class AdminController extends BaseController
             $isNewCompany = (bool) ($oldInput['is_new'] ?? $isNewCompany);
         }
 
+        $pagination = $this->paginateArray($companies, 8);
+
         View::render('admin/companies', [
             'title' => 'Web4Stage - Gestion des entreprises',
-            'companies' => $companies,
+            'companies' => $pagination['items'],
             'selectedCompany' => $selectedCompany,
             'selectedCompanyId' => $selectedCompanyId,
             'isNewCompany' => $isNewCompany,
+            'currentPage' => $pagination['currentPage'],
+            'totalPages' => $pagination['totalPages'],
+            'totalCompanies' => $pagination['totalItems'],
             'csrfToken' => Security::generateCsrfToken(),
             'metaDescription' => 'Gestion des entreprises partenaires dans le back-office Web4Stage.',
             'metaKeywords' => 'entreprises, partenaires, administration, web4stage',
@@ -520,10 +530,19 @@ class AdminController extends BaseController
             $this->flash('error', 'Impossible de charger les retours utilisateurs.');
         }
 
+        $feedbackPagination = $this->paginateArray($feedbacks, 8, 'feedback_page');
+        $companyReviewPagination = $this->paginateArray($companyReviews, 8, 'company_review_page');
+
         View::render('admin/moderation', [
             'title' => 'Web4Stage - Modération',
-            'feedbacks' => $feedbacks,
-            'companyReviews' => $companyReviews,
+            'feedbacks' => $feedbackPagination['items'],
+            'companyReviews' => $companyReviewPagination['items'],
+            'feedbackCurrentPage' => $feedbackPagination['currentPage'],
+            'feedbackTotalPages' => $feedbackPagination['totalPages'],
+            'feedbackTotalItems' => $feedbackPagination['totalItems'],
+            'companyReviewCurrentPage' => $companyReviewPagination['currentPage'],
+            'companyReviewTotalPages' => $companyReviewPagination['totalPages'],
+            'companyReviewTotalItems' => $companyReviewPagination['totalItems'],
             'metaDescription' => 'Modération des avis et évaluations utilisateurs sur Web4Stage.',
             'metaKeywords' => 'modération, avis, évaluations, web4stage',
         ]);
@@ -542,10 +561,19 @@ class AdminController extends BaseController
             $this->flash('error', 'Impossible de charger les indicateurs de qualité.');
         }
 
+        $offersPagination = $this->paginateArray($offers, 8, 'offers_page');
+        $companiesPagination = $this->paginateArray($companies, 8, 'companies_page');
+
         View::render('admin/quality', [
             'title' => 'Web4Stage - Qualité globale',
-            'offers' => $offers,
-            'companies' => $companies,
+            'offers' => $offersPagination['items'],
+            'companies' => $companiesPagination['items'],
+            'offersCurrentPage' => $offersPagination['currentPage'],
+            'offersTotalPages' => $offersPagination['totalPages'],
+            'offersTotalItems' => $offersPagination['totalItems'],
+            'companiesCurrentPage' => $companiesPagination['currentPage'],
+            'companiesTotalPages' => $companiesPagination['totalPages'],
+            'companiesTotalItems' => $companiesPagination['totalItems'],
             'metaDescription' => 'Vue synthèse de la qualité globale de la plateforme Web4Stage.',
             'metaKeywords' => 'qualité, indicateurs, administration, web4stage',
         ]);
