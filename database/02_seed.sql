@@ -1,4 +1,4 @@
-SET NAMES utf8mb4;
+﻿SET NAMES utf8mb4;
 
 INSERT INTO entreprise (nom, description, ville, secteur, site_web, email_contact, telephone_contact)
 VALUES

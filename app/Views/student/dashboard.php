@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $stats = is_array($stats ?? null) ? $stats : [];
 $applications = is_array($applications ?? null) ? $applications : [];
 $documents = is_array($documents ?? null) ? $documents : [];
