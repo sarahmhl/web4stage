@@ -13,30 +13,44 @@
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title">Avis étudiants</span>
-      <span class="pill-small"><?= count($feedbacks ?? []) ?> avis</span>
+      <span class="pill-small"><?= (int) ($feedbackTotalItems ?? count($feedbacks ?? [])) ?> avis</span>
     </header>
     <ul class="list-compact">
-      <?php foreach (array_slice($feedbacks ?? [], 0, 8) as $feedback): ?>
+      <?php foreach (($feedbacks ?? []) as $feedback): ?>
         <li>
           <span><?= htmlspecialchars(trim((string) $feedback['prenom'] . ' ' . (string) $feedback['nom']), ENT_QUOTES) ?> · <?= htmlspecialchars((string) $feedback['commentaire'], ENT_QUOTES) ?></span>
           <strong><?= (int) ($feedback['note'] ?? 0) ?>/5</strong>
         </li>
       <?php endforeach; ?>
     </ul>
+    <?php
+    $paginationCurrentPage = (int) ($feedbackCurrentPage ?? 1);
+    $paginationTotalPages = (int) ($feedbackTotalPages ?? 1);
+    $paginationPageParam = 'feedback_page';
+    $paginationLabel = 'Pagination des avis étudiants';
+    require __DIR__ . '/../partials/pagination.php';
+    ?>
   </article>
 
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title">Évaluations entreprises</span>
-      <span class="pill-small"><?= count($companyReviews ?? []) ?> évaluations</span>
+      <span class="pill-small"><?= (int) ($companyReviewTotalItems ?? count($companyReviews ?? [])) ?> évaluations</span>
     </header>
     <ul class="list-compact">
-      <?php foreach (array_slice($companyReviews ?? [], 0, 8) as $review): ?>
+      <?php foreach (($companyReviews ?? []) as $review): ?>
         <li>
           <span><?= htmlspecialchars((string) $review['entreprise_nom'], ENT_QUOTES) ?> · <?= htmlspecialchars((string) $review['commentaire'], ENT_QUOTES) ?></span>
           <strong><?= (int) ($review['note'] ?? 0) ?>/5</strong>
         </li>
       <?php endforeach; ?>
     </ul>
+    <?php
+    $paginationCurrentPage = (int) ($companyReviewCurrentPage ?? 1);
+    $paginationTotalPages = (int) ($companyReviewTotalPages ?? 1);
+    $paginationPageParam = 'company_review_page';
+    $paginationLabel = 'Pagination des évaluations d’entreprises';
+    require __DIR__ . '/../partials/pagination.php';
+    ?>
   </article>
 </section>
