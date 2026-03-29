@@ -4,6 +4,13 @@ $wishlistIds = is_array($wishlistIds ?? null) ? $wishlistIds : [];
 $statisticsCards = is_array($statisticsCards ?? null) ? $statisticsCards : [];
 $returnToValue = 'offres' . (!empty($_SERVER['QUERY_STRING']) ? '?' . (string) $_SERVER['QUERY_STRING'] : '');
 
+$statsIcons = [
+    'Durée' => '&#9201;',
+    'Wish-list' => '&#9829;',
+    'Catalogue' => '&#128194;',
+    'Candidatures' => '&#128221;',
+];
+
 $buildPageUrl = static function (int $page) use ($filters): string {
     $query = array_filter([
         'page' => $page,
@@ -42,10 +49,18 @@ $buildPageUrl = static function (int $page) use ($filters): string {
 
       <div class="stats-carousel" id="offers-stats" tabindex="0">
         <?php foreach ($statisticsCards as $card): ?>
+          <?php $kicker = (string) ($card['kicker'] ?? ''); ?>
           <article class="stats-carousel-card">
-            <span class="pill-small"><?= htmlspecialchars((string) ($card['kicker'] ?? ''), ENT_QUOTES) ?></span>
-            <h3 class="stats-carousel-title"><?= htmlspecialchars((string) ($card['title'] ?? ''), ENT_QUOTES) ?></h3>
-            <div class="stats-carousel-value"><?= htmlspecialchars((string) ($card['value'] ?? ''), ENT_QUOTES) ?></div>
+            <span class="pill-small stats-pill">
+              <?php if (isset($statsIcons[$kicker])): ?>
+                <span class="stats-pill-icon"><?= $statsIcons[$kicker] ?></span>
+              <?php endif; ?>
+              <?= htmlspecialchars($kicker, ENT_QUOTES) ?>
+            </span>
+            <div class="stats-carousel-head">
+              <h3 class="stats-carousel-title"><?= htmlspecialchars((string) ($card['title'] ?? ''), ENT_QUOTES) ?></h3>
+              <div class="stats-carousel-value"><?= htmlspecialchars((string) ($card['value'] ?? ''), ENT_QUOTES) ?></div>
+            </div>
             <p class="stats-carousel-text"><?= htmlspecialchars((string) ($card['description'] ?? ''), ENT_QUOTES) ?></p>
             <?php if (!empty($card['items']) && is_array($card['items'])): ?>
               <ul class="stats-carousel-list">
@@ -90,9 +105,9 @@ $buildPageUrl = static function (int $page) use ($filters): string {
       />
     </div>
     <div>
-      <label class="field-label" for="competence-liste">Compétence</label>
+      <label class="field-label" for="competence-liste">Compétence principale</label>
       <select id="competence-liste" name="skill" class="field-select">
-        <option value="">Toutes</option>
+        <option value="">Toutes les compétences</option>
         <?php foreach (($skillOptions ?? []) as $skillOption): ?>
           <option value="<?= htmlspecialchars((string) $skillOption, ENT_QUOTES) ?>" <?= (string) ($filters['skill'] ?? '') === (string) $skillOption ? 'selected' : '' ?>>
             <?= htmlspecialchars((string) $skillOption, ENT_QUOTES) ?>
@@ -103,10 +118,10 @@ $buildPageUrl = static function (int $page) use ($filters): string {
     <div>
       <label class="field-label" for="duree">Durée</label>
       <select id="duree" name="duration" class="field-select">
-        <option value="">Toutes durées</option>
-        <option value="2-3" <?= (string) ($filters['duration'] ?? '') === '2-3' ? 'selected' : '' ?>>2-3 mois</option>
-        <option value="4-6" <?= (string) ($filters['duration'] ?? '') === '4-6' ? 'selected' : '' ?>>4-6 mois</option>
-        <option value="6-plus" <?= (string) ($filters['duration'] ?? '') === '6-plus' ? 'selected' : '' ?>>6 mois et +</option>
+        <option value="">Toutes les durées</option>
+        <option value="2-3" <?= (string) ($filters['duration'] ?? '') === '2-3' ? 'selected' : '' ?>>2 à 3 mois</option>
+        <option value="4-6" <?= (string) ($filters['duration'] ?? '') === '4-6' ? 'selected' : '' ?>>4 à 6 mois</option>
+        <option value="6-plus" <?= (string) ($filters['duration'] ?? '') === '6-plus' ? 'selected' : '' ?>>Plus de 6 mois</option>
       </select>
     </div>
     <div class="search-actions">
