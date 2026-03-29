@@ -27,10 +27,15 @@ class CompanyController extends BaseController
             $this->flash('error', 'Impossible de charger les entreprises pour le moment.');
         }
 
+        $pagination = $this->paginateArray($companies, 6);
+
         View::render('companies/index', [
             'title' => 'Web4Stage - Entreprises',
-            'companies' => $companies,
+            'companies' => $pagination['items'],
             'filters' => $filters,
+            'currentPage' => $pagination['currentPage'],
+            'totalPages' => $pagination['totalPages'],
+            'totalCompanies' => $pagination['totalItems'],
             'metaDescription' => 'Consultez les entreprises partenaires, leurs coordonnées et les offres de stage associées sur Web4Stage.',
             'metaKeywords' => 'entreprises, stages, cesi, partenaires, web4stage',
         ]);
