@@ -492,6 +492,98 @@ class Offer
     }
 
     /**
+     * @return array<int, array<string, mixed>>
+     */
+    public static function statisticsCarousel(): array
+    {
+        $pdo = Database::getConnection();
+
+        $overview = self::overviewStats();
+
+        $durationRows = $pdo->query("
+            SELECT
+              SUM(CASE WHEN o.duree_mois BETWEEN 2 AND 3 THEN 1 ELSE 0 END) AS short_count,
+              SUM(CASE WHEN o.duree_mois BETWEEN 4 AND 6 THEN 1 ELSE 0 END) AS medium_count,
+              SUM(CASE WHEN o.duree_mois > 6 THEN 1 ELSE 0 END) AS long_count
+            FROM offre o
+            WHERE o.statut = 'PUBLIEE'
+        ")->fetch(PDO::FETCH_ASSOC) ?: [];
+
+        $averageApplications = $pdo->query("
+            SELECT AVG(application_total) AS average_applications
+            FROM (
+              SELECT o.id_offre, COUNT(c.id_candidature) AS application_total
+              FROM offre o
+              LEFT JOIN candidature c ON c.id_offre = o.id_offre
+              WHERE o.statut = 'PUBLIEE'
+              GROUP BY o.id_offre
+            ) offer_stats
+        ")->fetch(PDO::FETCH_ASSOC) ?: [];
+
+        $topWishlisted = $pdo->query("
+            SELECT
+              o.titre,
+              COUNT(w.id_offre) AS wishlist_total
+            FROM offre o
+            LEFT JOIN wishlist_offre w ON w.id_offre = o.id_offre
+            WHERE o.statut = 'PUBLIEE'
+            GROUP BY o.id_offre, o.titre
+            ORDER BY wishlist_total DESC, o.titre ASC
+            LIMIT 3
+        ")->fetchAll(PDO::FETCH_ASSOC);
+
+        $topWishlistedItems = [];
+        foreach ($topWishlisted as $row) {
+            $topWishlistedItems[] = sprintf(
+                '%s - %d ajout(s)',
+                (string) ($row['titre'] ?? ''),
+                (int) ($row['wishlist_total'] ?? 0)
+            );
+        }
+
+        return [
+            [
+                'kicker' => 'Durée',
+                'title' => 'Répartition des offres',
+                'value' => (int) ($overview['offers'] ?? 0) . ' offres',
+                'description' => 'Vue rapide des durées de stage actuellement publiées.',
+                'items' => [
+                    '2 à 3 mois - ' . (int) ($durationRows['short_count'] ?? 0),
+                    '4 à 6 mois - ' . (int) ($durationRows['medium_count'] ?? 0),
+                    'Plus de 6 mois - ' . (int) ($durationRows['long_count'] ?? 0),
+                ],
+            ],
+            [
+                'kicker' => 'Wish-list',
+                'title' => 'Offres les plus enregistrées',
+                'value' => $topWishlistedItems !== [] ? 'Top 3' : 'Aucune donnée',
+                'description' => 'Les offres les plus souvent ajoutées à la wish-list étudiante.',
+                'items' => $topWishlistedItems !== [] ? $topWishlistedItems : ['Aucune offre n’a encore été ajoutée en favori.'],
+            ],
+            [
+                'kicker' => 'Catalogue',
+                'title' => 'Offres disponibles',
+                'value' => (int) ($overview['offers'] ?? 0),
+                'description' => 'Nombre total d’offres publiées et visibles dans la base.',
+                'items' => [
+                    (int) ($overview['companies'] ?? 0) . ' entreprise(s) actives',
+                    (int) ($overview['cities'] ?? 0) . ' ville(s) couvertes',
+                    (int) ($overview['skills'] ?? 0) . ' compétence(s) référencée(s)',
+                ],
+            ],
+            [
+                'kicker' => 'Candidatures',
+                'title' => 'Moyenne par offre',
+                'value' => number_format((float) ($averageApplications['average_applications'] ?? 0), 1, ',', ' ') . ' candidature(s)',
+                'description' => 'Nombre moyen de candidatures envoyées par offre publiée.',
+                'items' => [
+                    'Indicateur calculé sur toutes les offres actuellement publiées.',
+                ],
+            ],
+        ];
+    }
+
+    /**
      * @param array<string, string> $filters
      * @return array{0:string,1:array<string, mixed>}
      */
@@ -646,7 +738,7 @@ class Offer
     private static function durationLabel(mixed $months): string
     {
         if ($months === null || (int) $months <= 0) {
-            return 'Duree non precisee';
+            return 'Durée non précisée';
         }
 
         $value = (int) $months;
