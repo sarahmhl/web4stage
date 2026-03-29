@@ -1,6 +1,5 @@
 # Web4Stage
 
-<<<<<<< HEAD
 Application web de gestion de stages.
 
 ## Fonctionnalites
