@@ -1,18 +1,20 @@
 <?php
-  $filters = is_array($filters ?? null) ? $filters : [];
-  $wishlistIds = is_array($wishlistIds ?? null) ? $wishlistIds : [];
-  $returnToValue = 'offres' . (!empty($_SERVER['QUERY_STRING']) ? '?' . (string) $_SERVER['QUERY_STRING'] : '');
-  $buildPageUrl = static function (int $page) use ($filters): string {
+$filters = is_array($filters ?? null) ? $filters : [];
+$wishlistIds = is_array($wishlistIds ?? null) ? $wishlistIds : [];
+$statisticsCards = is_array($statisticsCards ?? null) ? $statisticsCards : [];
+$returnToValue = 'offres' . (!empty($_SERVER['QUERY_STRING']) ? '?' . (string) $_SERVER['QUERY_STRING'] : '');
+
+$buildPageUrl = static function (int $page) use ($filters): string {
     $query = array_filter([
-      'page' => $page,
-      'keyword' => (string) ($filters['keyword'] ?? ''),
-      'city' => (string) ($filters['city'] ?? ''),
-      'skill' => (string) ($filters['skill'] ?? ''),
-      'duration' => (string) ($filters['duration'] ?? ''),
+        'page' => $page,
+        'keyword' => (string) ($filters['keyword'] ?? ''),
+        'city' => (string) ($filters['city'] ?? ''),
+        'skill' => (string) ($filters['skill'] ?? ''),
+        'duration' => (string) ($filters['duration'] ?? ''),
     ], static fn ($value): bool => $value !== '');
 
     return htmlspecialchars(\Core\Url::route('offres') . ($query !== [] ? '?' . http_build_query($query) : ''), ENT_QUOTES);
-  };
+};
 ?>
 <header class="page-heading">
   <div class="page-heading-block">
@@ -23,6 +25,45 @@
     </p>
   </div>
 </header>
+
+<?php if ($statisticsCards !== []): ?>
+  <section class="section" aria-labelledby="section-stats-offres">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title" id="section-stats-offres">Statistiques des offres</h2>
+        <p class="section-subtitle">Faites défiler les indicateurs clés du catalogue.</p>
+      </div>
+    </div>
+
+    <div class="stats-carousel-shell">
+      <button type="button" class="stats-carousel-control" data-carousel-direction="prev" data-carousel-target="offers-stats" aria-label="Carte précédente">
+        &lsaquo;
+      </button>
+
+      <div class="stats-carousel" id="offers-stats" tabindex="0">
+        <?php foreach ($statisticsCards as $card): ?>
+          <article class="stats-carousel-card">
+            <span class="pill-small"><?= htmlspecialchars((string) ($card['kicker'] ?? ''), ENT_QUOTES) ?></span>
+            <h3 class="stats-carousel-title"><?= htmlspecialchars((string) ($card['title'] ?? ''), ENT_QUOTES) ?></h3>
+            <div class="stats-carousel-value"><?= htmlspecialchars((string) ($card['value'] ?? ''), ENT_QUOTES) ?></div>
+            <p class="stats-carousel-text"><?= htmlspecialchars((string) ($card['description'] ?? ''), ENT_QUOTES) ?></p>
+            <?php if (!empty($card['items']) && is_array($card['items'])): ?>
+              <ul class="stats-carousel-list">
+                <?php foreach ($card['items'] as $item): ?>
+                  <li><?= htmlspecialchars((string) $item, ENT_QUOTES) ?></li>
+                <?php endforeach; ?>
+              </ul>
+            <?php endif; ?>
+          </article>
+        <?php endforeach; ?>
+      </div>
+
+      <button type="button" class="stats-carousel-control" data-carousel-direction="next" data-carousel-target="offers-stats" aria-label="Carte suivante">
+        &rsaquo;
+      </button>
+    </div>
+  </section>
+<?php endif; ?>
 
 <section class="search-section" aria-label="Filtres d'offres">
   <form method="get" action="<?= htmlspecialchars(\Core\Url::route('offres'), ENT_QUOTES) ?>" class="search-grid">
@@ -178,4 +219,3 @@
     </nav>
   <?php endif; ?>
 </section>
-
