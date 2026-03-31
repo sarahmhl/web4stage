@@ -3,10 +3,10 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
 ?>
 <header class="page-heading">
   <div class="page-heading-block">
-    <span class="page-heading-kicker">Avis étudiants</span>
+    <span class="page-heading-kicker">Avis sur la formation</span>
     <h1 class="page-heading-title">Donner son avis sur la formation</h1>
     <p class="page-heading-subtitle">
-      Partagez un retour simple sur l’accompagnement et consultez les avis déjà publiés.
+      Partagez un retour sur l'accompagnement pédagogique, le suivi du pilote et l'aide apportée dans votre recherche de stage.
     </p>
   </div>
 </header>
@@ -14,7 +14,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
 <section class="section" aria-labelledby="section-form-avis">
   <div class="section-header">
     <div>
-      <h2 class="section-title" id="section-form-avis">? Publier un avis</h2>
+      <h2 class="section-title" id="section-form-avis">Publier un avis</h2>
       <p class="section-subtitle">Un retour clair et concret suffit.</p>
     </div>
   </div>
@@ -22,14 +22,14 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title dash-card-title--icon">
-        <span class="card-title-icon" aria-hidden="true">?</span>
-        <span>Mon avis</span>
+        <span class="card-title-icon" aria-hidden="true">★</span>
+        <span>Mon retour sur la formation</span>
       </span>
       <span class="pill-small">Formation</span>
     </header>
 
     <p class="side-card-text">
-      Vous pouvez parler du suivi, de l’accompagnement, de la qualité des offres ou de la lisibilité de la plateforme.
+      Vous pouvez parler du suivi pédagogique, de l'accompagnement du pilote, de la clarté des consignes et de l'aide reçue pour trouver un stage.
     </p>
 
     <form method="post" action="<?= htmlspecialchars(\Core\Url::route('etudiant/avis'), ENT_QUOTES) ?>" data-js-validate>
@@ -52,7 +52,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
             id="comment"
             name="comment"
             class="form-control form-control--textarea"
-            placeholder="Expliquez ce qui vous aide vraiment dans votre recherche de stage."
+            placeholder="Expliquez ce que la formation vous apporte concrètement pour préparer votre recherche de stage."
             required
           ></textarea>
         </div>
@@ -61,7 +61,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
       <p class="auth-hint">Conseil : restez simple, précis et utile pour les autres étudiants.</p>
 
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary">? Publier mon avis</button>
+        <button type="submit" class="btn btn-primary">Publier mon avis</button>
       </div>
     </form>
   </article>
@@ -71,7 +71,7 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
   <div class="section-header">
     <div>
       <h2 class="section-title" id="section-liste-avis">Avis déjà publiés</h2>
-      <p class="section-subtitle">Les retours récents des étudiants.</p>
+      <p class="section-subtitle">Retours récents des étudiants sur la formation.</p>
     </div>
   </div>
 
@@ -89,10 +89,8 @@ $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
     </div>
   <?php else: ?>
     <div class="empty-state">
-      <span class="pill-small">? Aucun avis</span>
-      <h3 class="empty-state-title">Aucun avis n’a encore été publié</h3>
-      <p class="empty-state-text">Le premier retour peut être ajouté depuis le formulaire ci-dessus.</p>
+      <strong>Aucun avis</strong>
+      <p class="empty-state-text">Le premier retour sur la formation peut être publié depuis le formulaire ci-dessus.</p>
     </div>
   <?php endif; ?>
 </section>
-
