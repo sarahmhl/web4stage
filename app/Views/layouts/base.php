@@ -14,7 +14,7 @@ $assetUrl = static function (string $path): string {
 
 $currentPath = Url::currentPath();
 $isEntryPage = (bool) ($isEntryPage ?? false);
-$isHome = $currentPath === '/accueil';
+$isHome = $currentPath === '/accueil' || $currentPath === '/';
 $isLoggedIn = \Core\Auth::check();
 $user = \Core\Auth::user();
 $userRole = $user['role'] ?? '';

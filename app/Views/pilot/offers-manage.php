@@ -54,12 +54,12 @@ if ($selectedOffer !== null) {
 
   <article class="dash-card offer-editor-card">
     <header class="dash-card-header">
-      <span class="dash-card-title"><?= $isNewOffer ? 'Nouvelle offre' : 'Édition de l’offre' ?></span>
+      <span class="dash-card-title"><?= $isNewOffer ? 'Nouvelle offre' : 'Édition de l\'offre' ?></span>
       <span class="pill-small"><?= $isNewOffer ? 'Création' : 'Mise à jour' ?></span>
     </header>
 
     <?php if ($selectedOffer === null): ?>
-      <p class="auth-hint">Aucune offre n’est disponible pour le moment.</p>
+      <p class="auth-hint">Aucune offre n'est disponible pour le moment.</p>
     <?php else: ?>
       <form method="post" action="<?= htmlspecialchars(\Core\Url::route('pilote/offres'), ENT_QUOTES) ?>" data-js-validate>
         <input type="hidden" name="_csrf" value="<?= htmlspecialchars((string) ($csrfToken ?? ''), ENT_QUOTES) ?>" />
@@ -171,7 +171,7 @@ if ($selectedOffer !== null) {
         <div class="form-footer offer-form-actions offer-form-actions--split">
           <div class="offer-form-actions-group">
             <a href="<?= htmlspecialchars(\Core\Url::route('dashboard-pilote'), ENT_QUOTES) ?>" class="btn btn-outline">Retour au tableau de bord</a>
-            <button type="submit" class="btn btn-primary"><?= $isNewOffer ? 'Créer l’offre' : 'Enregistrer les modifications' ?></button>
+            <button type="submit" class="btn btn-primary"><?= $isNewOffer ? 'Créer l\'offre' : 'Enregistrer les modifications' ?></button>
           </div>
           <?php if (!$isNewOffer && (int) ($selectedOffer['id_offre'] ?? 0) > 0): ?>
             <button
@@ -181,7 +181,7 @@ if ($selectedOffer !== null) {
               class="btn btn-outline btn-outline--danger"
               onclick="return confirm('Supprimer cette offre ?');"
             >
-              Supprimer l’offre
+              Supprimer l'offre
             </button>
           <?php endif; ?>
         </div>

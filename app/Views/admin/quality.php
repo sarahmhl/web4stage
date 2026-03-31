@@ -2,14 +2,14 @@
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Qualité</span>
-    <h1 class="page-heading-title">Indicateurs de qualité globale</h1>
+    <h1 class="page-heading-title">Vue synthétique du catalogue</h1>
     <p class="page-heading-subtitle">
-      Gardez une vue synthétique sur les offres actives et le portefeuille d’entreprises.
+      Repérez rapidement les offres visibles et les entreprises les plus actives sur la plateforme.
     </p>
   </div>
 </header>
 
-<section class="dashboard-grid">
+<section class="dashboard-grid page-fill-grid">
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title">Offres en base</span>
@@ -27,7 +27,7 @@
     $paginationCurrentPage = (int) ($offersCurrentPage ?? 1);
     $paginationTotalPages = (int) ($offersTotalPages ?? 1);
     $paginationPageParam = 'offers_page';
-    $paginationLabel = 'Pagination des offres de qualité';
+    $paginationLabel = 'Pagination des offres en base';
     require __DIR__ . '/../partials/pagination.php';
     ?>
   </article>
@@ -49,7 +49,7 @@
     $paginationCurrentPage = (int) ($companiesCurrentPage ?? 1);
     $paginationTotalPages = (int) ($companiesTotalPages ?? 1);
     $paginationPageParam = 'companies_page';
-    $paginationLabel = 'Pagination des entreprises de qualité';
+    $paginationLabel = 'Pagination des entreprises référencées';
     require __DIR__ . '/../partials/pagination.php';
     ?>
   </article>

@@ -4,12 +4,12 @@
     <span class="page-heading-kicker">Modération</span>
     <h1 class="page-heading-title">Avis et retours utilisateurs</h1>
     <p class="page-heading-subtitle">
-      Relisez les avis étudiants et les évaluations entreprises publiés sur la plateforme.
+      Relisez les avis étudiants et les évaluations d'entreprises publiés sur la plateforme.
     </p>
   </div>
 </header>
 
-<section class="dashboard-grid">
+<section class="dashboard-grid page-fill-grid">
   <article class="dash-card">
     <header class="dash-card-header">
       <span class="dash-card-title">Avis étudiants</span>
@@ -49,7 +49,7 @@
     $paginationCurrentPage = (int) ($companyReviewCurrentPage ?? 1);
     $paginationTotalPages = (int) ($companyReviewTotalPages ?? 1);
     $paginationPageParam = 'company_review_page';
-    $paginationLabel = 'Pagination des évaluations d’entreprises';
+    $paginationLabel = 'Pagination des évaluations d\'entreprises';
     require __DIR__ . '/../partials/pagination.php';
     ?>
   </article>
