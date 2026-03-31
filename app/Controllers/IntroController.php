@@ -1,4 +1,5 @@
 <?php
+// Affiche l'ecran d'entree historique du projet.
 
 declare(strict_types=1);
 

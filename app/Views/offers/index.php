@@ -1,4 +1,5 @@
 <?php
+// Vue du catalogue des offres avec filtres, statistiques et pagination.
 $filters = is_array($filters ?? null) ? $filters : [];
 $wishlistIds = is_array($wishlistIds ?? null) ? $wishlistIds : [];
 $statisticsCards = is_array($statisticsCards ?? null) ? $statisticsCards : [];

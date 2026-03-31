@@ -1,4 +1,5 @@
 <?php
+// Modele des avis et retours laisses par les etudiants sur la formation.
 
 declare(strict_types=1);
 

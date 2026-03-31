@@ -1,4 +1,5 @@
 <?php
+// Associe chaque URL a l'action du controleur qui doit etre executee.
 
 declare(strict_types=1);
 

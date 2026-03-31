@@ -1,4 +1,5 @@
 <?php
+// Regroupe les actions de suivi et de gestion reservees au pilote.
 
 declare(strict_types=1);
 

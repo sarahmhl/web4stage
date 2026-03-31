@@ -1,4 +1,5 @@
 <?php
+// Centralise la generation des URLs internes et des chemins d'assets.
 
 declare(strict_types=1);
 

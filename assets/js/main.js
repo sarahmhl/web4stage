@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const navMobile = document.querySelector(".nav-mobile");
 
   if (burger && navMobile) {
+    // Ouvre ou ferme le menu mobile tout en gardant l'etat ARIA coherent.
     const spans = burger.querySelectorAll("span");
     const setBurgerState = (isOpen) => {
       navMobile.classList.toggle("open", isOpen);
       burger.setAttribute("aria-expanded", isOpen ? "true" : "false");
 
       if (isOpen) {
+        // Transforme les trois barres en icone de fermeture quand le menu est ouvert.
         spans[0].style.transform = "translateY(4px) rotate(45deg)";
         spans[1].style.opacity = "0";
         spans[2].style.transform = "translateY(-4px) rotate(-45deg)";
@@ -30,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setBurgerState(!navMobile.classList.contains("open"));
     });
 
+    // Referme le menu apres un clic sur un lien ou sur la touche Echap.
     navMobile.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => setBurgerState(false));
     });
@@ -40,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    // Remet l'etat mobile a zero quand on repasse en affichage desktop.
     const desktopMedia = window.matchMedia("(min-width: 769px)");
     const handleDesktopChange = (event) => {
       if (event.matches) {

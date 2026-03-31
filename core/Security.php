@@ -1,4 +1,5 @@
 <?php
+// Fournit les outils de securite utilises dans les formulaires et les vues.
 
 declare(strict_types=1);
 

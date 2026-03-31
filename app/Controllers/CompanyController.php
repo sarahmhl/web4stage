@@ -1,4 +1,5 @@
 <?php
+// Gere la consultation publique des entreprises et de leurs fiches.
 
 declare(strict_types=1);
 

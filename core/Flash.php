@@ -1,4 +1,5 @@
 <?php
+// Gere les messages temporaires affiches apres une action utilisateur.
 
 declare(strict_types=1);
 

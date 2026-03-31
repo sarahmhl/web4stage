@@ -1,4 +1,5 @@
 <?php
+// Configuration generale de l'application : URL, base de donnees et options de securite.
 
 return [
     'app_name' => 'Web4Stage',

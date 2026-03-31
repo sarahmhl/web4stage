@@ -1,4 +1,5 @@
 <?php
+// Gere la connexion, l'inscription et la deconnexion des utilisateurs.
 
 declare(strict_types=1);
 

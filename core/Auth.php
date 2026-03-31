@@ -1,4 +1,5 @@
 <?php
+// Centralise l'authentification, la session et le controle des roles.
 
 declare(strict_types=1);
 

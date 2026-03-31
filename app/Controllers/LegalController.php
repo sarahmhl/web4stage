@@ -1,4 +1,5 @@
 <?php
+// Affiche les pages legales comme les mentions et la confidentialite.
 
 declare(strict_types=1);
 

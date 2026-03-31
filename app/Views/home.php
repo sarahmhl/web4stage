@@ -1,4 +1,5 @@
 <?php
+  // Vue de la page d'accueil publique avec hero, offres et retours.
   $basePath = 'assets/img/offers/';
   $offersDir = dirname(__DIR__, 2) . '/assets/img/offers';
   if (!is_dir($offersDir)) {

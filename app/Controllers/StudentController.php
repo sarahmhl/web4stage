@@ -1,4 +1,5 @@
 <?php
+// Regroupe les actions disponibles dans l'espace etudiant.
 
 declare(strict_types=1);
 

@@ -1,4 +1,5 @@
 <?php
+// Modele des entreprises : consultation et operations de gestion.
 
 declare(strict_types=1);
 

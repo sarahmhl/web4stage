@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+// Vue de supervision qui resume quelques indicateurs globaux de qualite.
+?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Qualité</span>

@@ -1,4 +1,5 @@
 <?php
+// Point d'entree principal : demarrage de l'application, securite et declaration des routes.
 
 declare(strict_types=1);
 

@@ -1,4 +1,5 @@
 <?php
+// Lit et expose les valeurs de configuration du projet.
 
 declare(strict_types=1);
 

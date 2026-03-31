@@ -1,4 +1,5 @@
 <?php
+// Modele des documents etudiants comme le CV et la lettre type.
 
 declare(strict_types=1);
 

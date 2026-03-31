@@ -1,4 +1,5 @@
 <?php
+// Gere le rendu des vues et leur injection dans le layout principal.
 
 declare(strict_types=1);
 

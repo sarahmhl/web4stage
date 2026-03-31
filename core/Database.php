@@ -1,4 +1,5 @@
 <?php
+// Ouvre et partage la connexion PDO utilisee par les modeles.
 
 declare(strict_types=1);
 

@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+// Vue du formulaire de connexion principal.
+?>
 <section class="auth-wrapper">
   <section class="auth-card" aria-labelledby="titre-login">
     <h1 class="auth-title" id="titre-login">Se connecter</h1>

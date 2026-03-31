@@ -1,4 +1,5 @@
 <?php
+// Vue du formulaire d'avis sur la formation et l'accompagnement.
 $feedbacks = is_array($feedbacks ?? null) ? $feedbacks : [];
 ?>
 <header class="page-heading">

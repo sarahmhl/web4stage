@@ -1,5 +1,6 @@
 <?php
 
+// Layout principal commun a l'ensemble des pages du site.
 use Core\Flash;
 use Core\Security;
 use Core\Url;
@@ -121,6 +122,7 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
               </form>
             <?php endif; ?>
 
+            <?php // Bouton burger affiche quand la navigation desktop disparait en mobile. ?>
             <button
               type="button"
               class="burger"
@@ -135,6 +137,7 @@ $canonicalUrl = htmlspecialchars(Url::absolute($canonicalTarget), ENT_QUOTES);
           </div>
         </div>
 
+        <?php // Panneau de navigation mobile ouvert et ferme par le bouton burger. ?>
         <div id="nav-mobile-menu" class="nav-mobile" aria-label="Navigation mobile">
           <a href="<?= $routeUrl('accueil') ?>" class="nav-link<?= $isHome ? ' nav-link--active' : '' ?>">Accueil</a>
           <a href="<?= $routeUrl('offres') ?>" class="nav-link<?= str_starts_with($currentPath, '/offres') ? ' nav-link--active' : '' ?>">Offres de stage</a>

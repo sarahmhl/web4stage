@@ -1,4 +1,5 @@
 <?php
+// Modele des offres de stage : catalogue, detail, filtres et statistiques.
 
 declare(strict_types=1);
 

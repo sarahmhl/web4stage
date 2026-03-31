@@ -1,4 +1,5 @@
 <?php
+// Regroupe les actions reservees a l'administrateur.
 
 declare(strict_types=1);
 

@@ -1,4 +1,5 @@
 <?php
+// Gere le catalogue des offres, les filtres et l'affichage detaille.
 
 declare(strict_types=1);
 

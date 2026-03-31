@@ -1,4 +1,5 @@
 <?php
+// Controleur de la page d'accueil publique.
 
 declare(strict_types=1);
 

@@ -1,4 +1,5 @@
 <?php
+// Modele des candidatures : depot, suivi et consultation des envois.
 
 declare(strict_types=1);
 

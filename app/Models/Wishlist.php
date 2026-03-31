@@ -1,4 +1,5 @@
 <?php
+// Modele de la wish-list : ajout, suppression et lecture des offres favorites.
 
 declare(strict_types=1);
 

@@ -1,4 +1,5 @@
 <?php
+// Prepare l'environnement minimal necessaire pour executer les tests PHPUnit.
 
 declare(strict_types=1);
 

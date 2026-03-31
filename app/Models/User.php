@@ -1,4 +1,5 @@
 <?php
+// Modele utilisateur : comptes, roles et operations de gestion des profils.
 
 declare(strict_types=1);
 

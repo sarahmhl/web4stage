@@ -1,4 +1,5 @@
 <?php
+// Verifie le comportement attendu du controleur qui affiche les pages legales.
 
 declare(strict_types=1);
 

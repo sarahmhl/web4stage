@@ -1,4 +1,5 @@
 <?php
+// Vue pilote de gestion et d'edition des offres de stage.
 $selectedOffer = is_array($selectedOffer ?? null) ? $selectedOffer : null;
 $selectedOfferId = (int) ($selectedOfferId ?? 0);
 $isNewOffer = (bool) ($isNewOffer ?? false);

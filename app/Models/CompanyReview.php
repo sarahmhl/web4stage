@@ -1,4 +1,5 @@
 <?php
+// Modele des evaluations d'entreprises visibles dans la plateforme.
 
 declare(strict_types=1);
 

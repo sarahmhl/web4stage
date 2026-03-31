@@ -286,7 +286,7 @@ main {
   background: rgba(255, 228, 242, 0.9);
 }
 
-/* Burger menu (mobile) */
+/* Bouton burger affiche uniquement sur les petits ecrans. */
 
 .burger {
   border: none;
@@ -306,6 +306,7 @@ main {
   transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
 
+/* Le menu mobile reste masque tant que JavaScript ne lui ajoute pas la classe open. */
 .nav-mobile {
   display: none;
   flex-direction: column;
@@ -333,6 +334,7 @@ main {
 }
 
 @media (max-width: 768px) {
+  /* Sous le format tablette, les liens desktop sont remplaces par le menu burger. */
   .nav-links {
     display: none;
   }
@@ -372,6 +374,7 @@ main {
 }
 
 @media (min-width: 769px) {
+  /* En desktop, la navigation complete revient et le burger n'est plus utile. */
   .burger {
     display: none;
   }

@@ -1,4 +1,5 @@
 <?php
+// Gere l'affichage et la mise a jour de la wish-list etudiante.
 
 declare(strict_types=1);
 

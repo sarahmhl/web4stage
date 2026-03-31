@@ -1,4 +1,5 @@
 <?php
+// Gere le parcours de candidature de l'etudiant.
 
 declare(strict_types=1);
 

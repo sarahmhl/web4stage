@@ -1,4 +1,5 @@
 <?php
+// Classe de base des controleurs avec les outils communs utilises dans l'application.
 
 declare(strict_types=1);
 

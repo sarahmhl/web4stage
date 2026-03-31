@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+// Vue de moderation des retours et evaluations visibles sur la plateforme.
+?>
 <header class="page-heading">
   <div class="page-heading-block">
     <span class="page-heading-kicker">Modération</span>
